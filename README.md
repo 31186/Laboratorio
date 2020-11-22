@@ -1,4 +1,6 @@
-# Laboratório
+# Laboratório de Programação
+
+# Tema - Web platform for Employment/Volunteering/Internship
 
 # Estrutura
 - Sign-up
