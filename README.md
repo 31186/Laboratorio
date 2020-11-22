@@ -1,4 +1,4 @@
-# Laboraorio
+# Laboratório
 
 # Estrutura
 - Sign-up
