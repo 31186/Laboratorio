@@ -52,10 +52,13 @@
         - Histórico
 
 # Abordagem
-- Fazer API com BD
-- Fazer frontend (usar template gratuito)
+- 1º Fazer API com BD
+- 2º Fazer frontend (usar template gratuito)
+
+# Notas
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
 - Após a video-chamada o processo é manual
 
-# Extras
+# Extras (conforme o tempo restante)
+- Notificações
 - Perfil permite recomendações
