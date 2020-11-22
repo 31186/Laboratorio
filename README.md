@@ -18,11 +18,11 @@
     - Perfil mostra os trabalhadores/estagiários/voluntários (linka os utilizadores)
     - Botão para solicitar entrevista (só aparece aos Utilizadores)
 - Pesquisa Emprego/Estágio
-  - Utilizadores
+  - Utilizadores a pesquisar por empresas
     - Área de negócio (Saúde, IT, etc) 
     - Localização (incluir location browser)
     - Competências (requisitos)
-  - Empresas
+  - Empresas a procurar por utilizadores
     - Localização
     - Competências
 - Pesquisa Voluntariado (utilizadores) - Se as assiciações pudessem recrutar iam estar sempre a fazê-lo e criavam muito spam.
