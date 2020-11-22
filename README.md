@@ -23,12 +23,12 @@
     - Localização (incluir location browser)
     - Competências (requisitos)
   - Empresas a procurar por utilizadores
-    - Localização
+    - Localização (incluir location browser)
     - Competências
 - Pesquisa Voluntariado (utilizadores) - Se as assiciações pudessem recrutar iam estar sempre a fazê-lo e criavam muito spam.
   - Utilizadores
     - Tipo de voluntariado (Apoio de idosos, combate à fome, auxilio em instituições, etc)
-    - Localização
+    - Localização (incluir location browser)
 - Recrutamento
   - Utilizadores
     - Página para gerir as entrevistas
@@ -53,7 +53,7 @@
 
 # Abordagem
 - 1º Fazer API com BD
-- 2º Fazer frontend (usar template gratuito)
+- 2º Fazer frontend (procurar templates gratuitos Behance ou Dribble)
 
 # Notas
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
