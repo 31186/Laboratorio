@@ -6,7 +6,7 @@
   - Empresas (incluir linkedIn API)
 - Login
 - Perfis
-  - Utilizadores Candidatos/estagiários/voluntários
+  - Utilizadores (Candidatos/estagiários/voluntários)
     - Perfil com informações básicas (se der com autofill por API do linkedId https://docs.microsoft.com/pt-pt/linkedin/consumer/integrations/self-serve/plugins/autofill-plugin)
     - Perfil com possibilidade de inserir CV
     - Perfil com possibilidade de inserir ficheiros (certificados/diplomas)
