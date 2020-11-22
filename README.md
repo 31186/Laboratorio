@@ -57,6 +57,10 @@
 - 1º Fazer API com BD
 - 2º Fazer frontend (procurar templates gratuitos Behance ou Dribble)
 
+# Integração de APIs externas
+- LinkedIn
+- Agora
+
 # Notas
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
 - Após a video-chamada o processo é manual
