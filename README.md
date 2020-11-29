@@ -26,7 +26,7 @@
   - Empresas a procurar por utilizadores
     - Localização (incluir location browser)
     - Competências
-- Pesquisa Voluntariado (utilizadores) - Se as assiciações pudessem recrutar iam estar sempre a fazê-lo e criavam muito spam.
+- Pesquisa Voluntariado (utilizadores) - Se as associações pudessem recrutar iam estar sempre a fazê-lo e criavam muito spam.
   - Utilizadores
     - Tipo de voluntariado (Apoio de idosos, combate à fome, auxilio em instituições, etc)
     - Localização (incluir location browser)
