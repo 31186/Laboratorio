@@ -68,4 +68,5 @@
 
 # Extras (conforme o tempo restante)
 - Notificações
+- Portfolio
 - Perfil permite recomendações
