@@ -54,8 +54,9 @@
         - Histórico
 
 # Abordagem
-- 1º Fazer API com BD
-- 2º Fazer frontend (procurar templates gratuitos Behance ou Dribble)
+- 1º Desenhar BD
+- 2º Procurar Template
+- Implementar
 
 # Integração de APIs externas
 - LinkedIn
