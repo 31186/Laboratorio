@@ -23,7 +23,6 @@
   - Utilizadores a pesquisar por empresas
     - Área de negócio (Saúde, IT, etc) 
     - Localização (incluir location browser)
-    - Competências (requisitos)
   - Empresas a procurar por utilizadores
     - Localização (incluir location browser)
     - Competências
