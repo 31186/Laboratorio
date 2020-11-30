@@ -62,6 +62,7 @@
 - Agora / Twilio
 
 # Notas
+- Video depende de FE
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
 - Após a video-chamada o processo é manual
 
