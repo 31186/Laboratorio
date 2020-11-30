@@ -59,7 +59,7 @@
 
 # Integração de APIs externas
 - LinkedIn
-- Agora
+- Agora / Twilio
 
 # Notas
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
