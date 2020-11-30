@@ -14,7 +14,7 @@
     - Perfil com possibilidade de inserir ficheiros (certificados/diplomas)
     - Perfil mostra local/locais de trabalho/estágios e voluntariados (linka as empresas)
     - Perfil com lista de competências
-    - Botão para marcar entrevista (só aparece às empresas)
+    - Botão para marcar entrevista (só aparece às empresas) - com mensagem
   - Empresas (Empregadores/Voluntariado)
     - Perfil com informações básicas (se der com autofill por API do linkedId https://docs.microsoft.com/pt-pt/linkedin/consumer/integrations/self-serve/plugins/autofill-plugin)
     - Perfil mostra os trabalhadores/estagiários/voluntários (linka os utilizadores)
