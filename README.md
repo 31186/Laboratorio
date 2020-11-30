@@ -69,3 +69,4 @@
 - Notificações
 - Portfolio
 - Perfil permite recomendações
+- Multi-language -> deveria ser de ínicio?
