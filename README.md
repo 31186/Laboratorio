@@ -65,6 +65,7 @@
 - Video depende de FE
 - Video chamadas (https://www.agora.io/en/) gratis para testes, em live é pago
 - Após a video-chamada o processo é manual
+- Linkedin Integration: https://artisansweb.net/login-with-linkedin-in-laravel-using-laravel-socialite/ e https://docs.microsoft.com/en-gb/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin
 
 # Extras (conforme o tempo restante)
 - Notificações
