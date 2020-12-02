@@ -16,6 +16,8 @@ class CreateCompaniesInterviewsTable extends Migration
         Schema::create('companies_interviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('fk_company');
+            $table->unsignedBigInteger('fk_interview');
 
             $table->foreign('fk_company')->references('id')->on('companies');
             $table->foreign('fk_interview')->references('id')->on('interviews');

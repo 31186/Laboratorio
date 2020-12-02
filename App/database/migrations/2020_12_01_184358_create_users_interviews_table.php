@@ -16,6 +16,8 @@ class CreateUsersInterviewsTable extends Migration
         Schema::create('users_interviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('fk_user');
+            $table->unsignedBigInteger('fk_interview');
 
             $table->foreign('fk_user')->references('id')->on('users');
             $table->foreign('fk_interview')->references('id')->on('interviews');

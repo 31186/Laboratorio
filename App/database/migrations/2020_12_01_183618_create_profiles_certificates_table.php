@@ -16,6 +16,8 @@ class CreateProfilesCertificatesTable extends Migration
         Schema::create('profiles_certificates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('fk_profile');
+            $table->unsignedBigInteger('fk_certificate');
 
             $table->foreign('fk_profile')->references('id')->on('profiles');
             $table->foreign('fk_certificate')->references('id')->on('certificates');

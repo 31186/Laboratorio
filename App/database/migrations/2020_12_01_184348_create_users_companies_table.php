@@ -18,6 +18,8 @@ class CreateUsersCompaniesTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+            $table->unsignedBigInteger('fk_user');
+            $table->unsignedBigInteger('fk_company');
 
             $table->foreign('fk_user')->references('id')->on('users');
             $table->foreign('fk_company')->references('id')->on('companies');
