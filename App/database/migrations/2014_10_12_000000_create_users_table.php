@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedBigInteger('fk_profile');
+            $table->unsignedBigInteger('fk_profile')->nullable();
 
             $table->foreign('fk_profile')->references('id')->on('profiles');
         });
