@@ -41,6 +41,11 @@ class Company extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function user()
+    {
+        return $this->hasMany('App\Models\User');
+    }
+
     public function page()
     {
         return $this->hasOne('App\Models\Page');
@@ -49,5 +54,10 @@ class Company extends Authenticatable implements MustVerifyEmail
     public function company_type()
     {
         return $this->hasOne('App\Models\Company_type');
+    }
+
+    public function interview()
+    {
+        return $this->hasMany('App\Models\Interview');
     }
 }

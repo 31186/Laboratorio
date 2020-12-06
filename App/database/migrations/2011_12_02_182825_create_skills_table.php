@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersInterviewsTable extends Migration
+class CreateSkillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateUsersInterviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_interviews', function (Blueprint $table) {
+        Schema::create('skills', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
-            $table->unsignedBigInteger('fk_user');
-            $table->unsignedBigInteger('fk_interview');
+            $table->unsignedBigInteger('fk_profile')->nullable();
 
-            $table->foreign('fk_user')->references('id')->on('users');
-            $table->foreign('fk_interview')->references('id')->on('interviews');
+            $table->foreign('fk_profile')->references('id')->on('profiles');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateUsersInterviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_interviews');
+        Schema::dropIfExists('skills');
     }
 }

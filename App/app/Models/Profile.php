@@ -56,4 +56,14 @@ class Profile extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function certificates()
+    {
+        return $this->hasMany('App\Models\Certificates');
+    }
+
+    public function skills()
+    {
+        return $this->hasMany('App\Models\Skills');
+    }
 }

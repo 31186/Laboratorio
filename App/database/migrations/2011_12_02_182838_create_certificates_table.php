@@ -19,6 +19,9 @@ class CreateCertificatesTable extends Migration
             $table->string('file');
             $table->date('certification_date');
             $table->timestamps();
+            $table->unsignedBigInteger('fk_profile')->nullable();
+
+            $table->foreign('fk_profile')->references('id')->on('profiles');
         });
     }
 
