@@ -11,11 +11,11 @@
                 <a href="."><img src="{{ asset('img/logo.png') }}" height="36" alt=""></a>
             </div>
 
-            <form class="card card-md" method="POST" action="{{ route('login') }}">
+            <form class="card card-md" method="POST" action="{{ route('company.login') }}">
                 @csrf
 
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">{{ __('Login as a user') }}</h2>
+                    <h2 class="card-title text-center mb-4">{{ __('Login as a company') }}</h2>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">{{ __('Email Address') }}</label>
@@ -76,9 +76,9 @@
                 </div>
             </form>
             <div class="text-center text-muted mt">
-                {{ __("Not a user?") }}
+                {{ __("Not a company?") }}
                 <br />
-                <a href="{{ url('company/login') }}" tabindex="-1">{{ __('Login as a company') }}</a>
+                <a href="{{ url('login') }}" tabindex="-1">{{ __('Login as a user') }}</a>
             </div>
             <div class="text-center text-muted mt">
                 {{ __("Don't have an account yet?") }}

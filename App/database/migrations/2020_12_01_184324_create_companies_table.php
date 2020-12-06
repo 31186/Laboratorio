@@ -21,10 +21,10 @@ class CreateCompaniesTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedBigInteger('fk_status');
-            $table->unsignedBigInteger('fk_page');
+            $table->unsignedBigInteger('fk_type')->nullable();
+            $table->unsignedBigInteger('fk_page')->nullable();
 
-            $table->foreign('fk_status')->references('id')->on('company_types');
+            $table->foreign('fk_type')->references('id')->on('company_types');
             $table->foreign('fk_page')->references('id')->on('pages');
         });
     }

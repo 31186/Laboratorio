@@ -5,18 +5,15 @@ namespace Database\Seeders;
 use App\Models\Company;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class CompanySeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class,
-            CompanySeeder::class,
-        ]);
+        Company::factory(10)->create();
     }
 }

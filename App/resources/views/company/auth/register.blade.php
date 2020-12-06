@@ -10,18 +10,19 @@
             <div class="text-center mb-4">
                 <a href="."><img src="{{ asset('img/logo.png') }}" height="36" alt=""></a>
             </div>
-            <form class="card card-md" method="POST" action="{{ route('register') }}">
+            <form class="card card-md" method="POST" action="{{ route('company.register') }}">
                 @csrf
 
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">{{ __('Register as user') }}</h2>
+                    <h2 class="card-title text-center mb-4">{{ __('Register as company') }}</h2>
+                    
                     <div class="mb-3">
-                        <label for="first_name" value="{{ old('first_name') }}"
-                            class="form-label">{{ __('First name') }}</label>
-                        <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                            autocomplete="first_name" name="first_name" autofocus>
+                        <label for="company_name" value="{{ old('company_name') }}"
+                            class="form-label">{{ __('Company name') }}</label>
+                        <input type="text" class="form-control @error('company_name') is-invalid @enderror"
+                            autocomplete="company_name" name="company_name" autofocus>
 
-                        @error('first_name')
+                        @error('company_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -29,24 +30,27 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="last_name" value="{{ old('last_name') }}"
-                            class="form-label">{{ __('Last name') }}</label>
-                        <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                            autocomplete="last_name" name="last_name" autofocus>
+                        <label for="company_type" value="{{ old('company_type') }}"
+                            class="form-label">{{ __('Company type') }}</label>
 
-                        @error('last_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <label for="business_type" value="{{ old('business') }}" class="form-label form-in-line">{{ __('Business') }}</label>
+                            <input type="radio" class="form-margin @error('business_type') is-invalid @enderror"
+                            autocomplete="business_type" name="business_type" autofocus>
+                            
 
-                    <div class="mb-3">
-                        <label for="birthday" value="{{ old('birthday') }}" class="form-label">{{ __('Birthday') }}</label>
-                        <input type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday"
-                            autocomplete="birthday" autofocus>
+                        <label for="business_type" value="{{ old('charity') }}" class="form-label form-in-line">{{ __('Charity') }}</label>
+                            <input type="radio" class="form-margin @error('business_type') is-invalid @enderror"
+                            autocomplete="business_type" name="business_type" autofocus>
 
-                        @error('birthday')
+                        <style>
+                            .form-in-line {
+                                display: inline-block;
+                                margin-left: 10%;
+                            }
+                            .form-margin { margin-right: 2.5rem; }
+                        </style>
+
+                        @error('business_type')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -116,11 +120,12 @@
             </form>
 
             <div class="text-center text-muted mt">
-                {{ __('Already have an account?') }} <a href="{{ url('login') }}" tabindex="-1">{{ __('Login as a user') }}</a>
+                {{ __('Already have an account?') }} <a href="{{ url('company/login') }}"
+                    tabindex="-1">{{ __('Login as a company') }}</a>
             </div>
             <div class="text-center text-muted mt">
-                {{ __('Not a user?') }} <a href="{{ url('/company/register') }}"
-                    tabindex="-1">{{ __('Register as a company') }}</a>
+                {{ __('Not a company?') }} <a href="{{ url('register') }}"
+                    tabindex="-1">{{ __('Register as a user') }}</a>
             </div>
         </div>
     </div>

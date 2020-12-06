@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Company extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
-
-    protected $guard = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'birthday',
+        'company_name',
         'email',
         'password',
     ];
@@ -45,8 +41,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile()
+    public function page()
     {
-        return $this->hasOne('App\Models\Profile');
+        return $this->hasOne('App\Models\Page');
+    }
+
+    public function company_type()
+    {
+        return $this->hasOne('App\Models\Company_type');
     }
 }
