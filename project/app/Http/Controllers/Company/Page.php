@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile as ModelsProfile;
 use Illuminate\Http\Request;
 
-class Profile extends Controller
+class Page extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class Profile extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -46,9 +45,9 @@ class Profile extends Controller
      */
     public function show($id)
     {
-        return view('profile');
-        // return view('profile', [
-        //     'profile' => ModelsProfile::where(['id', $id])->firstOrFail()
+        return view('page');
+        // return view('page', [
+        //     'profile' => ModelsPage::where(['id', $id])->firstOrFail()
         // ]);
     }
 

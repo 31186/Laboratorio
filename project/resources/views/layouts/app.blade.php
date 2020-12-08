@@ -16,11 +16,11 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    @yield('fonts')
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
-    
 </head>
 
 <body>
@@ -57,7 +57,7 @@
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -81,10 +81,18 @@
             </div>
         </nav>
 
+        @yield('sidebar')
+
+        @yield('hero')
+
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
+
+<footer>
+    @yield('footer')
+</footer>
 
 </html>

@@ -1,4 +1,4 @@
-@extends('layouts.app-profile')
+@extends('../../layouts.app-profile')
 @include('sidebar')
 
 @section('fonts')
