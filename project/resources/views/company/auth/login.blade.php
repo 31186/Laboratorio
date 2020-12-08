@@ -30,19 +30,17 @@
                     </div>
 
                     <div class="mb-2">
-                        <label for="password" class="form-label">
-                            {{ __('Password') }}
-                        </label>
-                        <div class="input-group input-group-flat">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                name="password" required autocomplete="current-password">
+                        <label for="password" class="form-label">{{ __('Password') }}/label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="current-password">
 
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                     </div>
                     <div class="mb-2">
                         <label class="form-check" for="remember">
@@ -76,7 +74,7 @@
                 </div>
             </form>
             <div class="text-center text-muted mt">
-                {{ __("Not a company?") }}
+                {{ __('Not a company?') }}
                 <br />
                 <a href="{{ url('login') }}" tabindex="-1">{{ __('Login as a user') }}</a>
             </div>

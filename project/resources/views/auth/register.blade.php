@@ -16,8 +16,7 @@
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">{{ __('Register as user') }}</h2>
                     <div class="mb-3">
-                        <label for="first_name" value="{{ old('first_name') }}"
-                            class="form-label">{{ __('First name') }}</label>
+                        <label for="first_name" class="form-label">{{ __('First name') }}</label>
                         <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                             autocomplete="first_name" name="first_name" autofocus>
 
@@ -29,8 +28,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="last_name" value="{{ old('last_name') }}"
-                            class="form-label">{{ __('Last name') }}</label>
+                        <label for="last_name" class="form-label">{{ __('Last name') }}</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror"
                             autocomplete="last_name" name="last_name" autofocus>
 
@@ -42,7 +40,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="birthday" value="{{ old('birthday') }}" class="form-label">{{ __('Birthday') }}</label>
+                        <label for="birthday" class="form-label">{{ __('Birthday') }}</label>
                         <input type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday"
                             autocomplete="birthday" autofocus>
 
@@ -116,7 +114,8 @@
             </form>
 
             <div class="text-center text-muted mt">
-                {{ __('Already have an account?') }} <a href="{{ url('login') }}" tabindex="-1">{{ __('Login as a user') }}</a>
+                {{ __('Already have an account?') }} <a href="{{ url('login') }}"
+                    tabindex="-1">{{ __('Login as a user') }}</a>
             </div>
             <div class="text-center text-muted mt">
                 {{ __('Not a user?') }} <a href="{{ url('/company/register') }}"

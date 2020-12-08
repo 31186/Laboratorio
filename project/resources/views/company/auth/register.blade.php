@@ -15,10 +15,9 @@
 
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">{{ __('Register as company') }}</h2>
-                    
+
                     <div class="mb-3">
-                        <label for="company_name" value="{{ old('company_name') }}"
-                            class="form-label">{{ __('Company name') }}</label>
+                        <label for="company_name" class="form-label">{{ __('Company name') }}</label>
                         <input type="text" class="form-control @error('company_name') is-invalid @enderror"
                             autocomplete="company_name" name="company_name" autofocus>
 
@@ -33,20 +32,26 @@
                         <label for="company_type" class="form-label">{{ __('Company type') }}</label>
 
                         <label for="fk_type_1" class="form-label form-in-line">{{ __('Business') }}</label>
-                            <input id="fk_type_1" value="1" type="radio" class="form-margin @error('fk_type') is-invalid @enderror"
-                            autocomplete="fk_type" name="fk_type" autofocus>
-                            
+                        <input id="fk_type_1" value="1" type="radio"
+                            class="form-margin @error('fk_type') is-invalid @enderror" autocomplete="fk_type" name="fk_type"
+                            autofocus>
+
 
                         <label for="fk_type_2" class="form-label form-in-line">{{ __('Charity') }}</label>
-                            <input id="fk_type_2" value="2" type="radio" class="form-margin @error('fk_type') is-invalid @enderror"
-                            autocomplete="fk_type" name="fk_type" autofocus>
+                        <input id="fk_type_2" value="2" type="radio"
+                            class="form-margin @error('fk_type') is-invalid @enderror" autocomplete="fk_type" name="fk_type"
+                            autofocus>
 
                         <style>
                             .form-in-line {
                                 display: inline-block;
                                 margin-left: 10%;
                             }
-                            .form-margin { margin-right: 2.5rem; }
+
+                            .form-margin {
+                                margin-right: 2.5rem;
+                            }
+
                         </style>
 
                         @error('business_type')
@@ -123,8 +128,7 @@
                     tabindex="-1">{{ __('Login as a company') }}</a>
             </div>
             <div class="text-center text-muted mt">
-                {{ __('Not a company?') }} <a href="{{ url('register') }}"
-                    tabindex="-1">{{ __('Register as a user') }}</a>
+                {{ __('Not a company?') }} <a href="{{ url('register') }}" tabindex="-1">{{ __('Register as a user') }}</a>
             </div>
         </div>
     </div>
