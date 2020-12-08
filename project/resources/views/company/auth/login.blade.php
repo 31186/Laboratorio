@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="mb-2">
-                        <label for="password" class="form-label">{{ __('Password') }}/label>
+                        <label for="password" class="form-label">{{ __('Password') }}</label>
                             <div class="input-group input-group-flat">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
                                     name="password" required autocomplete="current-password">
