@@ -9,23 +9,23 @@
 
 @section('styles')
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('css/profile/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile/icofont.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile/venobox.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/icofont/icofont.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/venobox/venobox.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/aos/aos.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ asset('css/profile/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/profiles.css') }}" rel="stylesheet">
 @endsection
 
 @section('hero')
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
         <div class="hero-container" data-aos="fade-in">
-            <h1>Alex Smith</h1>
-            <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p>
+            <h1>João Castro</h1>
+            <p>I'm <span class="typed" data-typed-items="QAE, Web Developer, Freelancer"></span></p>
         </div>
     </section>
     <!-- End Hero -->
@@ -254,18 +254,18 @@
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="{{ asset('js/profile/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/profile/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/profile/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('js/profile/validate.js') }}"></script>
-    <script src="{{ asset('js/profile/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('js/profile/counterup.min.js') }}"></script>
-    <script src="{{ asset('js/profile/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('js/profile/venobox.min.js') }}"></script>
-    <script src="{{ asset('js/profile/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/profile/typed.min.js') }}"></script>
-    <script src="{{ asset('js/profile/aos.js') }}"></script>
+    <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('libs/jquery.easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('libs/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('libs/waypoints/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('libs/counterup/counterup.min.js') }}"></script>
+    <script src="{{ asset('libs/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('libs/venobox/venobox.min.js') }}"></script>
+    <script src="{{ asset('libs/owl.carousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('libs/typed.js/typed.min.js') }}"></script>
+    <script src="{{ asset('libs/aos/aos.js') }}"></script>
 
     <!-- Template Main JS File -->
-    <script src="{{ asset('js/profile/main.js') }}"></script>
+    <script src="{{ asset('js/profiles.js') }}"></script>
 @endsection
