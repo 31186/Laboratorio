@@ -53,4 +53,5 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
 });
 
 Route::get('/profile/{id}', [App\Http\Controllers\Profile::class, 'show']);
+Route::get('/profile-edit/{id}', [App\Http\Controllers\ProfileEdit::class, 'show']);
 Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);

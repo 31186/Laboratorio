@@ -1,11 +1,11 @@
 @extends('layouts.app-profile')
 @include('sidebar')
 
-@section('fonts')
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-@endsection
+{{-- @section('fonts')
+<link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+@endsection --}}
 
 @section('styles')
     <!-- Vendor CSS Files -->
@@ -25,74 +25,93 @@
     <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
         <div class="hero-container" data-aos="fade-in">
             <h1>João Castro</h1>
-            <p>I'm <span class="typed" data-typed-items="QAE, Web Developer, Freelancer"></span></p>
+            <p>{{ __("I'm") }} <span class="typed" data-typed-items="QAE, Student"></span></p>
         </div>
     </section>
     <!-- End Hero -->
 @endsection
 
 @section('content')
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-        <div class="container">
+    <div id="main">
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container">
 
-            <div class="section-title">
-                <h2>{{ __('About') }}</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4" data-aos="fade-right">
-                    <img src="{{ asset('img/profile/profile-img.jpg') }}" class="img-fluid" alt="">
+                <div class="section-title">
+                    <h2>{{ __('About') }}</h2>
+                    <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit in iste officiis commodi quidem hic quas.</p>
                 </div>
-                <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                    <h3>UI/UX Designer &amp; Web Developer.</h3>
-                    <p class="font-italic">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore
-                        magna aliqua.
-                    </p>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Birthday') }}:</strong> 1 May 1995
-                                </li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Website') }}:</strong>
-                                    www.example.com</li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Phone') }}:</strong> +123 456 7890
-                                </li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('City') }}:</strong> City : New
-                                    York, USA
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Age') }}:</strong> 30</li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Degree') }}:</strong> Master</li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('PhEmailone') }}:</strong>
-                                    email@example.com
-                                </li>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Freelance') }}:</strong> Available
-                                </li>
-                            </ul>
-                        </div>
+
+                <div class="row">
+                    <div class="col-lg-4" data-aos="fade-right">
+                        <img src="{{ asset('img/profile/profile-img.jpg') }}" class="img-fluid" alt="">
                     </div>
-                    <p>
-                        Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci
-                        omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-                        Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque
-                        neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni
-                        laudantium dolores.
-                    </p>
+                    <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+                        <h3>QAE &amp; Student.</h3>
+                        <p class="font-italic">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore
+                            magna aliqua.
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Birthday') }}:</strong> 1 May
+                                        1995
+                                    </li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Website') }}:</strong>
+                                        www.example.com</li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Phone') }}:</strong> +123 456
+                                        7890
+                                    </li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('City') }}:</strong> City : New
+                                        York, USA
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Age') }}:</strong> 30</li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Degree') }}:</strong> Master
+                                    </li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('PhEmailone') }}:</strong>
+                                        email@example.com
+                                    </li>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Freelance') }}:</strong>
+                                        Available
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>
+                            Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci
+                            omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
+                            Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque
+                            neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni
+                            laudantium dolores.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End About Section -->
+
+        <!-- ======= Social Section ======= -->
+        {{-- <section id="social" class="about">
+            <div class="container">
+                <div class="social-links mt-3 text-center">
+                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                 </div>
             </div>
-
-        </div>
-    </section>
-    <!-- End About Section -->
+        </section> --}}
+    <!-- ======= End Social Section ======= -->
 
     <!-- ======= Skills Section ======= -->
     <section id="skills" class="skills section-bg">
@@ -248,6 +267,7 @@
         </div>
     </section>
     <!-- End Resume Section -->
+    </div>
 @endsection
 
 @section('footer')
