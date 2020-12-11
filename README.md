@@ -60,6 +60,7 @@
 # Integração de APIs externas
 - LinkedIn
 - Agora / Twilio
+- Import data from europass CV - https://github.com/europass/sample-tools-php
 
 # Notas
 - Video depende de FE
