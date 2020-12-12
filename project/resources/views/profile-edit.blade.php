@@ -91,15 +91,15 @@
                             </div>
 
                             {{-- CV --}}
-                            {{-- TODO - add CSS --}}
-                            {{-- <div class="mb-3">
+                            <div class="mb-3">
                                 <div class="form-label">{{ __('CV') }}</div>
                                 <input type="file" class="form-control">
-                            </div> --}}
+                            </div>
 
                             {{-- Skills --}}
-                            {{-- TODO - add CSS --}}
-                            {{-- TODO - add all the skills in the database --}}
+                            {{-- TODO - fix CSS --}}
+                            {{-- TODO - add all the skills in the database
+                            --}}
                             {{-- <div class="mb-3">
                                 <label class="form-label">{{ __('Skills') }}</label>
                                 <select name="tags-advanced" id="select-tags-advanced" class="form-select selectized"

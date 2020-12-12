@@ -37,7 +37,7 @@
                     <li><a href=""><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
                     <li><a href=""><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
+                                document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
                             <span>{{ __('Logout') }}</span></a></li>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
