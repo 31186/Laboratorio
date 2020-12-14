@@ -15,23 +15,23 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('picture');
-            $table->string('cover_image');
-            $table->string('job_title');
-            $table->string('sn_twitter');
-            $table->string('sn_facebook');
-            $table->string('sn_instagram');
-            $table->string('sn_skype');
-            $table->string('sn_linkedin');
-            $table->string('description');
-            $table->string('job_description');
-            $table->string('website');
-            $table->integer('phone');
-            $table->string('city');
-            $table->string('country');
-            $table->string('degree');
-            $table->string('skills_description');
-            $table->string('cv');
+            $table->string('picture')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->string('job_title')->nullable();
+            $table->string('sn_twitter')->nullable();
+            $table->string('sn_facebook')->nullable();
+            $table->string('sn_instagram')->nullable();
+            $table->string('sn_skype')->nullable();
+            $table->string('sn_linkedin')->nullable();
+            $table->string('description')->nullable();
+            $table->string('job_description')->nullable();
+            $table->string('website')->nullable();
+            $table->integer('phone')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('degree')->nullable();
+            $table->string('skills_description')->nullable();
+            $table->string('cv')->nullable();
             $table->timestamps();
         });
     }

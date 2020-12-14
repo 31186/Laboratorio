@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile as ModelsProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Profile;
 
-class Profile extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class Profile extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -24,7 +25,7 @@ class Profile extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -35,7 +36,7 @@ class Profile extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -46,10 +47,9 @@ class Profile extends Controller
      */
     public function show($id)
     {
-        return view('profile');
-        // return view('profile', [
-        //     'profile' => ModelsProfile::where(['id', $id])->firstOrFail()
-        // ]);
+        return view('profile.show', [
+            'profile' => Profile::findOrFail($id)
+        ]);
     }
 
     /**
@@ -60,7 +60,10 @@ class Profile extends Controller
      */
     public function edit($id)
     {
-        //
+        // return view('profile.edit');
+        return view('profile.edit', [
+            'profile' => Profile::findOrFail($id)
+        ]);
     }
 
     /**
@@ -72,7 +75,33 @@ class Profile extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        // TODO: continue with updating the profile
+        $profile = Profile::findOrFail($id);
+
+        $request->validate([
+            'description' => ['required', 'string', 'max:255'],
+            'job_title' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'skills_description' => ['required', 'string', 'max:255'],
+            'picture',
+            'cover_image',
+            'sn_twitter',
+            'sn_facebook',
+            'sn_instagram',
+            'sn_skype',
+            'sn_linkedin',
+            'job_description' => ['required', 'string', 'max:255'],
+            'website',
+            'phone' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'degree' => ['required', 'string', 'max:255'],
+            'cv',
+        ]);
+
+        Profile::save($request->all());
+
+        return redirect()->back();
     }
 
     /**

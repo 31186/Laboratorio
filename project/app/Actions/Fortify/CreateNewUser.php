@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -20,6 +21,8 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        $profile = Profile::create();
+
         Validator::make($input, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -40,6 +43,7 @@ class CreateNewUser implements CreatesNewUsers
             'birthday' => $input['birthday'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'profile_id' => $profile->id,
         ]);
     }
 }

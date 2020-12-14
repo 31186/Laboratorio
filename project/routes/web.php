@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +51,7 @@ Route::prefix('company')->group(function () {
 Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::view('/profile/password', 'profile.password')->name('edit-password');
+    Route::resource('profile', ProfileController::class);
 });
 
-Route::get('/profile/{id}', [App\Http\Controllers\Profile::class, 'show']);
-Route::get('/profile-edit/{id}', [App\Http\Controllers\ProfileEdit::class, 'show']);
-Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);
+// Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);

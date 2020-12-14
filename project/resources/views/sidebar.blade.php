@@ -33,7 +33,7 @@
 
             <nav class="nav-menu">
                 <ul>
-                    <li><a href=""><i class="bx bx-home"></i> <span>{{ __('Profile') }}</span></a></li>
+                <li><a href="/profile/"><i class="bx bx-home"></i> <span>{{ __('Profile') }}</span></a></li>
                     <li><a href=""><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
                     <li><a href=""><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
