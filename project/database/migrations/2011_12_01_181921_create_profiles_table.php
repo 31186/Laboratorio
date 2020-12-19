@@ -21,7 +21,6 @@ class CreateProfilesTable extends Migration
             $table->string('sn_twitter')->nullable();
             $table->string('sn_facebook')->nullable();
             $table->string('sn_instagram')->nullable();
-            $table->string('sn_skype')->nullable();
             $table->string('sn_linkedin')->nullable();
             $table->string('description')->nullable();
             $table->string('job_description')->nullable();
@@ -30,7 +29,6 @@ class CreateProfilesTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('degree')->nullable();
-            $table->string('skills_description')->nullable();
             $table->string('cv')->nullable();
             $table->timestamps();
         });

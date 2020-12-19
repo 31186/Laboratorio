@@ -21,7 +21,6 @@ class Profile extends Model
         'sn_twitter',
         'sn_facebook',
         'sn_instagram',
-        'sn_skype',
         'sn_linkedin',
         'description',
         'job_description',
@@ -30,7 +29,6 @@ class Profile extends Model
         'city',
         'country',
         'degree',
-        'skills_description',
         'cv',
     ];
 

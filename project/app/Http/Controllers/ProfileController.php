@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -15,7 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
@@ -47,8 +48,14 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
+        $myUser = User::findOrFail(Auth::id());
+
+        $visitedUser = User::findOrFail($id);
+
         return view('profile.show', [
-            'profile' => Profile::findOrFail($id)
+            'profile' => Profile::findOrFail($id),
+            'user' => $myUser,
+            'visitedUser' => $visitedUser,
         ]);
     }
 
@@ -60,9 +67,14 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        // return view('profile.edit');
+        if ($id != Auth::id())
+            abort(403, 'Unauthorized action.');
+
+        $user = User::findOrFail($id);
+
         return view('profile.edit', [
-            'profile' => Profile::findOrFail($id)
+            'profile' => Profile::findOrFail($id),
+            'user' => $user
         ]);
     }
 
@@ -75,21 +87,18 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // TODO: continue with updating the profile
         $profile = Profile::findOrFail($id);
+        $user = User::findOrFail($id);
 
         $request->validate([
             'description' => ['required', 'string', 'max:255'],
             'job_title' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
-            'skills_description' => ['required', 'string', 'max:255'],
             'picture',
             'cover_image',
             'sn_twitter',
             'sn_facebook',
             'sn_instagram',
-            'sn_skype',
             'sn_linkedin',
             'job_description' => ['required', 'string', 'max:255'],
             'website',
@@ -99,9 +108,12 @@ class ProfileController extends Controller
             'cv',
         ]);
 
-        Profile::save($request->all());
+        $profile = $profile->update($request->all());
 
-        return redirect()->back();
+        return view('profile.show', [
+            'profile' => Profile::findOrFail($id),
+            'user' => $user
+        ]);
     }
 
     /**

@@ -28,16 +28,18 @@
 
             <div class="profile">
                 <img src="../../img/profile/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-                <h1 class="text-light"><a href="index.html">João Castro</a></h1>
+                {{-- <img src="{{ $profile->picture }}" alt="" class="img-fluid rounded-circle"> --}}
+                <h1 class="text-light">{{ $user->first_name . ' ' . $user->last_name }}</h1>
             </div>
 
             <nav class="nav-menu">
                 <ul>
-                <li><a href="/profile/"><i class="bx bx-home"></i> <span>{{ __('Profile') }}</span></a></li>
-                    <li><a href=""><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
-                    <li><a href=""><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
+                    <li><a href="{{ url('profile/' . Auth::id()) }}"><i class="bx bxs-user-detail"></i> <span>{{ __('View profile') }}</span></a></li>
+                    <li><a href="{{ url('profile/' . Auth::id()) . '/edit'}}"><i class="bx bx-pencil"></i> <span>{{ __('Edit profile') }}</span></a></li>
+                    <li><a href="{{ url('search') }}"><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
+                    <li><a href="{{ url('interview') }}"><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
+                                    document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
                             <span>{{ __('Logout') }}</span></a></li>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

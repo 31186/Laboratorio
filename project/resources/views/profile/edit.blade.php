@@ -14,8 +14,39 @@
                         <h3 class="card-title">{{ __('Create your profile') }}</h3>
                     </div>
                     <div class="card-body">
-                        <form method="PATCH" action="{{ route('profile.update', $profile->id) }}">
+                        <form method="POST" action="{{ route('profile.update', $profile->id) }}">
                             @csrf
+                            {{ method_field('PATCH') }}
+                                {{-- User information --}}
+
+                                {{-- First Name --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('First Name') }} *</label>
+                                    <input type="text" class="form-control" name="first_name" placeholder="Enter your first name"
+                                        required value="{{ $user->first_name }}">
+                                </div>
+
+                                {{-- Last Name --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Last Name') }} *</label>
+                                    <input type="text" class="form-control" name="last_name" placeholder="Enter your last name"
+                                        required value="{{ $user->last_name }}">
+                                </div>
+
+                                {{-- Birthday --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Birthday') }} *</label>
+                                    <input type="date" class="form-control" name="birthday" placeholder="Enter your birthday"
+                                        required value="{{ $user->birthday }}">
+                                </div>
+
+                                {{-- Email --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Birthday') }} *</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                                        required value="{{ $user->email }}">
+                                </div>
+
                                 {{-- Cover image --}}
                                 {{-- TODO --}}
 
@@ -23,7 +54,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Description') }} *</label>
                                     <textarea class="form-control" name="description" rows="6"
-                                        placeholder="Enter a description" spellcheck="false" required></textarea>
+                                placeholder="Enter a description" spellcheck="false" required> {{ $profile->description }} </textarea>
                                 </div>
 
                                 {{-- Social Networks --}}
@@ -36,56 +67,49 @@
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job Title') }} *</label>
                                     <input type="text" class="form-control" name="job_title" placeholder="Enter a job title"
-                                        required>
+                                        required value="{{ $profile->job_title }}">
                                 </div>
 
                                 {{-- Job Description --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job description') }} *</label>
                                     <textarea class="form-control" name="job_description" rows="6"
-                                        placeholder="Enter a job description" spellcheck="false" required></textarea>
+                                        placeholder="Enter a job description" spellcheck="false" required> {{ $profile->job_description }} </textarea>
                                 </div>
 
                                 {{-- Website --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Website') }}</label>
                                     <input type="text" class="form-control" name="website"
-                                        placeholder="Enter your website URL" value="">
+                                        placeholder="Enter your website URL" value="{{ $profile->website }}">
                                 </div>
 
                                 {{-- Phone --}}
                                 <div class="mb-3">
                                     <label class="form-label">Phone number</label>
                                     <input type="text" name="phone" class="form-control" data-mask="000000000"
-                                        data-mask-visible="true" placeholder="000000000" value="" autocomplete="off">
+                                        data-mask-visible="true" placeholder="000000000" value="{{ $profile->phone }}" autocomplete="off">
                                 </div>
 
                                 {{-- Country --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Country') }}</label>
                                     <input type="text" class="form-control" name="country" placeholder="Enter your country"
-                                        value="" required>
+                                        value="{{ $profile->country }}" required>
                                 </div>
 
                                 {{-- City --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('City') }} *</label>
                                     <input type="text" class="form-control" name="city" placeholder="Enter your city"
-                                        value="" required>
+                                        value="{{ $profile->city }}" required>
                                 </div>
 
                                 {{-- Degree --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Degree') }}</label>
                                     <input type="text" class="form-control" name="degree" placeholder="Enter your degree"
-                                        value="">
-                                </div>
-
-                                {{-- Skills Description --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Skills description') }} *</label>
-                                    <textarea class="form-control" name="skills_description" rows="6"
-                                        placeholder="Enter your skills description" spellcheck="false" required></textarea>
+                                        value="{{ $profile->degree }}">
                                 </div>
 
                                 {{-- CV --}}
