@@ -91,6 +91,10 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'birthday' => ['required', 'date'],
+            'email' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'job_title' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
@@ -110,9 +114,12 @@ class ProfileController extends Controller
 
         $profile = $profile->update($request->all());
 
+        $user = $user->update($request->all());
+
         return view('profile.show', [
             'profile' => Profile::findOrFail($id),
-            'user' => $user
+            'user' => User::findOrFail($id),
+            'visitedUser' => User::findOrFail($id),
         ]);
     }
 
