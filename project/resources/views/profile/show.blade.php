@@ -33,7 +33,6 @@
 
                 <div class="section-title">
                     <h2>{{ __('About') }}</h2>
-                    {{-- <p>{{ $profile->description }}</p> --}}
                 </div>
 
                 <div class="row">
@@ -49,7 +48,7 @@
                                         {{ $newDate = date('F j, Y', strtotime($visitedUser->birthday)) }}
                                     </li>
                                     <li><i class="icofont-rounded-right"></i> <strong>{{ __('Website') }}:</strong>
-                                        {{ $profile->website }}
+                                        <a href="{{ $profile->website }}" target="_blank">{{ $profile->website }}</a>
                                     </li>
                                     <li><i class="icofont-rounded-right"></i> <strong>{{ __('Phone') }}:</strong>
                                         {{ $profile->phone }}
@@ -67,7 +66,7 @@
                                     <li><i class="icofont-rounded-right"></i> <strong>{{ __('Degree') }}:</strong>
                                         {{ $profile->degree }}
                                     </li>
-                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('PhEmailone') }}:</strong>
+                                    <li><i class="icofont-rounded-right"></i> <strong>{{ __('Email') }}:</strong>
                                         {{ $visitedUser->email }}
                                     </li>
                                 </ul>
@@ -82,15 +81,16 @@
         <!-- End About Section -->
 
         <!-- ======= Social Section ======= -->
-        {{-- TODO: Add CSS --}}
         <section id="social">
             <div class="container">
-                <div class="social-links mt-3 text-center">
+                {{-- TODO: use bootstrap or tabler social icons
+                --}}
+                {{-- <div class="social-links mt-3 text-center">
                     <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
                     <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
                     <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
                     <a href="https://www.linkedin.com/in/{{ $visitedUser->sn_linkedin }}/" class="linkedin"><i
-                            class="bx bxl-linkedin"></i></a>
+                            class="bx bxl-linkedin"></i></a> --}}
                 </div>
             </div>
         </section>
@@ -132,6 +132,7 @@
                             </div>
                         </div>
 
+                        {{-- TODO: skills --}}
                         {{-- Show skills here --}}
                         {{-- @foreach ($skills as $skill)
                             <div class="progress">
@@ -191,67 +192,57 @@
                         <h3 class="resume-title">{{ __('Summary') }}</h3>
                         <div class="resume-item pb-0">
                             <h4>{{ $visitedUser->first_name . ' ' . $visitedUser->last_name }}</h4>
-                            {{-- Read description from CV json stored in bd
-                            --}}
-                            <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and
-                                    developing user-centered digital/print marketing material from initial concept to final,
-                                    polished deliverable.</em></p>
+                            <p><em>{{ $profile->description }}</em></p>
                             <ul>
-                                {{-- Read Address from CV json stored in bd
-                                --}}
-                                <li>Portland par 127,Orlando, FL</li>
                                 <li>{{ $profile->phone }}</li>
                                 <li>{{ $visitedUser->email }}</li>
                             </ul>
                         </div>
 
-                        <h3 class="resume-title">{{ __('Education') }}</h3>
-                        <div class="resume-item">
-                            <h4>Master of Fine Arts &amp; Graphic Design</h4>
-                            <h5>2015 - 2016</h5>
-                            <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-                            <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero
-                                voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-                        </div>
-                        <div class="resume-item">
-                            <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-                            <h5>2010 - 2014</h5>
-                            <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-                            <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel
-                                ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur
-                                neque etlon sader mart dila</p>
-                        </div>
+                        {{-- Education --}}
+                        @if (count($educations) != 0)
+                            <h3 class="resume-title">{{ __('Education') }}</h3>
+                            @foreach ($educations as $education)
+                                <div class="resume-item">
+                                    <h4>{{ $education->title }}</h4>
+                                    <h5>{{ __('Since') . ': ' . $education->start_date . ' || ' . __('Until') . ': ' . $education->end_date }}
+                                    </h5>
+                                    <p><em>{{ $profile->institution }}</em></p>
+                                    <p>{{ $profile->description }}</p>
+                                </div>
+                            @endforeach
+                        @endif
+
                     </div>
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="resume-title">{{ __('Professional Experience') }}</h3>
-                        <div class="resume-item">
-                            <h4>Senior graphic design specialist</h4>
-                            <h5>2019 - Present</h5>
-                            <p><em>Experion, New York, NY </em></p>
-                            <ul>
-                                <li>Lead in the design, development, and implementation of the graphic, layout, and
-                                    production communication materials</li>
-                                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of
-                                    the project. </li>
-                                <li>Supervise the assessment of all graphic materials in order to ensure quality and
-                                    accuracy of the design</li>
-                                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="resume-item">
-                            <h4>Graphic design specialist</h4>
-                            <h5>2017 - 2018</h5>
-                            <p><em>Stepping Stone Advertising, New York, NY</em></p>
-                            <ul>
-                                <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and
-                                    advertisements).</li>
-                                <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-                                <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-                                <li>Created 4+ design presentations and proposals a month for clients and account managers
-                                </li>
-                            </ul>
-                        </div>
+
+                        {{-- Professional Experience --}}
+                        @if (count($usersCompanies) != 0)
+                            <h3 class="resume-title">{{ __('Professional Experience') }}</h3>
+                            <div class="resume-item">
+                                @foreach ($usersCompanies as $userCompany)
+                                    <h4>{{ $userCompany->title }}</h4>
+                                    <h5>{{ __('Since') . ': ' . $userCompany->start_date . ' || ' . __('Until') . ': ' . $userCompany->end_date }}
+                                    </h5>
+                                    <p><em>{{ $userCompany->company_id->name }}</em></p>
+                                    <p>{{ $userCompany->description }}</p>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        {{-- Volunteering --}}
+                        @if (count($charities) != 0)
+                            <h3 class="resume-title">{{ __('Volunteering') }}</h3>
+                            @foreach ($charities as $charity)
+                                <div class="resume-item">
+                                    <h4>{{ $charity->title }}</h4>
+                                    <h5>{{ __('Since') . ': ' . $charity->start_date . ' || ' . __('Until') . ': ' . $charity->end_date }}
+                                    </h5>
+                                    <p><em>{{ $charity->company_id->name }}</em></p>
+                                    <p>{{ $charity->description }}</p>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
@@ -260,31 +251,45 @@
         <!-- End Resume Section -->
 
         <!-- ======= Certificates Section ======= -->
-        <section id="certificates" class="certificates">
-            <div class="container">
+        @if (count($certificates) != 0)
+            <section id="certificates" class="certificates">
+                <div class="container">
 
-                <div class="section-title">
-                    <h2>{{ __('Certificates') }}</h2>
-                </div>
-
-                {{-- Foreach certificates --}}
-                <div class="col-lg-12 pt-4 pt-lg-0 content" data-aos="fade-right">
-                    <h3>CERTIFICATE NAME</h3>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul>
-                                <li><i class="icofont-rounded-right"></i> <strong>{{ __('Date') }}:</strong> DATA</li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul>
-                                <a href="#"><i class="bx bx-award"></i></a>
-                            </ul>
-                        </div>
+                    <div class="section-title">
+                        <h2>{{ __('Certificates') }}</h2>
                     </div>
+
+                    @foreach ($certificates as $certificate)
+                        <div class="col-lg-12 pt-4 pt-lg-0 content" data-aos="fade-right">
+                            <h3>{{ $certificate->name }}</h3>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li><i class="icofont-rounded-right"></i> <strong>{{ __('Date') }}:</strong>
+                                            {{ $certificate->certification_date }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <a href="{{ $certificate->file }}" target="_blank"><svg
+                                                xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" />
+                                                <circle cx="6" cy="14" r="3" />
+                                                <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" />
+                                            </svg></a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
         <!-- ======= End Certificates Section ======= -->
     </div>
 @endsection

@@ -19,7 +19,8 @@
     @yield('fonts')
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/tabler.min.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 

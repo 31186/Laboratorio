@@ -160,14 +160,12 @@ h6 {
 }
 
 .nav-menu a:hover,
-.nav-menu .active>a,
 .nav-menu li:hover>a {
     text-decoration: none;
     color: #fff;
 }
 
 .nav-menu a:hover i,
-.nav-menu .active>a i,
 .nav-menu li:hover>a i {
     color: #149ddd;
 }
@@ -227,6 +225,7 @@ h6 {
     left: 0;
     right: 0;
     z-index: 1;
+    height: 100vh;
 }
 
 #hero .hero-container {

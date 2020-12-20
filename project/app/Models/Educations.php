@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skills extends Model
+class Educations extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,12 @@ class Skills extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'percentage',
+        'title',
+        'institution',
+        'description',
+        'start_date',
+        'end_date',
+        'profile_id'
     ];
 
     /**
@@ -39,6 +43,6 @@ class Skills extends Model
 
     public function profile()
     {
-        return $this->belongsToMany('App\Models\Profile');
+        return $this->belongsTo('App\Models\Profile');
     }
 }

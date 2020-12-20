@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function company()
     {
-        return $this->hasMany('App\Models\Company');
+        return $this->hasMany('App\Models\Company')->using('App\Models\UsersCompanies');
     }
 
     public function profile()

@@ -5,9 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skills extends Model
+class UsersCompanies extends Model
 {
     use HasFactory;
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -15,8 +22,12 @@ class Skills extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'percentage',
+        'title',
+        'description',
+        'start_date',
+        'end_date',
+        'user_id',
+        'company_id',
     ];
 
     /**
@@ -24,21 +35,12 @@ class Skills extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
-
-    ];
-
-    public function profile()
-    {
-        return $this->belongsToMany('App\Models\Profile');
-    }
+    protected $casts = [];
 }

@@ -27,8 +27,8 @@
         <div class="d-flex flex-column">
 
             <div class="profile">
-                <img src="../../img/profile/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-                {{-- <img src="{{ $profile->picture }}" alt="" class="img-fluid rounded-circle"> --}}
+                {{-- <img src="../../img/profile/profile-img.jpg" alt="" class="img-fluid rounded-circle"> --}}
+                <img src="{{ $profile->picture }}" alt="" class="img-fluid rounded-circle">
                 <h1 class="text-light">{{ $user->first_name . ' ' . $user->last_name }}</h1>
             </div>
 
@@ -54,24 +54,4 @@
     </header>
     <!-- End Header -->
 
-@endsection
-
-@section('footer')
-    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('libs/jquery.easing/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('libs/php-email-form/validate.js') }}"></script>
-    <script src="{{ asset('libs/waypoints/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('libs/counterup/counterup.min.js') }}"></script>
-    <script src="{{ asset('libs/isotope-layout/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('libs/venobox/venobox.min.js') }}"></script>
-    <script src="{{ asset('libs/owl.carousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('libs/typed.js/typed.min.js') }}"></script>
-    <script src="{{ asset('libs/aos/aos.js') }}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{{ asset('js/profiles.js') }}"></script>
 @endsection
