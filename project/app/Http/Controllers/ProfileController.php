@@ -109,7 +109,6 @@ class ProfileController extends Controller
             'phone' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
             'degree' => ['required', 'string', 'max:255'],
-            'cv',
         ]);
 
         $profile = $profile->update($request->all());

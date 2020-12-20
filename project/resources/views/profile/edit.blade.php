@@ -266,7 +266,7 @@
                             {{-- Certificates --}}
                             <fieldset class="form-fieldset">
                                 <div class="mb-3">
-                                    <div class="form-label">{{ __('CV') }}</div>
+                                    <div class="form-label">{{ __('Certificates') }}</div>
                                     <input type="file" class="form-control">
                                 </div>
                             </fieldset>

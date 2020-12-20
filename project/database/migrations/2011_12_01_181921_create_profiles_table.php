@@ -29,7 +29,6 @@ class CreateProfilesTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('degree')->nullable();
-            $table->string('cv')->nullable();
             $table->timestamps();
         });
     }
