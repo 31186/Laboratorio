@@ -33,7 +33,7 @@
 
                 <div class="section-title">
                     <h2>{{ __('About') }}</h2>
-                    <p>{{ $profile->description }}</p>
+                    {{-- <p>{{ $profile->description }}</p> --}}
                 </div>
 
                 <div class="row">

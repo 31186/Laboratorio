@@ -51,11 +51,11 @@
                             {{-- TODO --}}
 
                             {{-- Description --}}
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label class="form-label">{{ __('Description') }} *</label>
                                 <textarea class="form-control" name="description" rows="6" placeholder="Enter a description"
                                     spellcheck="false" required> {{ $profile->description }} </textarea>
-                            </div>
+                            </div> --}}
 
                             {{-- Social Networks --}}
                             {{-- TODO --}}
@@ -119,9 +119,9 @@
                             controllers, models and seeders --}}
                             <div class="mb-3">
                                 <label class="form-label">{{ __('Resume') }}</label>
-                                <textarea class="form-control" name="resume_description" rows="6"
+                                <textarea class="form-control" name="description" rows="6"
                                     placeholder="Enter a description for your resume" spellcheck="false" required>
-                                {{ $profile->resume_description }} </textarea>
+                                {{ $profile->description }} </textarea>
                             </div>
 
                             <div class="mb-3">
@@ -130,116 +130,109 @@
                                     value="{{ $user->address }}">
                             </div>
 
-                            {{-- TODO: Use new entity in the database
-                            --}}
                             <fieldset class="form-fieldset">
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Education Title') }}</label>
                                     <input type="text" class="form-control" name="education_title"
-                                        placeholder="Enter your education title" value="{{ $profile->education_title }}">
+                                        placeholder="Enter your education title" value="{{ $education->title }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Education Start - End years') }}</label>
-                                    <input type="text" class="form-control" name="education_years"
-                                        placeholder="Enter your education years (eg: 2010-2012)" size="10"
-                                        value="{{ $profile->education_years }}">
+                                    <label class="form-label">{{ __('Education Start Date') }}</label>
+                                    <input type="date" class="form-control" name="education_start_date"
+                                        placeholder="Enter your education start date" value="{{ $education->start_date }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Education End Date') }}</label>
+                                    <input type="date" class="form-control" name="education_end_date"
+                                        placeholder="Enter your education end date" value="{{ $education->end_date }}">
+                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Education Institution') }}</label>
                                     <input type="text" class="form-control" name="education_institution"
                                         placeholder="Enter your education institution"
-                                        value="{{ $profile->education_institution }}">
+                                        value="{{ $education->institution }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Education Description') }}</label>
-                                    <input type="text" class="form-control" name="education_description"
-                                        placeholder="Enter your education description"
-                                        value="{{ $profile->education_description }}">
+                                    <textarea class="form-control" name="education_description" rows="6"
+                                        placeholder="Enter your education description" spellcheck="false" required>
+                                    {{ $education->description }} </textarea>
                                 </div>
                             </fieldset>
 
-                            {{-- TODO: Use new entity in the database
-                            --}}
                             <fieldset class="form-fieldset">
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Professional Experience Title') }}</label>
                                     <input type="text" class="form-control" name="professional_title"
                                         placeholder="Enter your professional experience title"
-                                        value="{{ $profile->professional_title }}">
+                                        value="{{ $userCompany->professional_title }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Professional Experience Start - End years') }}</label>
-                                    <input type="text" class="form-control" name="professional_years"
-                                        placeholder="Enter your professional experience years (eg: 2010-2012)" size="10"
-                                        value="{{ $profile->professional_years }}">
+                                    <label class="form-label">{{ __('Professional Experience Start Date') }}</label>
+                                    <input type="text" class="form-control" name="start_date"
+                                        placeholder="Enter your professional experience start date"
+                                        value="{{ $userCompany->start_date }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Professional Experience End Date') }}</label>
+                                    <input type="text" class="form-control" name="end_date"
+                                        placeholder="Enter your professional experience end date"
+                                        value="{{ $userCompany->end_date }}">
+                                </div>
+
+                                {{-- TODO: search by company name where fk_company_type = 1
                                 --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Professional Experience Company') }}</label>
                                     <input type="text" class="form-control" name="professional_company"
                                         placeholder="Enter your professional experience company"
-                                        value="{{ $profile->professional_company }}">
+                                        value="{{ $userCompany->professional_company }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Professional Experience Description') }}</label>
                                     <input type="text" class="form-control" name="professional_description"
                                         placeholder="Enter your professional experience description"
-                                        value="{{ $profile->professional_description }}">
-                                </div>
-                            </fieldset>
-
-                            {{-- TODO: Use new entity in the database
-                            --}}
-                            <fieldset class="form-fieldset">
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Volunteering Title') }}</label>
-                                    <input type="text" class="form-control" name="volunteering_title"
-                                        placeholder="Enter your volunteering title"
-                                        value="{{ $profile->volunteering_title }}">
+                                        value="{{ $userCompany->professional_description }}">
                                 </div>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Volunteering Start - End years') }}</label>
-                                    <input type="text" class="form-control" name="volunteering_years"
-                                        placeholder="Enter your volunteering years (eg: 2010-2012)" size="10"
-                                        value="{{ $profile->volunteering_years }}">
-                                </div>
+                                    <label for="company_type" class="form-label">{{ __('Company type') }}</label>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Volunteering Institution') }}</label>
-                                    <input type="text" class="form-control" name="volunteering_institution"
-                                        placeholder="Enter your volunteering institution"
-                                        value="{{ $profile->volunteering_institution }}">
-                                </div>
+                                    <label for="fk_type_1" class="form-label form-in-line">{{ __('Business') }}</label>
+                                    <input id="fk_type_1" value="1" type="radio"
+                                        class="form-margin @error('fk_type') is-invalid @enderror" autocomplete="fk_type"
+                                        name="fk_type" autofocus>
 
-                                {{-- TODO: Use new entity in the database
-                                --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Volunteering Description') }}</label>
-                                    <input type="text" class="form-control" name="volunteering_description"
-                                        placeholder="Enter your volunteering description"
-                                        value="{{ $profile->volunteering_description }}">
+
+                                    <label for="fk_type_2" class="form-label form-in-line">{{ __('Charity') }}</label>
+                                    <input id="fk_type_2" value="2" type="radio"
+                                        class="form-margin @error('fk_type') is-invalid @enderror" autocomplete="fk_type"
+                                        name="fk_type" autofocus>
+
+                                    <style>
+                                        .form-in-line {
+                                            display: inline-block;
+                                            margin-left: 10%;
+                                        }
+
+                                        .form-margin {
+                                            margin-right: 2.5rem;
+                                        }
+
+                                    </style>
+
+                                    @error('business_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </fieldset>
 
