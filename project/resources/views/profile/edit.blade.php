@@ -222,8 +222,7 @@
                                                                         <textarea class="form-control"
                                                                             name="education_description"
                                                                             placeholder="Enter your education description"
-                                                                            spellcheck="false"
-                                                                            required>{{ $education->description }}</textarea>
+                                                                            spellcheck="false">{{ $education->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -301,7 +300,7 @@
                                                         <label class="form-label">{{ __('Education Description') }}</label>
                                                         <textarea class="form-control" name="education_description"
                                                             placeholder="Enter your education description"
-                                                            spellcheck="false" required></textarea>
+                                                            spellcheck="false"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -408,8 +407,7 @@
                                                                         <textarea class="form-control"
                                                                             name="professional_experience_description"
                                                                             placeholder="Enter your professional experience description"
-                                                                            spellcheck="false"
-                                                                            required>{{ $userCompany->description }}</textarea>
+                                                                            spellcheck="false">{{ $userCompany->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -499,7 +497,7 @@
                                                         <textarea class="form-control"
                                                             name="professional_experience_description"
                                                             placeholder="Enter your professional experience description"
-                                                            spellcheck="false" required></textarea>
+                                                            spellcheck="false"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -550,8 +548,7 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteeting Title') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="charity_id"
+                                                                        <input type="hidden" name="charity_id"
                                                                             value="{{ $charity->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="charity_title"
@@ -562,8 +559,7 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Start Date') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="charity_id"
+                                                                        <input type="hidden" name="charity_id"
                                                                             value="{{ $charity->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="charity_start_date"
@@ -574,8 +570,7 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering End Date') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="charity_id"
+                                                                        <input type="hidden" name="charity_id"
                                                                             value="{{ $charity->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="charity_end_date"
@@ -586,8 +581,7 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Company') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="charity_id"
+                                                                        <input type="hidden" name="charity_id"
                                                                             value="{{ $charity->id }}">
                                                                         {{-- TODO: use search
                                                                         select --}}
@@ -600,14 +594,12 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Description') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="charity_id"
+                                                                        <input type="hidden" name="charity_id"
                                                                             value="{{ $charity->id }}">
                                                                         <textarea class="form-control"
                                                                             name="charity_description"
                                                                             placeholder="Enter your volunteering description"
-                                                                            spellcheck="false"
-                                                                            required>{{ $charity->description }}</textarea>
+                                                                            spellcheck="false">{{ $charity->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -658,46 +650,39 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Volunteering Title') }}</label>
-                                                        <input type="text" class="form-control"
-                                                            name="charity_title"
+                                                        <label class="form-label">{{ __('Volunteering Title') }}</label>
+                                                        <input type="text" class="form-control" name="charity_title"
                                                             placeholder="Enter your volunteering title">
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label
                                                             class="form-label">{{ __('Volunteering Start Date') }}</label>
-                                                        <input type="date" class="form-control"
-                                                            name="charity_start_date"
+                                                        <input type="date" class="form-control" name="charity_start_date"
                                                             placeholder="Enter your volunteering start date">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Volunteering End Date') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering End Date') }}</label>
                                                         <input type="date" class="form-control"
-                                                            name="charity_experience_end_date"
+                                                            name="charity_end_date"
                                                             placeholder="Enter your volunteering end date">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Volunteering Company') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering Company') }}</label>
                                                         {{-- TODO: use search
                                                         select --}}
-                                                        <input type="text" class="form-control"
-                                                            name="charity_company"
+                                                        <input type="text" class="form-control" name="charity_company"
                                                             placeholder="Enter your volunteering company">
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label
                                                             class="form-label">{{ __('Volunteering Description') }}</label>
-                                                        <textarea class="form-control"
-                                                            name="charity_description"
+                                                        <textarea class="form-control" name="charity_description"
                                                             placeholder="Enter your volunteering description"
-                                                            spellcheck="false" required></textarea>
+                                                            spellcheck="false"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -865,12 +850,11 @@
                             </fieldset>
 
                             {{-- Save --}}
-                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                            <button type="submit" class="btn btn-success">{{ __('Save Changes') }}</button>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

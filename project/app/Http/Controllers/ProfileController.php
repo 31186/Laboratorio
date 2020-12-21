@@ -60,7 +60,7 @@ class ProfileController extends Controller
         //     ['id', $usersCompanies],
         //     ['company_type_id', 1],
         // ])->get();
-            
+
         // $charities = Company::where([
         //     ['id', $usersCompanies],
         //     ['company_type_id', 2],
@@ -119,23 +119,44 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:255'],
             'job_title' => ['required', 'string', 'max:255'],
+            'job_description' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'website' => ['string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'degree' => ['required', 'string', 'max:255'],
+            "address" => ['required', 'string', 'max:255'],
+            // Education
+            'education_title' => ['string', 'max:255'],
+            'education_description' => ['string', 'max:255'],
+            'education_institution' => ['string', 'max:255'],
+            'education_start_date' => ['date', 'max:255'],
+            'education_end_date' => ['date', 'max:255'],
+            // Professional Experience
+            'professional_experience_title' => ['string', 'max:255'],
+            'professional_experience_description' => ['string', 'max:255'],
+            'professional_experience_company' => ['string', 'max:255'],
+            'professional_experience_start_date' => ['date', 'max:255'],
+            'professional_experience_end_date' => ['date', 'max:255'],
+            // Charity
+            'charity_title' => ['string', 'max:255'],
+            'charity_description' => ['string', 'max:255'],
+            'charity_company' => ['string', 'max:255'],
+            'charity_start_date' => ['date', 'max:255'],
+            'charity_end_date' => ['date', 'max:255'],
+            // Certificate
+            'certificate_name' => ['string', 'max:255'],
+            'certificate_file' => ['string', 'max:255'],
+            'certification_date' => ['date', 'max:255'],
+
+            // TODO: include this in view
             'picture' => ['string', 'max:255'],
             'cover_image' => ['string', 'max:255'],
             'sn_twitter' => ['string', 'max:255'],
             'sn_facebook' => ['string', 'max:255'],
             'sn_instagram' => ['string', 'max:255'],
             'sn_linkedin' => ['string', 'max:255'],
-            'job_description' => ['required', 'string', 'max:255'],
-            'website' => ['string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'degree' => ['required', 'string', 'max:255'],
-            'education_title' => ['string', 'max:255'],
-            'education_description' => ['string', 'max:255'],
-            'education_institution' => ['string', 'max:255'],
-            'education_start_date' => ['date', 'max:255'],
-            'education_end_date' => ['date', 'max:255'],
+
         ]);
 
         Educations::create([
@@ -144,6 +165,13 @@ class ProfileController extends Controller
             'description' => $request->education_description,
             'start_date' => $request->education_start_date,
             'end_date' => $request->education_end_date,
+            'profile_id' => $profile->id
+        ]);
+
+        Certificates::create([
+            'name' => $request->certificate_name,
+            'file' => $request->certificate_file,
+            'certification_date' => $request->certification_date,
             'profile_id' => $profile->id
         ]);
 
@@ -156,6 +184,7 @@ class ProfileController extends Controller
             'user' => User::findOrFail($id),
             'visitedUser' => User::findOrFail($id),
             'educations' => Educations::where('profile_id', $id)->get(),
+            'certificates' => Certificates::where('profile_id', $id)->get(),
         ]);
     }
 

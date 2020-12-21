@@ -18,6 +18,7 @@ class Certificates extends Model
         'name',
         'file',
         'certification_date',
+        'profile_id'
     ];
 
     /**
