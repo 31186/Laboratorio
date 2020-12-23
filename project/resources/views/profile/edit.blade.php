@@ -11,12 +11,13 @@
                         <h3 class="card-title">{{ __('Edit your profile') }}</h3>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('profile.update', $profile->id) }}">
-                            @csrf
-                            {{ method_field('PATCH') }}
-                            {{-- User information --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('User information') }}</h4>
+                        {{-- User information --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('User information') }}</h4>
+
+                            <form method="POST" name="updateUser" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
 
                                 {{-- First Name --}}
                                 <div class="mb-3">
@@ -45,26 +46,70 @@
                                     <input type="email" class="form-control" name="email" placeholder="Enter your email"
                                         required value="{{ $user->email }}">
                                 </div>
-                            </fieldset>
 
-                            {{-- Cover image --}}
-                            {{-- TODO --}}
+                                <button type="submit" name="updateUser"
+                                    class="btn btn-success">{{ __('Save Changes') }}</button>
+                            </form>
+                        </fieldset>
 
-                            {{-- Description --}}
-                            {{-- <div class="mb-3">
-                                <label class="form-label">{{ __('Description') }} *</label>
-                                <textarea class="form-control" name="description" placeholder="Enter a description"
-                                    spellcheck="false" required>{{ $profile->description }}</textarea>
-                            </div> --}}
+                        {{-- About --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('About') }}</h4>
 
-                            {{-- Social Networks --}}
-                            {{-- TODO --}}
+                            <form method="POST" name="updateProfile" enctype="multipart/form-data" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
 
-                            {{-- Picture --}}
-                            {{-- TODO --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Profile Picture & Cover image') }}</label>
 
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('About') }}</h4>
+                                {{-- Picture --}}
+                                    <div class="d-inline-block card p-3 col-2 col-lg-3 ml-2 photoInput mb-3" style="margin: auto;">
+                                        @php
+                                        $photo = asset('/uploads/user_placeholder.png');
+                                        @endphp
+
+                                        <img src="{{ asset('/uploads/' . $profile->picture) }}"
+                                            alt="{{ __('Insert a profile image') }}" class="rounded mb-3" id="uplImg">
+                                        <input type="file" name="picture" id="photoInput" class="inputfile"
+                                            value="{{ $profile->picture }}" accept="image/x-png,image/jpeg" />
+                                        <label for="photoInput" class="btn btn-secondary">
+                                            <i class="fe fe-upload mr-3"></i>
+                                            <span>{{ __('Update picture') }}</span>
+                                        </label>
+
+                                        {{-- <button type="button" class="btn btn-danger bg-red-light" id="removePhoto"
+                                            onclick="clearInput()"
+                                            {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
+                                            {{ __('Remove picture') }}
+                                        </button> --}}
+                                    </div>
+
+                                    {{-- Cover Image --}}
+                                    <div class="d-inline-block card p-2 col-2 col-lg-7 ml-5 coverInput mb-3" style="margin: auto;">
+                                        @php
+                                        $photo = asset('/uploads/cover_placeholder.jpg');
+                                        @endphp
+
+                                        <img src="{{ asset('/uploads/' . $profile->cover_image) }}"
+                                            alt="{{ __('Insert a cover image') }}" class="rounded mb-3" id="uplCover">
+                                        <input type="file" name="cover_image" id="coverInput" class="inputfile"
+                                            value="{{ $profile->cover_image }}" accept="image/x-png,image/jpeg" />
+                                        <label for="coverInput" class="btn btn-secondary">
+                                            <i class="fe fe-upload mr-3"></i>
+                                            <span>{{ __('Update cover image') }}</span>
+                                        </label>
+
+                                        {{-- <button type="button" class="btn btn-danger bg-red-light" id="removePhoto"
+                                            onclick="clearInput()"
+                                            {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
+                                            {{ __('Remove picture') }}
+                                        </button> --}}
+                                    </div>
+                                </div>
+
+                                {{-- Social Networks --}}
+                                {{-- TODO --}}
 
                                 {{-- Job title --}}
                                 <div class="mb-3">
@@ -116,50 +161,50 @@
                                     <input type="text" class="form-control" name="degree" placeholder="Enter your degree"
                                         value="{{ $profile->degree }}">
                                 </div>
-                            </fieldset>
 
-                            {{-- Resume --}}
-                            {{-- TODO: Add this fields to the E-R model, migrations,
-                            controllers, models and seeders --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('Resume Summary') }}</h4>
+                                {{-- Bio --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Resume') }}</label>
+                                    <label class="form-label">{{ __('Bio') }}</label>
                                     <textarea class="form-control" name="description"
-                                        placeholder="Enter a description for your resume" spellcheck="false"
+                                        placeholder="Enter a bio for your profile" spellcheck="false"
                                         required>{{ $profile->description }}</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Address') }}</label>
-                                    <input type="text" class="form-control" name="address" placeholder="Enter your address"
-                                        value="{{ $user->address }}">
-                                </div>
-                            </fieldset>
+                                <button type="submit" name="updateProfile"
+                                    class="btn btn-success">{{ __('Save Changes') }}</button>
+                            </form>
+                        </fieldset>
 
-                            {{-- Education --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('Resume Education') }}</h4>
-                                @foreach ($educations as $education)
-                                    <div class="col-12 mb-3">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">
-                                                    {{ $education->title }}
-                                                </h3>
-                                                <div class="card-actions">
-                                                    <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
-                                                        data-toggle="modal"
-                                                        data-target="#editEducationModal-{{ $education->id }}">
-                                                        {{ __('Edit education') }}
-                                                    </a>
+                        {{-- Resume Education --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Resume Education') }}</h4>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="editEducationModal-{{ $education->id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="editEducation"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
+                            @foreach ($educations as $education)
+                                <div class="col-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                {{ $education->title }}
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
+                                                    data-toggle="modal"
+                                                    data-target="#editEducationModal-{{ $education->id }}">
+                                                    {{ __('Edit education') }}
+                                                </a>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="editEducationModal-{{ $education->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="editEducation"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                            <form method="POST" name="updateEducation"
+                                                                action="{{ route('profile.update', $profile->id) }}">
+                                                                @csrf
+                                                                {{ method_field('PATCH') }}
+
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="editEducation">
                                                                         {{ __('Edit education') }}
@@ -184,8 +229,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Education Start Date') }}</label>
-                                                                        <input type="hidden" name="education_id"
-                                                                            value="{{ $education->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="education_start_date"
                                                                             placeholder="Enter your education start date"
@@ -195,8 +238,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Education End Date') }}</label>
-                                                                        <input type="hidden" name="education_id"
-                                                                            value="{{ $education->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="education_end_date"
                                                                             placeholder="Enter your education end date"
@@ -206,8 +247,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Education Institution') }}</label>
-                                                                        <input type="hidden" name="education_id"
-                                                                            value="{{ $education->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="education_institution"
                                                                             placeholder="Enter your education institution"
@@ -217,8 +256,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Education Description') }}</label>
-                                                                        <input type="hidden" name="education_id"
-                                                                            value="{{ $education->id }}">
                                                                         <textarea class="form-control"
                                                                             name="education_description"
                                                                             placeholder="Enter your education description"
@@ -228,40 +265,47 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                                    <button type="submit" name="updateEducation"
+                                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <dl class="row">
-                                                    <dt class="col-5">{{ __('Start Date') }}:</dt>
-                                                    <dd class="col-7">{{ $education->start_date }}</dd>
-                                                    <dt class="col-5">{{ __('End Date') }}:</dt>
-                                                    <dd class="col-7">{{ $education->end_date }}</dd>
-                                                    <dt class="col-5">{{ __('Institution') }}:</dt>
-                                                    <dd class="col-7">{{ $education->institution }}</dd>
-                                                    <dt class="col-5">{{ __('Description') }}:</dt>
-                                                    <dd class="col-7">{{ $education->description }}</dd>
-                                                </dl>
-                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <dl class="row">
+                                                <dt class="col-5">{{ __('Start Date') }}:</dt>
+                                                <dd class="col-7">{{ $education->start_date }}</dd>
+                                                <dt class="col-5">{{ __('End Date') }}:</dt>
+                                                <dd class="col-7">{{ $education->end_date }}</dd>
+                                                <dt class="col-5">{{ __('Institution') }}:</dt>
+                                                <dd class="col-7">{{ $education->institution }}</dd>
+                                                <dt class="col-5">{{ __('Description') }}:</dt>
+                                                <dd class="col-7">{{ $education->description }}</dd>
+                                            </dl>
                                         </div>
                                     </div>
-                                @endforeach
-                                <div class="card-actions">
-                                    <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
-                                        data-target="#createEducationModal">
-                                        {{ __('New education') }}
-                                    </a>
+                                </div>
+                            @endforeach
+                            <div class="card-actions">
+                                <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
+                                    data-target="#createEducationModal">
+                                    {{ __('New education') }}
+                                </a>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="createEducationModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="createEducation" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
+                                <!-- Modal -->
+                                <div class="modal fade" id="createEducationModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="createEducation" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+
+                                            <form method="POST" name="createEducation"
+                                                action="{{ route('profile.update', $profile->id) }}">
+                                                @csrf
+                                                {{ method_field('PATCH') }}
+
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="createEducation">
                                                         {{ __('New education') }}
@@ -306,38 +350,45 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                    <button type="button"
-                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                    <button type="submit" name="createEducation"
+                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            {{-- Professional Experience --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('Resume Professional Experience') }}</h4>
-                                @foreach ($usersCompanies as $userCompany)
-                                    <div class="col-12 mb-3">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">
-                                                    {{ $userCompany->title }}
-                                                </h3>
-                                                <div class="card-actions">
-                                                    <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
-                                                        data-toggle="modal"
-                                                        data-target="#editCompanyModal-{{ $userCompany->id }}">
-                                                        {{ __('Edit professional experience') }}
-                                                    </a>
+                        {{-- Resume Professional Experience --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Resume Professional Experience') }}</h4>
+                            @foreach ($usersCompanies as $userCompany)
+                                <div class="col-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                {{ $userCompany->title }}
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
+                                                    data-toggle="modal"
+                                                    data-target="#editCompanyModal-{{ $userCompany->id }}">
+                                                    {{ __('Edit professional experience') }}
+                                                </a>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="editCompanyModal-{{ $userCompany->id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="editCompany"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="editCompanyModal-{{ $userCompany->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="editCompany"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                            <form method="POST" name="updateProfessionalExperience"
+                                                                action="{{ route('profile.update', $profile->id) }}">
+                                                                @csrf
+                                                                {{ method_field('PATCH') }}
+
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="editCompany">
                                                                         {{ __('Edit professional experience') }}
@@ -363,9 +414,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Professional Experience Start Date') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="professional_experience_id"
-                                                                            value="{{ $userCompany->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="professional_experience_start_date"
                                                                             placeholder="Enter your professional experience start date"
@@ -375,9 +423,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Professional Experience End Date') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="professional_experience_id"
-                                                                            value="{{ $userCompany->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="professional_experience_end_date"
                                                                             placeholder="Enter your professional experience end date"
@@ -387,23 +432,19 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Professional Experience Company') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="professional_experience_id"
-                                                                            value="{{ $userCompany->id }}">
-                                                                        {{-- TODO: use search
-                                                                        select --}}
-                                                                        <input type="text" class="form-control"
-                                                                            name="professional_experience_company"
-                                                                            placeholder="Enter your professional experience company"
-                                                                            value="{{ $userCompany->company_id->name }}">
+                                                                        <select class="form-control"
+                                                                            name="professional_experience_company_id">
+                                                                            @foreach ($companies as $company)
+                                                                                <option value="{{ $company->id }}">
+                                                                                    {{ $company->company_name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Professional Experience Description') }}</label>
-                                                                        <input type="hidden"
-                                                                            name="professional_experience_id"
-                                                                            value="{{ $userCompany->id }}">
                                                                         <textarea class="form-control"
                                                                             name="professional_experience_description"
                                                                             placeholder="Enter your professional experience description"
@@ -413,40 +454,48 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                                    <button type="submit"
+                                                                        name="updateProfessionalExperience"
+                                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <dl class="row">
-                                                    <dt class="col-5">{{ __('Start Date') }}:</dt>
-                                                    <dd class="col-7">{{ $userCompany->start_date }}</dd>
-                                                    <dt class="col-5">{{ __('End Date') }}:</dt>
-                                                    <dd class="col-7">{{ $userCompany->end_date }}</dd>
-                                                    <dt class="col-5">{{ __('Company') }}:</dt>
-                                                    <dd class="col-7">{{ $userCompany->company_id->name }}</dd>
-                                                    <dt class="col-5">{{ __('Description') }}:</dt>
-                                                    <dd class="col-7">{{ $userCompany->description }}</dd>
-                                                </dl>
-                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <dl class="row">
+                                                <dt class="col-5">{{ __('Start Date') }}:</dt>
+                                                <dd class="col-7">{{ $userCompany->start_date }}</dd>
+                                                <dt class="col-5">{{ __('End Date') }}:</dt>
+                                                <dd class="col-7">{{ $userCompany->end_date }}</dd>
+                                                <dt class="col-5">{{ __('Company') }}:</dt>
+                                                <dd class="col-7">{{ $userCompany->company_name }}</dd>
+                                                <dt class="col-5">{{ __('Description') }}:</dt>
+                                                <dd class="col-7">{{ $userCompany->description }}</dd>
+                                            </dl>
                                         </div>
                                     </div>
-                                @endforeach
-                                <div class="card-actions">
-                                    <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
-                                        data-target="#newCompanyModal">
-                                        {{ __('New professional experience') }}
-                                    </a>
+                                </div>
+                            @endforeach
+                            <div class="card-actions">
+                                <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
+                                    data-target="#newCompanyModal">
+                                    {{ __('New professional experience') }}
+                                </a>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="newCompanyModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="createCompany" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
+                                <!-- Modal -->
+                                <div class="modal fade" id="newCompanyModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="createCompany" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+
+                                            <form method="POST" name="createProfessionalExperience"
+                                                action="{{ route('profile.update', $profile->id) }}">
+                                                @csrf
+                                                {{ method_field('PATCH') }}
+
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="createCompany">
                                                         {{ __('New professional experience') }}
@@ -482,13 +531,17 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label
+                                                        <label for="companies"
                                                             class="form-label">{{ __('Professional Experience Company') }}</label>
-                                                        {{-- TODO: use search
-                                                        select --}}
-                                                        <input type="text" class="form-control"
-                                                            name="professional_experience_company"
-                                                            placeholder="Enter your professional experience company">
+
+                                                        <select class="form-control"
+                                                            name="professional_experience_company_id">
+                                                            @foreach ($companies as $company)
+                                                                <option value="{{ $company->id }}">
+                                                                    {{ $company->company_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
                                                     <div class="mb-3">
@@ -503,40 +556,47 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                    <button type="button"
-                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                    <button type="submit" name="createProfessionalExperience"
+                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            {{-- Volunteering --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('Resume Volunteering') }}</h4>
-                                @foreach ($charities as $charity)
-                                    <div class="col-12 mb-3">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">
-                                                    {{ $charity->title }}
-                                                </h3>
-                                                <div class="card-actions">
-                                                    <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
-                                                        data-toggle="modal"
-                                                        data-target="#editCharityModal-{{ $charity->id }}">
-                                                        {{ __('Edit volunteering') }}
-                                                    </a>
+                        {{-- Resume Volunteering --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Resume Volunteering') }}</h4>
+                            @foreach ($usersCharities as $usersCharity)
+                                <div class="col-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                {{ $usersCharity->title }}
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
+                                                    data-toggle="modal"
+                                                    data-target="#editusersCharityModal-{{ $usersCharity->id }}">
+                                                    {{ __('Edit volunteering') }}
+                                                </a>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="editCharityModal-{{ $charity->id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="editCharity"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="editusersCharityModal-{{ $usersCharity->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="editusersCharity"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                            <form method="POST" name="updateVolunteering"
+                                                                action="{{ route('profile.update', $profile->id) }}">
+                                                                @csrf
+                                                                {{ method_field('PATCH') }}
+
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="editCharity">
+                                                                    <h5 class="modal-title" id="editusersCharity">
                                                                         {{ __('Edit volunteering') }}
                                                                     </h5>
                                                                     <button type="button" class="close" data-dismiss="modal"
@@ -549,98 +609,100 @@
                                                                         <label
                                                                             class="form-label">{{ __('Volunteeting Title') }}</label>
                                                                         <input type="hidden" name="charity_id"
-                                                                            value="{{ $charity->id }}">
+                                                                            value="{{ $usersCharity->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="charity_title"
                                                                             placeholder="Enter your volunteering title"
-                                                                            value="{{ $charity->title }}">
+                                                                            value="{{ $usersCharity->title }}">
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Start Date') }}</label>
-                                                                        <input type="hidden" name="charity_id"
-                                                                            value="{{ $charity->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="charity_start_date"
                                                                             placeholder="Enter your volunteering start date"
-                                                                            value="{{ $charity->start_date }}">
+                                                                            value="{{ $usersCharity->start_date }}">
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering End Date') }}</label>
-                                                                        <input type="hidden" name="charity_id"
-                                                                            value="{{ $charity->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="charity_end_date"
                                                                             placeholder="Enter your volunteering end date"
-                                                                            value="{{ $charity->end_date }}">
+                                                                            value="{{ $usersCharity->end_date }}">
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Company') }}</label>
-                                                                        <input type="hidden" name="charity_id"
-                                                                            value="{{ $charity->id }}">
-                                                                        {{-- TODO: use search
-                                                                        select --}}
-                                                                        <input type="text" class="form-control"
-                                                                            name="charity_company"
-                                                                            placeholder="Enter your volunteering company"
-                                                                            value="{{ $charity->company_id->name }}">
+
+                                                                        <select class="form-control"
+                                                                            name="charity_company_id">
+                                                                            @foreach ($charities as $charity)
+                                                                                <option value="{{ $charity->id }}">
+                                                                                    {{ $charity->company_name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Description') }}</label>
-                                                                        <input type="hidden" name="charity_id"
-                                                                            value="{{ $charity->id }}">
                                                                         <textarea class="form-control"
                                                                             name="charity_description"
                                                                             placeholder="Enter your volunteering description"
-                                                                            spellcheck="false">{{ $charity->description }}</textarea>
+                                                                            spellcheck="false">{{ $usersCharity->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                                    <button type="submit" name="updateVolunteering"
+                                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <dl class="row">
-                                                    <dt class="col-5">{{ __('Start Date') }}:</dt>
-                                                    <dd class="col-7">{{ $charity->start_date }}</dd>
-                                                    <dt class="col-5">{{ __('End Date') }}:</dt>
-                                                    <dd class="col-7">{{ $charity->end_date }}</dd>
-                                                    <dt class="col-5">{{ __('Company') }}:</dt>
-                                                    <dd class="col-7">{{ $charity->company_id->name }}</dd>
-                                                    <dt class="col-5">{{ __('Description') }}:</dt>
-                                                    <dd class="col-7">{{ $charity->description }}</dd>
-                                                </dl>
-                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <dl class="row">
+                                                <dt class="col-5">{{ __('Start Date') }}:</dt>
+                                                <dd class="col-7">{{ $usersCharity->start_date }}</dd>
+                                                <dt class="col-5">{{ __('End Date') }}:</dt>
+                                                <dd class="col-7">{{ $usersCharity->end_date }}</dd>
+                                                <dt class="col-5">{{ __('Company') }}:</dt>
+                                                <dd class="col-7">{{ $usersCharity->company_name }}</dd>
+                                                <dt class="col-5">{{ __('Description') }}:</dt>
+                                                <dd class="col-7">{{ $usersCharity->description }}</dd>
+                                            </dl>
                                         </div>
                                     </div>
-                                @endforeach
-                                <div class="card-actions">
-                                    <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
-                                        data-target="#newCharityModal">
-                                        {{ __('New volunteering') }}
-                                    </a>
+                                </div>
+                            @endforeach
+                            <div class="card-actions">
+                                <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
+                                    data-target="#newusersCharityModal">
+                                    {{ __('New volunteering') }}
+                                </a>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="newCharityModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="createCharity" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
+                                <!-- Modal -->
+                                <div class="modal fade" id="newusersCharityModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="createusersCharity" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+
+                                            <form method="POST" name="createVolunteering"
+                                                action="{{ route('profile.update', $profile->id) }}">
+                                                @csrf
+                                                {{ method_field('PATCH') }}
+
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="createCharity">
+                                                    <h5 class="modal-title" id="createVolunteering">
                                                         {{ __('New volunteering') }}
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -664,22 +726,26 @@
 
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Volunteering End Date') }}</label>
-                                                        <input type="date" class="form-control"
-                                                            name="charity_end_date"
+                                                        <input type="date" class="form-control" name="charity_end_date"
                                                             placeholder="Enter your volunteering end date">
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Volunteering Company') }}</label>
-                                                        {{-- TODO: use search
-                                                        select --}}
-                                                        <input type="text" class="form-control" name="charity_company"
-                                                            placeholder="Enter your volunteering company">
+
+                                                        <select class="form-control" name="charity_company_id">
+                                                            @foreach ($charities as $charity)
+                                                                <option value="{{ $charity->id }}">
+                                                                    {{ $charity->company_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label
                                                             class="form-label">{{ __('Volunteering Description') }}</label>
+
                                                         <textarea class="form-control" name="charity_description"
                                                             placeholder="Enter your volunteering description"
                                                             spellcheck="false"></textarea>
@@ -688,42 +754,49 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                    <button type="button"
-                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                    <button type="submit" name="createVolunteering"
+                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            {{-- Skills --}}
-                            {{-- TODO - add all the skills in the database
-                            --}}
+                        {{-- Skills --}}
+                        {{-- TODO - add all the skills in the database
+                        --}}
 
-                            {{-- Certificates --}}
-                            <fieldset class="form-fieldset">
-                                <h4>{{ __('Certificates') }}</h4>
-                                @foreach ($certificates as $certificate)
-                                    <div class="col-12 mb-3">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">
-                                                    {{ $certificate->name }}
-                                                </h3>
-                                                <div class="card-actions">
-                                                    <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
-                                                        data-toggle="modal"
-                                                        data-target="#editCertificateModal-{{ $certificate->id }}">
-                                                        {{ __('Edit certificate') }}
-                                                    </a>
+                        {{-- Certificates --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Certificates') }}</h4>
+                            @foreach ($certificates as $certificate)
+                                <div class="col-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                {{ $certificate->name }}
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
+                                                    data-toggle="modal"
+                                                    data-target="#editCertificateModal-{{ $certificate->id }}">
+                                                    {{ __('Edit certificate') }}
+                                                </a>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="editCertificateModal-{{ $certificate->id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="editCertificate"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="editCertificateModal-{{ $certificate->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="editCertificate"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                            <form method="POST" name="updateCertificate"
+                                                                action="{{ route('profile.update', $profile->id) }}">
+                                                                @csrf
+                                                                {{ method_field('PATCH') }}
+
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="editCertificate">
                                                                         {{ __('Edit certificate') }}
@@ -747,8 +820,6 @@
                                                                     <div class="mb-3">
                                                                         <label
                                                                             class="form-label">{{ __('Certification date') }}</label>
-                                                                        <input type="hidden" name="certificate_id"
-                                                                            value="{{ $certificate->id }}">
                                                                         <input type="date" class="form-control"
                                                                             name="certification_date"
                                                                             placeholder="Enter your certification date"
@@ -757,59 +828,64 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">{{ __('File') }}
                                                                         </label>
-                                                                        <input type="hidden" name="certificate_id"
-                                                                            value="{{ $certificate->id }}">
                                                                         <input type="file" class="form-control"
-                                                                            name="certificate_file">
+                                                                            name="certificate_file"
+                                                                            value="{{ $certificate->file }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                                    <button type="submit" name="updateCertificate"
+                                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <dl class="row">
-                                                    <dt class="col-5">{{ __('Certification date') }}:</dt>
-                                                    <dd class="col-7">
-                                                        {{ $certificate->certification_date }}
-                                                    </dd>
-                                                    <dt class="col-5">{{ __('File') }}:</dt>
-                                                    {{ $certificate->file }}
-                                                    <dd class="col-7"><a href="" target="_blank"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                                                <path
-                                                                    d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" />
-                                                                <circle cx="6" cy="14" r="3" />
-                                                                <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" />
-                                                            </svg></a></dd>
-                                                </dl>
-                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <dl class="row">
+                                                <dt class="col-5">{{ __('Certification date') }}:</dt>
+                                                <dd class="col-7">
+                                                    {{ $certificate->certification_date }}
+                                                </dd>
+                                                <dt class="col-5">{{ __('File') }}:</dt>
+                                                <dd class="col-7"><a href="{{ $certificate->file }}" target="_blank"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                                            stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                            <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" />
+                                                            <circle cx="6" cy="14" r="3" />
+                                                            <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" />
+                                                        </svg></a></dd>
+                                            </dl>
                                         </div>
                                     </div>
-                                @endforeach
-                                <div class="card-actions">
-                                    <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
-                                        data-target="#createCertificateModal">
-                                        {{ __('New certificate') }}
-                                    </a>
+                                </div>
+                            @endforeach
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="createCertificateModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="createCertificate" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
+                            <div class="card-actions">
+                                <a class="btn btn-primary btn-pill w-10 mr-3 float-right" data-toggle="modal"
+                                    data-target="#createCertificateModal">
+                                    {{ __('New certificate') }}
+                                </a>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="createCertificateModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="createCertificate" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+
+                                            <form method="POST" name="createCertificate"
+                                                action="{{ route('profile.update', $profile->id) }}">
+                                                @csrf
+                                                {{ method_field('PATCH') }}
+
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="createCertificate">
                                                         {{ __('New certificate') }}
@@ -831,30 +907,96 @@
                                                         <input type="date" class="form-control" name="certification_date"
                                                             placeholder="Enter your certification date">
                                                     </div>
+
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('File') }}
+                                                        {{-- <label
+                                                            class="form-label">{{ __('File') }}
                                                         </label>
                                                         <input type="file" class="form-control" name="certificate_file">
+                                                        --}}
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">{{ __('Discard') }}</button>
-                                                    <button type="button"
-                                                        class="btn btn-primary">{{ __('Save Changes') }}</button>
+                                                    <button type="submit" name="createCertificate"
+                                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-
-                            {{-- Save --}}
-                            <button type="submit" class="btn btn-success">{{ __('Save Changes') }}</button>
-                        </form>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        readURL = input => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#uplImg').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+                setTimeout(() => {
+                    $('#removePhoto').css('display', 'block');
+                }, 1000);
+            } else {
+                $('#uplImg').attr('src', '{{ asset("uploads/user_placeholder.png") }}');
+                $("#photoInput").next('label').find('span').html('Carregar Foto');
+                $('#removePhoto').css('display', 'none');
+            }
+        }
+        $("#photoInput").change(function() {
+            readURL(this);
+        });
+
+        function clearInput() {
+            $("#photoInput").val('');
+            readURL(this);
+        }
+
+        $('.photoInput img').click(function() {
+            $('#photoInput').trigger('click');
+        });
+
+    </script>
+
+<script>
+    readURL = input => {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#uplCover').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            setTimeout(() => {
+                $('#removePhoto').css('display', 'block');
+            }, 1000);
+        } else {
+            $('#uplCover').attr('src', '{{ asset("uploads/cover_placeholder.jpg") }}');
+            $("#coverInput").next('label').find('span').html('Carregar Foto');
+            $('#removePhoto').css('display', 'none');
+        }
+    }
+    $("#coverInput").change(function() {
+        readURL(this);
+    });
+
+    function clearInput() {
+        $("#coverInput").val('');
+        readURL(this);
+    }
+
+    $('.coverInput img').click(function() {
+        $('#coverInput').trigger('click');
+    });
+
+</script>
 @endsection

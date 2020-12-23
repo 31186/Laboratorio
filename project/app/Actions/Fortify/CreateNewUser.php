@@ -22,8 +22,8 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         $profile = Profile::create([
-            'picture' => '../../img/profile/profile-img.jpg',
-            'cover_image' => '../../img/profile/hero-bg.jpg',
+            'picture' => 'user_placeholder.png',
+            'cover_image' => 'cover_placeholder.jpg',
         ]);
 
         Validator::make($input, [

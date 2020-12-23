@@ -16,12 +16,23 @@
 
 @section('hero')
     <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <section id="hero" class="d-flex flex-column justify-content-center align-items-center" style="background: url({{ asset('/uploads/' . $profile->cover_image) }}) no-repeat;">
         <div class="hero-container" data-aos="fade-in">
             <h1>{{ $visitedUser->first_name . ' ' . $visitedUser->last_name }}</h1>
             <p>{{ __("I'm") }} <span class="typed" data-typed-items="{{ $profile->job_title }}"></span></p>
         </div>
     </section>
+
+    {{-- TODO: dynamic --}}
+    <style>
+        #hero {
+            width: 100%;
+            height: 100vh;
+            background: url("{{ asset('/uploads/' . $profile->picture) }}") top center;
+            background-size: cover;
+        }
+
+    </style>
     <!-- End Hero -->
 @endsection
 
@@ -37,7 +48,7 @@
 
                 <div class="row">
                     <div class="col-lg-4" data-aos="fade-right">
-                        <img src="{{ asset($profile->picture) }}" class="img-fluid" alt="">
+                        <img src="{{ asset('/uploads/' . $profile->picture) }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
                         <h3>{{ $profile->job_title }}</h3>
@@ -81,8 +92,8 @@
         <!-- End About Section -->
 
         <!-- ======= Social Section ======= -->
-        <section id="social">
-            <div class="container">
+        {{-- <section id="social">
+            <div class="container"> --}}
                 {{-- TODO: use bootstrap or tabler social icons
                 --}}
                 {{-- <div class="social-links mt-3 text-center">
@@ -90,10 +101,10 @@
                     <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
                     <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
                     <a href="https://www.linkedin.com/in/{{ $visitedUser->sn_linkedin }}/" class="linkedin"><i
-                            class="bx bxl-linkedin"></i></a> --}}
+                            class="bx bxl-linkedin"></i></a>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- ======= End Social Section ======= -->
 
         <!-- ======= Skills Section ======= -->
@@ -207,8 +218,8 @@
                                     <h4>{{ $education->title }}</h4>
                                     <h5>{{ __('Since') . ': ' . $education->start_date . ' || ' . __('Until') . ': ' . $education->end_date }}
                                     </h5>
-                                    <p><em>{{ $profile->institution }}</em></p>
-                                    <p>{{ $profile->description }}</p>
+                                    <p><em>{{ $education->institution }}</em></p>
+                                    <p>{{ $education->description }}</p>
                                 </div>
                             @endforeach
                         @endif
@@ -224,21 +235,21 @@
                                     <h4>{{ $userCompany->title }}</h4>
                                     <h5>{{ __('Since') . ': ' . $userCompany->start_date . ' || ' . __('Until') . ': ' . $userCompany->end_date }}
                                     </h5>
-                                    <p><em>{{ $userCompany->company_id->name }}</em></p>
+                                    <p><em>{{ $userCompany->company_name }}</em></p>
                                     <p>{{ $userCompany->description }}</p>
                                 @endforeach
                             </div>
                         @endif
 
                         {{-- Volunteering --}}
-                        @if (count($charities) != 0)
+                        @if (count($usersCharities) != 0)
                             <h3 class="resume-title">{{ __('Volunteering') }}</h3>
-                            @foreach ($charities as $charity)
+                            @foreach ($usersCharities as $charity)
                                 <div class="resume-item">
                                     <h4>{{ $charity->title }}</h4>
                                     <h5>{{ __('Since') . ': ' . $charity->start_date . ' || ' . __('Until') . ': ' . $charity->end_date }}
                                     </h5>
-                                    <p><em>{{ $charity->company_id->name }}</em></p>
+                                    <p><em>{{ $charity->company_name }}</em></p>
                                     <p>{{ $charity->description }}</p>
                                 </div>
                             @endforeach
@@ -252,7 +263,7 @@
 
         <!-- ======= Certificates Section ======= -->
         @if (count($certificates) != 0)
-            <section id="certificates" class="certificates">
+            <section id="certificates" class="certificates section-bg">
                 <div class="container">
 
                     <div class="section-title">
@@ -294,7 +305,7 @@
     </div>
 @endsection
 
-@section('footer')
+@section('scripts')
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
     <!-- Vendor JS Files -->

@@ -28,7 +28,7 @@
 
             <div class="profile">
                 {{-- <img src="../../img/profile/profile-img.jpg" alt="" class="img-fluid rounded-circle"> --}}
-                <img src="{{ $profile->picture }}" alt="" class="img-fluid rounded-circle">
+                <img src="{{ '/uploads/' . $profile->picture }}" alt="" class="img-fluid rounded-circle">
                 <h1 class="text-light">{{ $user->first_name . ' ' . $user->last_name }}</h1>
             </div>
 

@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,8 +19,10 @@
     @yield('fonts')
 
     <!-- Styles -->
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    {{--
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/tabler.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/upload.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 
@@ -34,10 +36,8 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
+    @yield('scripts')
 </body>
-
-<footer>
-    @yield('footer')
-</footer>
 
 </html>
