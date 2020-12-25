@@ -9,6 +9,8 @@ use App\Models\Profile;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\Educations;
+use App\Models\ProfilesSkills;
+use App\Models\Skills;
 use App\Models\UsersCompanies;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -71,14 +73,22 @@ class ProfileController extends Controller
             ->where('users_companies.user_id', '=', $id)
             ->get();
 
+        $userSkills = DB::table('profiles_skills')
+            ->join('skills', 'profiles_skills.skill_id', '=', 'skills.id')
+            ->select('skills.*')
+            ->where('profiles_skills.profile_id', '=', $id)
+            ->get();
+
         return view('profile.show', [
-            'profile' => Profile::findOrFail($id),
+            'profile' => Profile::findOrFail(Auth::id()),
+            'visitedProfile' => Profile::findOrFail($id),
             'user' => User::findOrFail(Auth::id()),
             'visitedUser' => User::findOrFail($id),
             'educations' => Educations::where('profile_id', $id)->get(),
             'certificates' => Certificates::where('profile_id', $id)->get(),
             'usersCompanies' => $usersCompanies,
             'usersCharities' => $usersCharities,
+            'skills' => $userSkills,
         ]);
     }
 
@@ -109,6 +119,12 @@ class ProfileController extends Controller
             ->where('users_companies.user_id', '=', $id)
             ->get();
 
+        $currentSkills = DB::table('profiles_skills')
+            ->join('skills', 'profiles_skills.skill_id', '=', 'skills.id')
+            ->select('skills.*')
+            ->where('profiles_skills.profile_id', '=', $id)
+            ->get();
+
         return view('profile.edit', [
             'profile' => Profile::findOrFail($id),
             'user' => User::findOrFail(Auth::id()),
@@ -119,6 +135,8 @@ class ProfileController extends Controller
             'usersCharities' => $usersCharities,
             'companies' => Company::where('company_type_id', '1')->get(),
             'charities' => Company::where('company_type_id', '2')->get(),
+            'currentSkills' => $currentSkills,
+            'skills' => DB::table('skills')->distinct()->get(),
         ]);
     }
 
@@ -149,8 +167,10 @@ class ProfileController extends Controller
             $this->createVolunteering($request, $id);
         else if ($request->has('updateCertificate'))
             $this->updateCertificate($request, $id);
-        else if ($request->has('createCertificate'))
-            $this->createCertificate($request, $id);
+        else if ($request->has('updateSkills'))
+            $this->updateSkills($request, $id);
+        else if ($request->has('createSkill'))
+            $this->createSkill($request, $id);
 
         return $this->show($id);
     }
@@ -158,7 +178,8 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request{
+     * Skills::}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -212,7 +233,7 @@ class ProfileController extends Controller
             }
             $filename = $id . '_' . $this->formatName($id);
             $extension = $request->picture->getClientOriginalExtension();
-            $filenameToStorePicture = 'profile/' . $filename . '_' . time() . '.' . $extension;
+            $filenameToStorePicture = 'profile/img/' . $filename . '_' . time() . '.' . $extension;
             // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('picture'));
             // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
@@ -232,7 +253,7 @@ class ProfileController extends Controller
             }
             $filename = $id . '_' . $this->formatName($id);
             $extension = $request->cover_image->getClientOriginalExtension();
-            $filenameToStoreCover = 'profile/' . $filename . '_' . time() . '.' . $extension;
+            $filenameToStoreCover = 'profile/img/' . $filename . '_' . time() . '.' . $extension;
             // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('cover_image'));
             // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
@@ -460,31 +481,39 @@ class ProfileController extends Controller
      */
     public function updateCertificate(Request $request, $id)
     {
-        // TODO: fix
+        // TODO: fix, edit not working
 
         $request->validate([
             'certificate_id' => ['required', 'integer'],
             'certificate_name' => ['required', 'string', 'max:255'],
-            'certificate_file' => ['string', 'max:255'],
+            'certificate_file' => ['file', 'max:8192'],
             'certification_date' => ['required', 'date', 'max:255'],
         ]);
 
-        // TODO: file upload
-
         $certificates = Certificates::findOrFail($request->certificate_id);
+
+        if (isset($request->certificate_file)) {
+            $filename = $id . '_' . $this->formatName($id);
+            $extension = $request->certificate_file->getClientOriginalExtension();
+            $filenameToStoreCertificate = 'profile/certificates/' . $filename . '_' . time() . '.' . $extension;
+            // TODO: fix pdf
+            $request->file('certificate_file')->storeAs(
+                'uploads',
+                $filenameToStoreCertificate
+            );
+            $request->certificate_file = $filenameToStoreCertificate;
+        }
 
         if (isset($request->certificate_file))
             $certificates->update([
-                'name' => $request->$request->certificate_name,
-                'file' => $request->$request->certificate_file,
-                'certification_date' => $request->$request->certification_date,
-                'profile_id' => $request->$id,
+                'name' => $request->certificate_name,
+                'file' => $request->certificate_file,
+                'certification_date' => $request->certification_date,
             ]);
         else
             $certificates->update([
                 'name' => $request->$request->certificate_name,
                 'certification_date' => $request->$request->certification_date,
-                'profile_id' => $request->$id,
             ]);
     }
 
@@ -499,11 +528,21 @@ class ProfileController extends Controller
     {
         $request->validate([
             'certificate_name' => ['required', 'string', 'max:255'],
-            'certificate_file' => ['required', 'string', 'max:255'],
+            'certificate_file' => ['required', 'file', 'max:255'],
             'certification_date' => ['required', 'date', 'max:255'],
         ]);
 
-        // TODO: file upload
+        if (isset($request->certificate_file)) {
+            $filename = $id . '_' . $this->formatName($id);
+            $extension = $request->certificate_file->getClientOriginalExtension();
+            $filenameToStoreCertificate = 'profile/certificates/' . $filename . '_' . time() . '.' . $extension;
+            // TODO: fix pdf
+            $request->file('certificate_file')->storeAs(
+                'uploads',
+                $filenameToStoreCertificate
+            );
+            $request->certificate_file = $filenameToStoreCertificate;
+        }
 
         Certificates::create([
             'name' => $request->certificate_name,
@@ -511,6 +550,85 @@ class ProfileController extends Controller
             'certification_date' => $request->certification_date,
             'profile_id' => $id
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createSkill(Request $request, $id)
+    {
+        $request->validate([
+            'skill_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $skills = DB::table('skills')
+            ->select('skills.name')
+            ->where('name', '=', $request->skill_name);
+
+        if ($skills->doesntExist()) {
+            Skills::create([
+                'name' => $request->skill_name,
+            ]);
+        }
+
+        $skill = Skills::where('name', '=', $request->skill_name)->get('id');
+
+        ProfilesSkills::create([
+            'profile_id' => $id,
+            'skill_id' => $skill[0]->id,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSkills(Request $request, $id)
+    {
+        $request->validate([
+            'skills_array' => ['array', 'max:255'],
+        ]);
+
+        DB::table('profiles_skills')
+            ->where('profile_id', '=', $id)
+            ->delete();
+
+        if (isset($request->skills_array)) {
+            foreach ($request->skills_array as $skill_name) {
+                $skills = DB::table('skills')
+                    ->select('skills.name')
+                    ->where('name', '=', $skill_name);
+
+                if ($skills->doesntExist()) {
+                    Skills::create([
+                        'name' => $skill_name,
+                    ]);
+                }
+
+                $skill = Skills::where('name', '=', $skill_name)->get('id');
+
+                $skill = $skill[0]->id;
+
+                $existingProfileSkill = DB::table('profiles_skills')
+                    ->select('profiles_skills.id')
+                    ->where('skill_id', '=', $skill)
+                    ->where('profile_id', '=', $id);
+
+                if ($existingProfileSkill->doesntExist()) {
+                    ProfilesSkills::create([
+                        'profile_id' => $id,
+                        'skill_id' => $skill,
+                    ]);
+                }
+            }
+        }
     }
 
     /**

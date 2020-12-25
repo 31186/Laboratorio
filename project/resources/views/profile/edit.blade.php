@@ -56,15 +56,17 @@
                         <fieldset class="form-fieldset">
                             <h4>{{ __('About') }}</h4>
 
-                            <form method="POST" name="updateProfile" enctype="multipart/form-data" action="{{ route('profile.update', $profile->id) }}">
+                            <form method="POST" name="updateProfile" enctype="multipart/form-data"
+                                action="{{ route('profile.update', $profile->id) }}">
                                 @csrf
                                 {{ method_field('PATCH') }}
 
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Profile Picture & Cover image') }}</label>
 
-                                {{-- Picture --}}
-                                    <div class="d-inline-block card p-3 col-2 col-lg-3 ml-2 photoInput mb-3" style="margin: auto;">
+                                    {{-- Picture --}}
+                                    <div class="d-inline-block card p-3 col-2 col-lg-3 ml-2 photoInput mb-3"
+                                        style="margin: auto;">
                                         @php
                                         $photo = asset('/uploads/user_placeholder.png');
                                         @endphp
@@ -78,15 +80,16 @@
                                             <span>{{ __('Update picture') }}</span>
                                         </label>
 
-                                        {{-- <button type="button" class="btn btn-danger bg-red-light" id="removePhoto"
-                                            onclick="clearInput()"
+                                        {{-- <button type="button"
+                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
                                             {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
                                             {{ __('Remove picture') }}
                                         </button> --}}
                                     </div>
 
                                     {{-- Cover Image --}}
-                                    <div class="d-inline-block card p-2 col-2 col-lg-7 ml-5 coverInput mb-3" style="margin: auto;">
+                                    <div class="d-inline-block card p-2 col-2 col-lg-7 ml-5 coverInput mb-3"
+                                        style="margin: auto;">
                                         @php
                                         $photo = asset('/uploads/cover_placeholder.jpg');
                                         @endphp
@@ -100,8 +103,8 @@
                                             <span>{{ __('Update cover image') }}</span>
                                         </label>
 
-                                        {{-- <button type="button" class="btn btn-danger bg-red-light" id="removePhoto"
-                                            onclick="clearInput()"
+                                        {{-- <button type="button"
+                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
                                             {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
                                             {{ __('Remove picture') }}
                                         </button> --}}
@@ -765,8 +768,55 @@
                         </fieldset>
 
                         {{-- Skills --}}
-                        {{-- TODO - add all the skills in the database
-                        --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Skills') }}</h4>
+                            <form method="POST" name="updateSkills" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Skills') }}</label>
+                                    <select name="skills_array[]" multiple id="select-tags-advanced" class="form-select selectized"
+                                        multiple="multiple" tabindex="-1" style="display: none;">
+                                        @foreach ($skills as $skill)
+                                            @foreach ($currentSkills as $currentSkill)
+                                                @if (strcmp($skill->name, $currentSkill->name) === 0)
+                                                    <option value="{{ $skill->name }}" selected="selected">
+                                                        {{ $skill->name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                            <option value="{{ $skill->name }}">
+                                                {{ $skill->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="selectize-dropdown multi form-select plugin-remove_button"
+                                        style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
+                                        <div class="selectize-dropdown-content">
+                                            @foreach ($skills as $skill)
+                                                <div class="option" data-selectable="" data-value="{{ $skill->name }}">
+                                                    {{ $skill->name }}
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="updateSkills"
+                                        class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
+
+                            <form method="POST" name="createSkill" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
+                                        <input type="text" class="form-control" name="skill_name"
+                                            placeholder="Enter your currentSkill name">
+                                        <button type="submit" name="createSkill"
+                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
+                        </fieldset>
 
                         {{-- Certificates --}}
                         <fieldset class="form-fieldset">
@@ -828,9 +878,9 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">{{ __('File') }}
                                                                         </label>
-                                                                        <input type="file" class="form-control"
-                                                                            name="certificate_file"
-                                                                            value="{{ $certificate->file }}">
+                                                                        <input type="file" name="certificate_file"
+                                                                            class="form-control" accept=".pdf"
+                                                                            value="{{ $certificate->file }}" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -881,7 +931,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
 
-                                            <form method="POST" name="createCertificate"
+                                            <form method="POST" name="createCertificate" enctype="multipart/form-data"
                                                 action="{{ route('profile.update', $profile->id) }}">
                                                 @csrf
                                                 {{ method_field('PATCH') }}
@@ -909,11 +959,10 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        {{-- <label
-                                                            class="form-label">{{ __('File') }}
+                                                        <label class="form-label">{{ __('File') }}
                                                         </label>
-                                                        <input type="file" class="form-control" name="certificate_file">
-                                                        --}}
+                                                        <input type="file" name="certificate_file" class="form-control"
+                                                            accept=".pdf" />
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -936,6 +985,7 @@
 @endsection
 
 @section('scripts')
+{{-- TODO: fix preview the one imported in the right place or remove preview and keep the file name only --}}
     <script>
         readURL = input => {
             if (input.files && input.files[0]) {
@@ -948,7 +998,8 @@
                     $('#removePhoto').css('display', 'block');
                 }, 1000);
             } else {
-                $('#uplImg').attr('src', '{{ asset("uploads/user_placeholder.png") }}');
+                $('#uplImg').attr('src', '{{ asset('
+                    uploads / user_placeholder.png ') }}');
                 $("#photoInput").next('label').find('span').html('Carregar Foto');
                 $('#removePhoto').css('display', 'none');
             }
@@ -968,35 +1019,46 @@
 
     </script>
 
-<script>
-    readURL = input => {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                $('#uplCover').attr('src', e.target.result);
+    <script>
+        readURL = input => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#uplCover').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+                setTimeout(() => {
+                    $('#removePhoto').css('display', 'block');
+                }, 1000);
+            } else {
+                $('#uplCover').attr('src', '{{ asset('
+                    uploads / cover_placeholder.jpg ') }}');
+                $("#coverInput").next('label').find('span').html('Carregar Foto');
+                $('#removePhoto').css('display', 'none');
             }
-            reader.readAsDataURL(input.files[0]);
-            setTimeout(() => {
-                $('#removePhoto').css('display', 'block');
-            }, 1000);
-        } else {
-            $('#uplCover').attr('src', '{{ asset("uploads/cover_placeholder.jpg") }}');
-            $("#coverInput").next('label').find('span').html('Carregar Foto');
-            $('#removePhoto').css('display', 'none');
         }
-    }
-    $("#coverInput").change(function() {
-        readURL(this);
-    });
+        $("#coverInput").change(function() {
+            readURL(this);
+        });
 
-    function clearInput() {
-        $("#coverInput").val('');
-        readURL(this);
-    }
+        function clearInput() {
+            $("#coverInput").val('');
+            readURL(this);
+        }
 
-    $('.coverInput img').click(function() {
-        $('#coverInput').trigger('click');
-    });
+        $('.coverInput img').click(function() {
+            $('#coverInput').trigger('click');
+        });
 
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#select-tags-advanced').selectize({
+                maxItems: 15,
+                plugins: ['remove_button'],
+            });
+        });
+
+    </script>
 @endsection

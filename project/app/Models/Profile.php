@@ -67,6 +67,6 @@ class Profile extends Model
 
     public function skills()
     {
-        return $this->belongsToMany('App\Models\Skills');
+        return $this->hasMany('App\Models\Skills')->using('App\Models\ProfilesSkills');
     }
 }

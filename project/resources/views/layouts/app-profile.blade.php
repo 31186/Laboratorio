@@ -22,6 +22,8 @@
     {{--
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/tabler.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/tabler-vendors.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/selectize/dist/css/selectize.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/upload.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
@@ -37,6 +39,8 @@
         </main>
     </div>
     <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('libs/selectize/dist/js/standalone/selectize.min.js') }}"></script>
+    <script src="{{ asset('js/tabler.min.js') }}"></script>
     @yield('scripts')
 </body>
 
