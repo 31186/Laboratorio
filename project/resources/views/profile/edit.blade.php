@@ -775,8 +775,9 @@
                                 {{ method_field('PATCH') }}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Skills') }}</label>
-                                    <select name="skills_array[]" multiple id="select-tags-advanced" class="form-select selectized"
-                                        multiple="multiple" tabindex="-1" style="display: none;">
+                                    <select name="skills_array[]" multiple id="select-tags-advanced"
+                                        class="form-select selectized" multiple="multiple" tabindex="-1"
+                                        style="display: none;">
                                         @foreach ($skills as $skill)
                                             @foreach ($currentSkills as $currentSkill)
                                                 @if (strcmp($skill->name, $currentSkill->name) === 0)
@@ -985,7 +986,8 @@
 @endsection
 
 @section('scripts')
-{{-- TODO: fix preview the one imported in the right place or remove preview and keep the file name only --}}
+    {{-- TODO: fix preview the one imported in the right place or remove preview and keep the
+    file name only --}}
     <script>
         readURL = input => {
             if (input.files && input.files[0]) {
