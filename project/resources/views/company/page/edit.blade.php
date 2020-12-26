@@ -21,14 +21,14 @@
                                 {{-- Name --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Name') }} *</label>
-                                    <input type="text" class="form-control" name="company_name"
+                                    <input type="text" class="form-control" name="company_name" maxlength="255"
                                         placeholder="Enter your company name" required value="{{ $company->company_name }}">
                                 </div>
 
                                 {{-- Email --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Email') }} *</label>
-                                    <input type="email" class="form-control" name="email"
+                                    <input type="email" class="form-control" name="email" maxlength="255"
                                         placeholder="Enter your company email" required value="{{ $company->email }}">
                                 </div>
 
@@ -107,8 +107,8 @@
 
                                 {{-- Description --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Bio') }}</label>
-                                    <textarea class="form-control" name="description"
+                                    <label class="form-label">{{ __('Description') }} *</label>
+                                    <textarea class="form-control" name="description" maxlength="255"
                                         placeholder="Enter a description for your page" spellcheck="false"
                                         required>{{ $page->description }}</textarea>
                                 </div>
@@ -116,30 +116,30 @@
                                 {{-- Website --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Website') }}</label>
-                                    <input type="text" class="form-control" name="website"
+                                    <input type="text" class="form-control" name="website" maxlength="255"
                                         placeholder="Enter your website URL" value="{{ $page->website }}">
                                 </div>
 
                                 {{-- Phone --}}
                                 <div class="mb-3">
-                                    <label class="form-label">Phone number</label>
+                                    <label class="form-label">{{ __('Phone number') }} *</label>
                                     <input type="text" name="phone" class="form-control" data-mask="000000000"
                                         data-mask-visible="true" placeholder="000000000" value="{{ $page->phone }}"
-                                        autocomplete="off">
+                                        autocomplete="off" required>
                                 </div>
 
                                 {{-- Country --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Country') }}</label>
+                                    <label class="form-label">{{ __('Country') }} *</label>
                                     <input type="text" class="form-control" name="country" placeholder="Enter your country"
-                                        value="{{ $page->country }}" required>
+                                        maxlength="255" value="{{ $page->country }}" required>
                                 </div>
 
                                 {{-- City --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('City') }} *</label>
                                     <input type="text" class="form-control" name="city" placeholder="Enter your city"
-                                        value="{{ $page->city }}" required>
+                                        maxlength="255" value="{{ $page->city }}" required>
                                 </div>
 
                                 <button type="submit" name="updatePage"
@@ -157,13 +157,13 @@
 
                                 {{-- Twitter --}}
                                 <div class="mb-3">
-                                    <label class="form-label fa-twitter">{{ __('Twitter') }}
+                                    <label class="form-label">{{ __('Twitter') }}
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 https://twitter.com/
                                             </span>
                                             <input type="text" class="form-control" name="sn_twitter" placeholder="twitter"
-                                                value="{{ $page->sn_twitter }}" autocomplete="off">
+                                                maxlength="255" value="{{ $page->sn_twitter }}" autocomplete="off">
                                         </div>
                                 </div>
 
@@ -174,7 +174,7 @@
                                             <span class="input-group-text">
                                                 https://www.facebook.com/
                                             </span>
-                                            <input type="text" class="form-control" name="sn_facebook"
+                                            <input type="text" class="form-control" name="sn_facebook" maxlength="255"
                                                 placeholder="facebook" value="{{ $page->sn_facebook }}" autocomplete="off">
                                         </div>
                                 </div>
@@ -186,7 +186,7 @@
                                             <span class="input-group-text">
                                                 https://www.instagram.com/
                                             </span>
-                                            <input type="text" class="form-control" name="sn_instagram"
+                                            <input type="text" class="form-control" name="sn_instagram" maxlength="255"
                                                 placeholder="instagram" value="{{ $page->sn_instagram }}"
                                                 autocomplete="off">
                                         </div>
@@ -199,7 +199,7 @@
                                             <span class="input-group-text">
                                                 https://www.linkedin.com/in/
                                             </span>
-                                            <input type="text" class="form-control" name="sn_linkedin"
+                                            <input type="text" class="form-control" name="sn_linkedin" maxlength="255"
                                                 placeholder="linkedin" value="{{ $page->sn_linkedin }}" autocomplete="off">
                                         </div>
                                 </div>
@@ -207,58 +207,59 @@
                                 <button type="submit" name="updateSocial"
                                     class="btn btn-success">{{ __('Save Changes') }}</button>
                             </form>
+                        </fieldset>
 
-                            {{-- Skills --}}
-                            {{-- <fieldset class="form-fieldset">
-                                <h4>{{ __('Skills') }}</h4>
-                                <form method="POST" name="updateSkills" action="{{ route('page.update', $page->id) }}">
-                                    @csrf
-                                    {{ method_field('PATCH') }}
-                                    <div class="mb-3">
-                                        <label class="form-label">{{ __('Skills') }}</label>
-                                        <select name="skills_array[]" multiple id="select-tags-advanced"
-                                            class="form-select selectized" multiple="multiple" tabindex="-1"
-                                            style="display: none;">
-                                            @foreach ($skills as $skill)
-                                                @foreach ($currentSkills as $currentSkill)
-                                                    @if (strcmp($skill->name, $currentSkill->name) === 0)
-                                                        <option value="{{ $skill->name }}" selected="selected">
-                                                            {{ $skill->name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                                <option value="{{ $skill->name }}">
-                                                    {{ $skill->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="selectize-dropdown multi form-select plugin-remove_button"
-                                            style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
-                                            <div class="selectize-dropdown-content">
-                                                @foreach ($skills as $skill)
-                                                    <div class="option" data-selectable="" data-value="{{ $skill->name }}">
+                        {{-- Skills --}}
+                        {{-- <fieldset class="form-fieldset">
+                            <h4>{{ __('Skills') }}</h4>
+                            <form method="POST" name="updateSkills" action="{{ route('page.update', $page->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Skills') }}</label>
+                                    <select name="skills_array[]" multiple id="select-tags-advanced"
+                                        class="form-select selectized" multiple="multiple" tabindex="-1"
+                                        style="display: none;">
+                                        @foreach ($skills as $skill)
+                                            @foreach ($currentSkills as $currentSkill)
+                                                @if (strcmp($skill->name, $currentSkill->name) === 0)
+                                                    <option value="{{ $skill->name }}" selected="selected">
                                                         {{ $skill->name }}
-                                                    </div>
-                                                @endforeach
-                                            </div>
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                            <option value="{{ $skill->name }}">
+                                                {{ $skill->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="selectize-dropdown multi form-select plugin-remove_button"
+                                        style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
+                                        <div class="selectize-dropdown-content">
+                                            @foreach ($skills as $skill)
+                                                <div class="option" data-selectable="" data-value="{{ $skill->name }}">
+                                                    {{ $skill->name }}
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <button type="submit" name="updateSkills"
-                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
                                     </div>
-                                </form>
+                                    <button type="submit" name="updateSkills"
+                                        class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
 
-                                <form method="POST" name="createSkill" action="{{ route('page.update', $page->id) }}">
-                                    @csrf
-                                    {{ method_field('PATCH') }}
-                                    <div class="mb-3">
-                                        <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
-                                            <input type="text" class="form-control" name="skill_name"
-                                                placeholder="Enter your currentSkill name">
-                                            <button type="submit" name="createSkill"
-                                                class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
-                                    </div>
-                                </form>
-                            </fieldset> --}}
+                            <form method="POST" name="createSkill" action="{{ route('page.update', $page->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
+                                        <input type="text" class="form-control" name="skill_name"
+                                            placeholder="Enter your currentSkill name">
+                                        <button type="submit" name="createSkill"
+                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
+                        </fieldset> --}}
                     </div>
                 </div>
             </div>

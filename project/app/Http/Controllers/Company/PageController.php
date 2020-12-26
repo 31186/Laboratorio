@@ -134,7 +134,7 @@ class PageController extends Controller
             'business_type' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
-            'website' => ['string', 'max:255'],
+            'website' => ['nullable', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'logo' => ['file', 'max:8192'],
@@ -213,31 +213,14 @@ class PageController extends Controller
 
     public function updateSocial(Request $request, $id)
     {
-        // TODO: implement not required social
         $page = Page::findOrFail($id);
 
         $request->validate([
-            'sn_twitter' => ['required', 'string', 'max:255'],
-            'sn_facebook' => ['required', 'string', 'max:255'],
-            'sn_instagram' => ['required', 'string', 'max:255'],
-            'sn_linkedin' => ['required', 'string', 'max:255'],
+            'sn_twitter' => ['nullable', 'string', 'max:255'],
+            'sn_facebook' => ['nullable', 'string', 'max:255'],
+            'sn_instagram' => ['nullable', 'string', 'max:255'],
+            'sn_linkedin' => ['nullable', 'string', 'max:255'],
         ]);
-
-        if (!isset($request->sn_twitter))
-            Page::where('id', '=', $id)
-                ->update('sn_twitter', null);
-
-        if (!isset($request->sn_facebook))
-            Page::where('id', '=', $id)
-                ->update('sn_facebook', null);
-
-        if (!isset($request->sn_instagram))
-            Page::where('id', '=', $id)
-                ->update('sn_instagram', null);
-
-        if (!isset($request->sn_linkedin))
-            Page::where('id', '=', $id)
-                ->update('sn_linkedin', null);
 
         $page->update($request->all());
     }

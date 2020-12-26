@@ -105,19 +105,32 @@
         <!-- End About Section -->
 
         <!-- ======= Social Section ======= -->
-        {{-- <section id="social">
-            <div class="container"> --}}
-                {{-- TODO: use bootstrap or tabler social icons
-                --}}
-                {{-- <div class="social-links mt-3 text-center">
-                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/{{ $visitedUser->sn_linkedin }}/" class="linkedin"><i
-                            class="bx bxl-linkedin"></i></a>
+        @if ($profile->sn_twitter !== null || $profile->sn_facebook !== null || $profile->sn_instagram !== null || $profile->sn_linkedin !== null)
+            <section id="social" class="social section-bg">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>{{ __('Social') }}</h2>
+                    </div>
+
+                    @if ($profile->sn_twitter !== null)
+                        <a href="{{ 'https://twitter.com/' . $profile->sn_twitter }}" target="_blank"
+                            class="fa fa-twitter"></a>
+                    @endif
+                    @if ($profile->sn_facebook !== null)
+                        <a href="{{ 'https://www.facebook.com/' . $profile->sn_facebook }}" target="_blank"
+                            class="fa fa-facebook"></a>
+                    @endif
+                    @if ($profile->sn_instagram !== null)
+                        <a href="{{ 'https://www.instagram.com/' . $profile->sn_instagram }}" target="_blank"
+                            class="fa fa-instagram"></a>
+                    @endif
+                    @if ($profile->sn_linkedin !== null)
+                        <a href="{{ 'https://www.linkedin.com/in/' . $profile->sn_linkedin }}" target="_blank"
+                            class="fa fa-linkedin"></a>
+                    @endif
                 </div>
-            </div>
-        </section> --}}
+            </section>
+        @endif
         <!-- ======= End Social Section ======= -->
 
         <!-- ======= Skills Section ======= -->

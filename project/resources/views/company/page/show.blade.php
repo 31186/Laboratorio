@@ -94,20 +94,32 @@
         <!-- End About Section -->
 
         <!-- ======= Social Section ======= -->
-        {{-- <section id="social">
-            <div class="container"> --}}
-                {{-- TODO: use bootstrap or tabler social icons
-                --}}
-                {{-- <div class="social-links mt-3 text-center">
-                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/{{ $visitedUser->sn_linkedin }}/" class="linkedin"><i
-                            class="bx bxl-linkedin"></i></a>
+        @if ($page->sn_twitter !== null || $page->sn_facebook !== null || $page->sn_instagram !== null || $page->sn_linkedin !== null)
+            <section id="social" class="social section-bg">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>{{ __('Social') }}</h2>
+                    </div>
+
+                    @if ($page->sn_twitter !== null)
+                        <a href="{{ 'https://twitter.com/' . $page->sn_twitter }}" target="_blank"
+                            class="fa fa-twitter"></a>
+                    @endif
+                    @if ($page->sn_facebook !== null)
+                        <a href="{{ 'https://www.facebook.com/' . $page->sn_facebook }}" target="_blank"
+                            class="fa fa-facebook"></a>
+                    @endif
+                    @if ($page->sn_instagram !== null)
+                        <a href="{{ 'https://www.instagram.com/' . $page->sn_instagram }}" target="_blank"
+                            class="fa fa-instagram"></a>
+                    @endif
+                    @if ($page->sn_linkedin !== null)
+                        <a href="{{ 'https://www.linkedin.com/in/' . $page->sn_linkedin }}" target="_blank"
+                            class="fa fa-linkedin"></a>
+                    @endif
                 </div>
-            </div>
-        </section> --}}
-        <!-- ======= End Social Section ======= -->
+            </section>
+        @endif
 
         <!-- ======= Skills Section ======= -->
         {{-- @if (count($skills) !== 0)

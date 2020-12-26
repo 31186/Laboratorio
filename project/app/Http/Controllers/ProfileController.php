@@ -171,6 +171,8 @@ class ProfileController extends Controller
             $this->updateSkills($request, $id);
         else if ($request->has('createSkill'))
             $this->createSkill($request, $id);
+        else if ($request->has('updateSocial'))
+            $this->updateSocial($request, $id);
 
         return $this->show($id);
     }
@@ -629,6 +631,20 @@ class ProfileController extends Controller
                 }
             }
         }
+    }
+
+    public function updateSocial(Request $request, $id)
+    {
+        $profile = Profile::findOrFail($id);
+
+        $request->validate([
+            'sn_twitter' => ['nullable', 'string', 'max:255'],
+            'sn_facebook' => ['nullable', 'string', 'max:255'],
+            'sn_instagram' => ['nullable', 'string', 'max:255'],
+            'sn_linkedin' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $profile->update($request->all());
     }
 
     /**

@@ -110,9 +110,6 @@
                                     </div>
                                 </div>
 
-                                {{-- Social Networks --}}
-                                {{-- TODO --}}
-
                                 {{-- Job title --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job Title') }} *</label>
@@ -173,6 +170,70 @@
                                 </div>
 
                                 <button type="submit" name="updateProfile"
+                                    class="btn btn-success">{{ __('Save Changes') }}</button>
+                            </form>
+                        </fieldset>
+
+                        {{-- Social Networks --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Social Networks') }}</h4>
+
+                            <form method="POST" name="updateSocial" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+
+                                {{-- Twitter --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Twitter') }}
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                https://twitter.com/
+                                            </span>
+                                            <input type="text" class="form-control" name="sn_twitter" placeholder="twitter"
+                                                maxlength="255" value="{{ $profile->sn_twitter }}" autocomplete="off">
+                                        </div>
+                                </div>
+
+                                {{-- Facebook --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Facebook') }}
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                https://www.facebook.com/
+                                            </span>
+                                            <input type="text" class="form-control" name="sn_facebook" maxlength="255"
+                                                placeholder="facebook" value="{{ $profile->sn_facebook }}"
+                                                autocomplete="off">
+                                        </div>
+                                </div>
+
+                                {{-- Instagram --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Instagram') }}
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                https://www.instagram.com/
+                                            </span>
+                                            <input type="text" class="form-control" name="sn_instagram" maxlength="255"
+                                                placeholder="instagram" value="{{ $profile->sn_instagram }}"
+                                                autocomplete="off">
+                                        </div>
+                                </div>
+
+                                {{-- LinkedIn --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('LinkedIn') }}
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                https://www.linkedin.com/in/
+                                            </span>
+                                            <input type="text" class="form-control" name="sn_linkedin" maxlength="255"
+                                                placeholder="linkedin" value="{{ $profile->sn_linkedin }}"
+                                                autocomplete="off">
+                                        </div>
+                                </div>
+
+                                <button type="submit" name="updateSocial"
                                     class="btn btn-success">{{ __('Save Changes') }}</button>
                             </form>
                         </fieldset>
