@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Company\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::prefix('company')->group(function () {
         Route::post('logout', [Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])->name('company.logout');
         Route::get('home', [App\Http\Controllers\Company\HomeController::class, 'index'])->name('company.home');
         Route::view('profile/password', 'company.profile.password')->name('company.edit-password');
+        Route::resource('/page', PageController::class);
     });
 });
 

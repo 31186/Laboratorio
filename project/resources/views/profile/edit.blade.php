@@ -1,5 +1,4 @@
 @extends('layouts.app-profile')
-
 @include('sidebar')
 
 @section('content')
@@ -105,7 +104,7 @@
 
                                         {{-- <button type="button"
                                             class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
-                                            {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
+                                            {{ $photo !== 'cover_placeholder.jpg' ? '' : 'style=display:none;' }}>
                                             {{ __('Remove picture') }}
                                         </button> --}}
                                     </div>

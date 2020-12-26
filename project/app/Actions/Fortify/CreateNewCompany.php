@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\Company;
+use App\Models\Page;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -20,6 +21,11 @@ class CreateNewCompany implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        $page = Page::create([
+            'logo' => 'user_placeholder.png',
+            'cover_image' => 'cover_placeholder.jpg',
+        ]);
+
         Validator::make($input, [
             'company_name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -37,6 +43,7 @@ class CreateNewCompany implements CreatesNewUsers
             'company_name' => $input['company_name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'page_id' => $page->id,
         ]);
 
         $company->company_type()->associate($input['fk_type']);

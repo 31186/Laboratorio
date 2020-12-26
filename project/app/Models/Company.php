@@ -22,6 +22,7 @@ class Company extends Authenticatable implements MustVerifyEmail
         'company_name',
         'email',
         'password',
+        'page_id'
     ];
 
     /**
