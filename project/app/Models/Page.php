@@ -26,7 +26,6 @@ class Page extends Model
         'country',
         'cover_image',
         'logo',
-        'business_type',
     ];
 
     /**

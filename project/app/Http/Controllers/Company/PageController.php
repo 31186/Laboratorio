@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Page;
+use App\Models\PagesTypes;
+use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class PageController extends Controller
@@ -51,11 +54,18 @@ class PageController extends Controller
      */
     public function show($id)
     {
+        $companyTypes = DB::table('pages_types')
+            ->join('types', 'pages_types.type_id', '=', 'types.id')
+            ->select('types.*')
+            ->where('pages_types.page_id', '=', $id)
+            ->get();
+
         return view('company.page.show', [
             'page' => Page::findOrFail(Auth::id()),
             'visitedPage' => Page::findOrFail($id),
             'company' => Company::findOrFail(Auth::id()),
             'visitedCompany' => Company::findOrFail($id),
+            'types' => $companyTypes,
         ]);
     }
 
@@ -72,11 +82,19 @@ class PageController extends Controller
 
         Page::findOrFail($id);
 
+        $currentTypes = DB::table('pages_types')
+            ->join('types', 'pages_types.type_id', '=', 'types.id')
+            ->select('types.*')
+            ->where('pages_types.page_id', '=', $id)
+            ->get();
+
         return view('company.page.edit', [
             'page' => Page::findOrFail(Auth::id()),
             'visitedPage' => Page::findOrFail($id),
             'company' => Company::findOrFail(Auth::id()),
             'visitedCompany' => Company::findOrFail($id),
+            'currentTypes' => $currentTypes,
+            'types' => DB::table('types')->distinct()->get(),
         ]);
     }
 
@@ -95,6 +113,10 @@ class PageController extends Controller
             $this->updatePage($request, $id);
         else if ($request->has('updateSocial'))
             $this->updateSocial($request, $id);
+        else if ($request->has('updateBusinessTypes'))
+            $this->updateBusinessTypes($request, $id);
+        else if ($request->has('createBusinessType'))
+            $this->createBusinessType($request, $id);
 
         return $this->show($id);
     }
@@ -103,7 +125,7 @@ class PageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request{
-     * Skills::}
+     * types::}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -131,7 +153,6 @@ class PageController extends Controller
         $page = Page::findOrFail($id);
 
         $request->validate([
-            'business_type' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
             'website' => ['nullable', 'string', 'max:255'],
@@ -181,7 +202,6 @@ class PageController extends Controller
         }
 
         $page->update([
-            'business_type' => $request->business_type,
             'city' => $request->city,
             'country' => $request->country,
             'website' => $request->website,
@@ -211,6 +231,13 @@ class PageController extends Controller
         return 'success';
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateSocial(Request $request, $id)
     {
         $page = Page::findOrFail($id);
@@ -223,6 +250,85 @@ class PageController extends Controller
         ]);
 
         $page->update($request->all());
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBusinessTypes(Request $request, $id)
+    {
+        $request->validate([
+            'types_array' => ['array', 'max:255'],
+        ]);
+
+        DB::table('pages_types')
+            ->where('page_id', '=', $id)
+            ->delete();
+
+        if (isset($request->types_array)) {
+            foreach ($request->types_array as $type_name) {
+                $types = DB::table('types')
+                    ->select('types.name')
+                    ->where('name', '=', $type_name);
+
+                if ($types->doesntExist()) {
+                    Types::create([
+                        'name' => $type_name,
+                    ]);
+                }
+
+                $type = Types::where('name', '=', $type_name)->get('id');
+
+                $type = $type[0]->id;
+
+                $existingPageType = DB::table('pages_types')
+                    ->select('pages_types.id')
+                    ->where('type_id', '=', $type)
+                    ->where('page_id', '=', $id);
+
+                if ($existingPageType->doesntExist()) {
+                    PagesTypes::create([
+                        'page_id' => $id,
+                        'type_id' => $type,
+                    ]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createBusinessType(Request $request, $id)
+    {
+        $request->validate([
+            'type_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $types = DB::table('types')
+            ->select('types.name')
+            ->where('name', '=', $request->type_name);
+
+        if ($types->doesntExist()) {
+            Types::create([
+                'name' => $request->type_name,
+            ]);
+        }
+
+        $type = Types::where('name', '=', $request->type_name)->get('id');
+
+        PagesTypes::create([
+            'page_id' => $id,
+            'type_id' => $type[0]->id,
+        ]);
     }
 
     /**

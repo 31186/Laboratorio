@@ -20,9 +20,6 @@
         style="background: url({{ asset('/uploads/' . $visitedPage->cover_image) }}) no-repeat;">
         <div class="hero-container" data-aos="fade-in">
             <h1>{{ $visitedCompany->company_name }}</h1>
-            @if ($visitedPage->business_type !== null)
-                <p><span class="typed" data-typed-items="{{ $visitedPage->business_type }}"></span></p>
-            @endif
         </div>
     </section>
 @endsection
@@ -42,7 +39,6 @@
                         <img src="{{ asset('/uploads/' . $visitedPage->logo) }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                        <h3>{{ $visitedPage->business_type }}</h3>
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul>
@@ -93,9 +89,45 @@
         </section>
         <!-- End About Section -->
 
+        <!-- ======= Types Section ======= -->
+        @if (count($types) !== 0)
+            <section id="skills" class="skills section-bg">
+                <div class="container">
+
+                    <div class="section-title">
+                        @if ($company->company_type_id === 1)
+                            <h2>{{ __('Business Types') }}</h2>
+                        @else
+                            <h2>{{ __('Charity Types') }}</h2>
+                        @endif
+                    </div>
+
+                    <div class="row types-content">
+                        <div class="col-lg-12" data-aos="fade-up">
+
+                            @foreach ($types as $type)
+                                <div class="progress">
+                                    <span class="skill">{{ $type->name }}</span>
+                                    <div class="progress-bar-wrap">
+                                        <div class="progress-bar" aria-valuenow="100"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        @endif
+        <!-- End types Section -->
+
         <!-- ======= Social Section ======= -->
         @if ($page->sn_twitter !== null || $page->sn_facebook !== null || $page->sn_instagram !== null || $page->sn_linkedin !== null)
-            <section id="social" class="social section-bg">
+            @if (count($types) !== 0)
+                <section id="social" class="social">
+            @else
+                <section id="social" class="social section-bg">
+            @endif
                 <div class="container">
                     <div class="section-title">
                         <h2>{{ __('Social') }}</h2>
@@ -120,36 +152,6 @@
                 </div>
             </section>
         @endif
-
-        <!-- ======= Skills Section ======= -->
-        {{-- @if (count($skills) !== 0)
-            <section id="skills" class="skills section-bg">
-                <div class="container">
-
-                    <div class="section-title">
-                        <h2>{{ __('Skills') }}</h2>
-                    </div>
-
-                    <div class="row skills-content">
-                        <div class="col-lg-12" data-aos="fade-up">
-
-                            @foreach ($skills as $skill)
-                                <div class="progress">
-                                    <span class="skill">{{ $skill->name }}</span>
-                                    <div class="progress-bar-wrap">
-                                        <div class="progress-bar" aria-valuenow="100"></div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-        @endif --}}
-        <!-- End Skills Section -->
-
-        <!-- ======= End Certificates Section ======= -->
     </div>
 @endsection
 

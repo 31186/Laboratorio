@@ -96,15 +96,6 @@
                                     </div>
                                 </div>
 
-                                {{-- Business type --}}
-                                {{-- Make new entity to use in search
-                                --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Business Type') }} *</label>
-                                    <input type="text" class="form-control" name="business_type"
-                                        placeholder="Enter a business type" required value="{{ $page->business_type }}">
-                                </div>
-
                                 {{-- Description --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Description') }} *</label>
@@ -209,57 +200,71 @@
                             </form>
                         </fieldset>
 
-                        {{-- Skills --}}
-                        {{-- <fieldset class="form-fieldset">
-                            <h4>{{ __('Skills') }}</h4>
-                            <form method="POST" name="updateSkills" action="{{ route('page.update', $page->id) }}">
+                        {{-- Types --}}
+                        <fieldset class="form-fieldset">
+                            @if ($company->company_type_id === 1)
+                                <h4>{{ __('Business Types') }}</h4>
+                            @else
+                                <h4>{{ __('Charity Types') }}</h4>
+                            @endif
+                            <form method="POST" name="updateBusinessTypes" action="{{ route('page.update', $page->id) }}">
                                 @csrf
                                 {{ method_field('PATCH') }}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Skills') }}</label>
-                                    <select name="skills_array[]" multiple id="select-tags-advanced"
+                                    @if ($company->company_type_id === 1)
+                                        <label class="form-label">{{ __('Business Types') }}</label>
+                                    @else
+                                        <label class="form-label">{{ __('Charity Types') }}</label>
+                                    @endif
+                                    <select name="types_array[]" multiple id="select-tags-advanced"
                                         class="form-select selectized" multiple="multiple" tabindex="-1"
                                         style="display: none;">
-                                        @foreach ($skills as $skill)
-                                            @foreach ($currentSkills as $currentSkill)
-                                                @if (strcmp($skill->name, $currentSkill->name) === 0)
-                                                    <option value="{{ $skill->name }}" selected="selected">
-                                                        {{ $skill->name }}
+                                        @foreach ($types as $type)
+                                            @foreach ($currentTypes as $currenType)
+                                                @if (strcmp($type->name, $currenType->name) === 0)
+                                                    <option value="{{ $type->name }}" selected="selected">
+                                                        {{ $type->name }}
                                                     </option>
                                                 @endif
                                             @endforeach
-                                            <option value="{{ $skill->name }}">
-                                                {{ $skill->name }}
+                                            <option value="{{ $type->name }}">
+                                                {{ $type->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                     <div class="selectize-dropdown multi form-select plugin-remove_button"
                                         style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
                                         <div class="selectize-dropdown-content">
-                                            @foreach ($skills as $skill)
-                                                <div class="option" data-selectable="" data-value="{{ $skill->name }}">
-                                                    {{ $skill->name }}
+                                            @foreach ($types as $type)
+                                                <div class="option" data-selectable="" data-value="{{ $type->name }}">
+                                                    {{ $type->name }}
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
-                                    <button type="submit" name="updateSkills"
+                                    <button type="submit" name="updateBusinessTypes"
                                         class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
                                 </div>
                             </form>
 
-                            <form method="POST" name="createSkill" action="{{ route('page.update', $page->id) }}">
+                            <form method="POST" name="createBusinessType" action="{{ route('page.update', $page->id) }}">
                                 @csrf
                                 {{ method_field('PATCH') }}
                                 <div class="mb-3">
-                                    <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
-                                        <input type="text" class="form-control" name="skill_name"
-                                            placeholder="Enter your currentSkill name">
-                                        <button type="submit" name="createSkill"
-                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                    @if ($company->company_type_id === 1)
+                                        <h6>{{ __('Could not find business type? Create your own') }}</h6>
+                                        <input type="text" class="form-control" name="type_name"
+                                            placeholder="Enter your business type name">
+                                    @else
+                                        <h6>{{ __('Could not find charity type? Create your own') }}</h6>
+                                        <input type="text" class="form-control" name="type_name"
+                                            placeholder="Enter your charity type name">
+                                    @endif
+                                    <button type="submit" name="createBusinessType"
+                                        class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
                                 </div>
                             </form>
-                        </fieldset> --}}
+                        </fieldset>
                     </div>
                 </div>
             </div>

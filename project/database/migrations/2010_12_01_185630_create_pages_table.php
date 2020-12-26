@@ -26,7 +26,6 @@ class CreatePagesTable extends Migration
             $table->string('country')->nullable();
             $table->string('cover_image')->nullable();
             $table->string('logo')->nullable();
-            $table->string('business_type')->nullable();
             $table->timestamps();
         });
     }
