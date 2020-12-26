@@ -97,9 +97,9 @@
                     </div>
                 </div>
 
-                <div class="hr-text">or</div>
+                {{-- <div class="hr-text">or</div> --}}
 
-                <div class="card-body">
+                {{-- <div class="card-body">
                     <div class="row">
                         <div class="col"><a href="#" class="btn btn-white w-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </form>
 
             <div class="text-center text-muted mt">
