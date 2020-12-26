@@ -4,8 +4,8 @@
 
 # Estrutura
 - Sign-up
-  - Utilizadores (incluir linkedIn API)
-  - Empresas (incluir linkedIn API)
+  - Utilizadores
+  - Empresas
 - Login
 - Perfis
   - Utilizadores (Candidatos/estagiários/voluntários)
@@ -73,4 +73,5 @@
 - Notificações
 - Portfolio
 - Perfil permite recomendações
+- Login/Sign-up linkedin
 - Multi-language -> deveria ser de ínicio?
