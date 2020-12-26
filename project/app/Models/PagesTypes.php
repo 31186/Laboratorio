@@ -5,9 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class PagesTypes extends Model
 {
     use HasFactory;
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -15,18 +22,8 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'sn_twitter',
-        'sn_facebook',
-        'sn_instagram',
-        'sn_linkedin',
-        'description',
-        'website',
-        'phone',
-        'city',
-        'country',
-        'cover_image',
-        'logo',
-        'business_type',
+        'page_id',
+        'type_id',
     ];
 
     /**
@@ -42,14 +39,4 @@ class Page extends Model
      * @var array
      */
     protected $casts = [];
-
-    public function company()
-    {
-        return $this->belongsTo('App\Models\Company');
-    }
-
-    public function types()
-    {
-        return $this->hasMany('App\Models\Types')->using('App\Models\PagesTypes');
-    }
 }

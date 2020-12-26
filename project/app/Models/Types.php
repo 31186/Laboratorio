@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Types extends Model
 {
     use HasFactory;
 
@@ -15,18 +15,7 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'sn_twitter',
-        'sn_facebook',
-        'sn_instagram',
-        'sn_linkedin',
-        'description',
-        'website',
-        'phone',
-        'city',
-        'country',
-        'cover_image',
-        'logo',
-        'business_type',
+        'name',
     ];
 
     /**
@@ -43,13 +32,8 @@ class Page extends Model
      */
     protected $casts = [];
 
-    public function company()
+    public function page()
     {
-        return $this->belongsTo('App\Models\Company');
-    }
-
-    public function types()
-    {
-        return $this->hasMany('App\Models\Types')->using('App\Models\PagesTypes');
+        return $this->hasMany('App\Models\Page');
     }
 }
