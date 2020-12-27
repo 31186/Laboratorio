@@ -56,6 +56,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::view('/profile/password', 'profile.password')->name('edit-password');
     Route::resource('/profile', ProfileController::class);
     Route::resource('/search', SearchController::class);
+    Route::get('/search', [SearchController::class, 'getSearch'])->name('search');
 });
 
 // Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);

@@ -18,31 +18,49 @@
                 <div class="row">
                     {{-- Search column --}}
                     <div class="col-3">
-                        <form action="" method="get">
-                            <div class="subheader mb-2">{{ __('Company type') }}:</div>
+                        <form method="GET" action="{{ route('search') }}">
+                            <div class="subheader mb-2">{{ __('Company type') }}</div>
                             <div class="mb-3">
                                 <label class="form-check mb-1">
-                                    <input type="radio" class="form-check-input" name="company_type" value="1">
+                                    @if ($selectedCompanyType == 1)
+                                        <input type="radio" class="form-check-input" name="company_type" value="1" checked>
+                                    @else
+                                        <input type="radio" class="form-check-input" name="company_type" value="1">
+                                    @endif
                                     <span class="form-check-label">{{ __('Business') }}</span>
                                 </label>
                                 <label class="form-check mb-1">
-                                    <input type="radio" class="form-check-input" name="company_type" value="2">
+                                    @if ($selectedCompanyType == 2)
+                                        <input type="radio" class="form-check-input" name="company_type" value="2" checked>
+                                    @else
+                                        <input type="radio" class="form-check-input" name="company_type" value="2">
+                                    @endif
                                     <span class="form-check-label">{{ __('Charity') }}</span>
                                 </label>
                             </div>
                             <div class="subheader mb-2">{{ __('Country') }}</div>
                             <div>
                                 <select name="country" class="form-select mb-2">
+                                    <option></option>
                                     @foreach ($countries as $country)
-                                        <option>{{ $country->country }}</option>
+                                        @if ($selectedCountry === $country->country)
+                                            <option selected>{{ $country->country }}</option>
+                                        @else
+                                            <option>{{ $country->country }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
                             <div class="subheader mb-2">{{ __('City') }}:</div>
                             <div>
-                                <select name="country" class="form-select mb-2">
+                                <select name="city" class="form-select mb-2">
+                                    <option></option>
                                     @foreach ($cities as $city)
-                                        <option>{{ $city->city }}</option>
+                                        @if ($selectedCity === $city->city)
+                                            <option selected>{{ $city->city }}</option>
+                                        @else
+                                            <option>{{ $city->city }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -70,7 +88,7 @@
                                 <button class="btn btn-primary w-40">
                                     {{ __('Search') }}
                                 </button>
-                                <a href="#" class="btn btn-secondary w-30">
+                                <a href="/search" class="btn btn-secondary w-30">
                                     {{ __('Reset') }}
                                 </a>
                             </div>
@@ -79,26 +97,32 @@
 
                     {{-- Results --}}
                     <div class="col-9 mt-5">
-                        <div class="row">
-                            @for ($i = 0; $i < count($results[0]); $i++)
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="card card-sm">
-                                        <a href="{{ '/page/' . $results[1][$i]->id }}" class="d-block"><img
-                                                src="{{ '/uploads/' . $results[1][$i]->cover_image }}"
-                                                class="card-img-top"></a>
-                                        <div class="card-body">
-                                            <div class="d-flex align-items-center">
-                                                <span class="avatar mr-3 rounded"
-                                                    style="background-image: url({{ '/uploads/' . $results[1][$i]->logo }})"></span>
-                                                <div>
-                                                    <div>{{ $results[0][$i]->company_name }}</div>
+                        @if (count($results) !== 0)
+                            <div class="row">
+                                @foreach ($results as $result)
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="card card-sm">
+                                            <a href="{{ '/page/' . $result->id }}" class="d-block"><img
+                                                    src="{{ '/uploads/' . $result->cover_image }}" class="card-img-top"></a>
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="avatar mr-3 rounded"
+                                                        style="background-image: url({{ '/uploads/' . $result->logo }})"></span>
+                                                    <div>
+                                                        <div>{{ $result->company_name }}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endfor
-                        </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="alert alert-info">
+                                <strong>{{ __('Info') }}:</strong> {{ __('The current filters have no results to show.') }}
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>

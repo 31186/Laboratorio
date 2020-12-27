@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
 
 class SearchController extends Controller
 {
@@ -20,34 +21,7 @@ class SearchController extends Controller
      */
     public function index()
     {
-        $results = [];
-
-        $companies = Company::get();
-        $pages = Page::get();
-
-        $results[0] = $companies;
-        $results[1] = $pages;
-
-        $countries = DB::table('pages')
-            ->select('pages.country')
-            ->distinct()
-            ->orderBy('country')
-            ->get();
-
-        $cities = DB::table('pages')
-            ->select('pages.city')
-            ->distinct()
-            ->orderBy('city')
-            ->get();
-
-        return view('search', [
-            'profile' => Profile::findOrFail(Auth::id()),
-            'user' => User::findOrFail(Auth::id()),
-            'results' => $results,
-            'types' => Types::distinct()->get(),
-            'countries' => $countries,
-            'cities' => $cities,
-        ]);
+        // 
     }
 
     /**
@@ -80,6 +54,95 @@ class SearchController extends Controller
     public function show($id)
     {
         // 
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSearch(Request $request)
+    {
+        $results = DB::table('companies')
+            ->join('pages', 'page_id', '=', 'pages.id')
+            ->select('pages.*', 'companies.company_name')
+            ->get();
+
+        if ($request->input('company_type') !== null) {
+            $pages = DB::table('companies')
+                ->join('pages', 'page_id', '=', 'pages.id')
+                ->select('pages.*', 'companies.company_name')
+                ->where('companies.company_type_id', '=', $request->input('company_type'))
+                ->get();
+
+            $results = $pages;
+        }
+
+        if ($request->input('country') !== null) {
+            $pagesToSend = [];
+
+            $pages = DB::table('companies')
+                ->join('pages', 'page_id', '=', 'pages.id')
+                ->select('pages.*', 'companies.company_name')
+                ->where('pages.country', '=', $request->input('country'))
+                ->get();
+
+            foreach ($results as $currentPage) {
+                foreach ($pages as $page) {
+                    if ($currentPage->country === $page->country) {
+                        array_push($pagesToSend, $page);
+                    }
+                }
+            }
+
+            $results = $pagesToSend;
+        }
+
+        if ($request->input('city') !== null) {
+            $pagesToSend = [];
+
+            $pages = DB::table('companies')
+                ->join('pages', 'page_id', '=', 'pages.id')
+                ->select('pages.*', 'companies.company_name')
+                ->where('pages.city', '=', $request->input('city'))
+                ->get();
+
+            foreach ($results as $currentPage) {
+                foreach ($pages as $page) {
+                    if ($currentPage->city === $page->city) {
+                        array_push($pagesToSend, $page);
+                    }
+                }
+            }
+
+            $results = $pagesToSend;
+        }
+
+        // TODO: skills
+
+        $countries = DB::table('pages')
+            ->select('pages.country')
+            ->distinct()
+            ->orderBy('country')
+            ->get();
+
+        $cities = DB::table('pages')
+            ->select('pages.city')
+            ->distinct()
+            ->orderBy('city')
+            ->get();
+
+        return view('search', [
+            'profile' => Profile::findOrFail(Auth::id()),
+            'user' => User::findOrFail(Auth::id()),
+            'results' => $results,
+            'types' => Types::distinct()->get(),
+            'countries' => $countries,
+            'cities' => $cities,
+            'selectedCompanyType' => $request->input('company_type'),
+            'selectedCountry' => $request->input('country'),
+            'selectedCity' => $request->input('city'),
+        ]);
     }
 
     /**

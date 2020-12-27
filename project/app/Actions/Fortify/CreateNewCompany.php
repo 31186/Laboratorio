@@ -22,8 +22,8 @@ class CreateNewCompany implements CreatesNewUsers
     public function create(array $input)
     {
         $page = Page::create([
-            'logo' => 'user_placeholder.png',
-            'cover_image' => 'cover_placeholder.jpg',
+            'logo' => 'logo-default.png',
+            'cover_image' => 'cover-default.jpg',
         ]);
 
         Validator::make($input, [
