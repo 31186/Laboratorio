@@ -33,6 +33,10 @@ h6 {
     font-family: "Raleway", sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
 
 /*--------------------------------------------------------------
 # Back to top button

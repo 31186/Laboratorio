@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Company\PageController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::view('/profile/password', 'profile.password')->name('edit-password');
     Route::resource('/profile', ProfileController::class);
+    Route::resource('/search', SearchController::class);
 });
 
 // Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);

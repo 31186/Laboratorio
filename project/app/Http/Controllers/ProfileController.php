@@ -221,13 +221,10 @@ class ProfileController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'picture' => ['file', 'max:8192'],
             'cover_image' => ['file', 'max:8192'],
-
-            // TODO: include this in view
-            // 'sn_twitter' => ['string', 'max:255'],
-            // 'sn_facebook' => ['string', 'max:255'],
-            // 'sn_instagram' => ['string', 'max:255'],
-            // 'sn_linkedin' => ['string', 'max:255'],
         ]);
+
+        $request->country = strtoupper($request->country);
+        $request->city = strtoupper($request->city);
 
         if (isset($request->picture)) {
             if ($request->picture !== 'user_placeholder.png') {

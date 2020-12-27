@@ -162,6 +162,9 @@ class PageController extends Controller
             'cover_image' => ['file', 'max:8192'],
         ]);
 
+        $request->country = strtoupper($request->country);
+        $request->city = strtoupper($request->city);
+
         if (isset($request->logo)) {
             if ($request->logo !== 'user_placeholder.png') {
                 Storage::disk('uploads')->delete('/' . $request->logo);
