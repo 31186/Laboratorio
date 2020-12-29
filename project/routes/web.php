@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Company\PageController;
+use App\Http\Controllers\Company\InterviewsController;
 use App\Http\Controllers\Company\SearchController as CompanySearchController;
 use App\Http\Controllers\SearchController;
 
@@ -52,6 +53,7 @@ Route::prefix('company')->group(function () {
         Route::resource('/search', CompanySearchController::class);
         Route::get('/search', [CompanySearchController::class, 'getSearch'])->name('companysearch');
         Route::get('/profile/{id}', [ProfileController::class, 'showCompany'])->name('showCompany');
+        Route::resource('interviews', InterviewsController::class);
     });
 });
 

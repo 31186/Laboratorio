@@ -18,6 +18,11 @@ class CreateInterviewsTable extends Migration
             $table->string('status');
             $table->timestamp('schedule');
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('company_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('company_id')->references('id')->on('companies');
         });
     }
 

@@ -259,7 +259,7 @@ class ProfileController extends Controller
             'job_description' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
-            'website' => ['string', 'max:255'],
+            'website' => ['nullable', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
             'degree' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],

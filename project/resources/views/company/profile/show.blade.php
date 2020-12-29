@@ -135,7 +135,7 @@
 
         <!-- ======= Skills Section ======= -->
         @if (count($skills) !== 0)
-            <section id="skills" class="skills section-bg">
+            <section id="skills" class="skills">
                 <div class="container">
 
                     <div class="section-title">
@@ -162,7 +162,7 @@
         <!-- End Skills Section -->
 
         <!-- ======= Resume Section ======= -->
-        <section id="resume" class="resume">
+        <section id="resume" class="resume section-bg">
             <div class="container">
 
                 <div class="section-title">
@@ -236,7 +236,7 @@
 
         <!-- ======= Certificates Section ======= -->
         @if (count($certificates) != 0)
-            <section id="certificates" class="certificates section-bg">
+            <section id="certificates" class="certificates">
                 <div class="container">
 
                     <div class="section-title">
@@ -275,6 +275,52 @@
             </section>
         @endif
         <!-- ======= End Certificates Section ======= -->
+
+        <!-- ======= Schedule Interview Section ======= -->
+        <section id="schedule" class="schedule section-bg">
+            <div class="container text-center">
+                <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#scheduleMeeting">
+                    {{ __('Schedule an interview') }}
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="scheduleMeeting" tabindex="-1" role="dialog" aria-labelledby="scheduleMeeting"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+
+                            <form method="POST" name="scheduleMeeting"
+                                action="{{ route('interviews.store') }}">
+                                @csrf
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="scheduleMeeting">
+                                        {{ __('Schedule an Interview') }}
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <input type="hidden" name="user_id" value="{{ $visitedUser->id }}">
+                                        <input type="datetime-local" required class="form-control" name="schedule">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">{{ __('Discard') }}</button>
+                                    <button type="submit" name="scheduleMeeting"
+                                        class="btn btn-success">{{ __('Save Changes') }}</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ======= End Schedule Interview Section ======= -->
     </div>
 @endsection
 

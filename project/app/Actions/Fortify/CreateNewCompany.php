@@ -23,7 +23,7 @@ class CreateNewCompany implements CreatesNewUsers
     {
         $page = Page::create([
             'logo' => 'logo-default.png',
-            'cover_image' => 'cover-default.jpg',
+            'cover_image' => 'cover_placeholder.jpg',
         ]);
 
         Validator::make($input, [
