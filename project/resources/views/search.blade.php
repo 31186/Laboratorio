@@ -9,7 +9,7 @@
                 <div class="page-header d-print-none">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h1 class="page-title">
+                            <h1 class="text-xl">
                                 {{ __('Search Companies') }}
                             </h1>
                         </div>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="row">
                     {{-- Search column --}}
-                    <div class="col-3">
+                    <div class="col-3 mt-2">
                         <form method="GET" action="{{ route('search') }}">
                             <div class="subheader mb-2">{{ __('Company type') }}</div>
                             <div class="mb-3">
@@ -103,7 +103,7 @@
                     </div>
 
                     {{-- Results --}}
-                    <div class="col-9 mt-5">
+                    <div class="col-9 mt-2">
                         @if (count($results) !== 0)
                             <div class="row">
                                 @foreach ($results as $result)
