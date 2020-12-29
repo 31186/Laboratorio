@@ -194,14 +194,10 @@ class PageController extends Controller
             if ($request->logo !== 'user_placeholder.png') {
                 Storage::disk('uploads')->delete('/' . $request->logo);
             }
-            $filename = $id . '_' . $this->formatName($id);
+            $filename = 'logo_' . $this->formatName($id);
             $extension = $request->logo->getClientOriginalExtension();
             $filenameToStoreLogo = 'page/img/' . $filename . '_' . time() . '.' . $extension;
-            // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('logo'));
-            // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
-            // $constraint->aspectRatio();
-            // });
             Storage::disk('uploads')->put('/' . $filenameToStoreLogo, (string)$img->encode());
 
             $page->update([
@@ -213,16 +209,11 @@ class PageController extends Controller
             if ($request->cover_image !== 'user_placeholder.png') {
                 Storage::disk('uploads')->delete('/' . $request->cover_image);
             }
-            $filename = $id . '_' . $this->formatName($id);
+            $filename = 'cover_' . $this->formatName($id);
             $extension = $request->cover_image->getClientOriginalExtension();
             $filenameToStoreCover = 'page/img/' . $filename . '_' . time() . '.' . $extension;
-            // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('cover_image'));
-            // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
-            // $constraint->aspectRatio();
-            // });
             Storage::disk('uploads')->put('/' . $filenameToStoreCover, (string)$img->encode());
-            // $request->cover_image = $filenameToStoreCover;
 
             $page->update([
                 'cover_image' => $filenameToStoreCover,

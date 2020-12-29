@@ -21,14 +21,14 @@
                                 {{-- First Name --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('First Name') }} *</label>
-                                    <input type="text" class="form-control" name="first_name"
+                                    <input type="text" class="form-control" name="first_name" maxlength="255"
                                         placeholder="Enter your first name" required value="{{ $user->first_name }}">
                                 </div>
 
                                 {{-- Last Name --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Last Name') }} *</label>
-                                    <input type="text" class="form-control" name="last_name"
+                                    <input type="text" class="form-control" name="last_name" maxlength="255"
                                         placeholder="Enter your last name" required value="{{ $user->last_name }}">
                                 </div>
 
@@ -43,7 +43,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Email') }} *</label>
                                     <input type="email" class="form-control" name="email" placeholder="Enter your email"
-                                        required value="{{ $user->email }}">
+                                        maxlength="255" required value="{{ $user->email }}">
                                 </div>
 
                                 <button type="submit" name="updateUser"
@@ -60,75 +60,42 @@
                                 @csrf
                                 {{ method_field('PATCH') }}
 
+                                {{-- Picture --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Profile Picture & Cover image') }}</label>
+                                    <label class="form-label">{{ __('Profile picture') }}
+                                    </label>
+                                    <input type="file" name="picture" class="form-control" accept="image/x-png,image/jpeg"
+                                        value="{{ $profile->picture }}" />
 
-                                    {{-- Picture --}}
-                                    <div class="d-inline-block card p-3 col-2 col-lg-3 ml-2 photoInput mb-3"
-                                        style="margin: auto;">
-                                        @php
-                                        $photo = asset('/uploads/user_placeholder.png');
-                                        @endphp
+                                </div>
 
-                                        <img src="{{ asset('/uploads/' . $profile->picture) }}"
-                                            alt="{{ __('Insert a profile image') }}" class="rounded mb-3" id="uplImg">
-                                        <input type="file" name="picture" id="photoInput" class="inputfile"
-                                            value="{{ $profile->picture }}" accept="image/x-png,image/jpeg" />
-                                        <label for="photoInput" class="btn btn-secondary">
-                                            <i class="fe fe-upload mr-3"></i>
-                                            <span>{{ __('Update picture') }}</span>
-                                        </label>
-
-                                        {{-- <button type="button"
-                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
-                                            {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
-                                            {{ __('Remove picture') }}
-                                        </button> --}}
-                                    </div>
-
-                                    {{-- Cover Image --}}
-                                    <div class="d-inline-block card p-2 col-2 col-lg-7 ml-5 coverInput mb-3"
-                                        style="margin: auto;">
-                                        @php
-                                        $photo = asset('/uploads/cover_placeholder.jpg');
-                                        @endphp
-
-                                        <img src="{{ asset('/uploads/' . $profile->cover_image) }}"
-                                            alt="{{ __('Insert a cover image') }}" class="rounded mb-3" id="uplCover">
-                                        <input type="file" name="cover_image" id="coverInput" class="inputfile"
-                                            value="{{ $profile->cover_image }}" accept="image/x-png,image/jpeg" />
-                                        <label for="coverInput" class="btn btn-secondary">
-                                            <i class="fe fe-upload mr-3"></i>
-                                            <span>{{ __('Update cover image') }}</span>
-                                        </label>
-
-                                        {{-- <button type="button"
-                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
-                                            {{ $photo !== 'cover_placeholder.jpg' ? '' : 'style=display:none;' }}>
-                                            {{ __('Remove picture') }}
-                                        </button> --}}
-                                    </div>
+                                {{-- Cover Image --}}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Cover Image') }}
+                                    </label>
+                                    <input type="file" name="cover_image" class="form-control"
+                                        accept="image/x-png,image/jpeg" value="{{ $profile->cover_image }}" />
                                 </div>
 
                                 {{-- Job title --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job Title') }} *</label>
                                     <input type="text" class="form-control" name="job_title" placeholder="Enter a job title"
-                                        required value="{{ $profile->job_title }}">
+                                        maxlength="255" required value="{{ $profile->job_title }}">
                                 </div>
 
                                 {{-- Job Description --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job description') }} *</label>
                                     <textarea class="form-control" name="job_description"
-                                        placeholder="Enter a job description" spellcheck="false"
+                                        placeholder="Enter a job description" spellcheck="false" maxlength="255"
                                         required>{{ $profile->job_description }}</textarea>
                                 </div>
 
                                 {{-- Website --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Website') }}</label>
-                                    <input type="text" class="form-control" name="website"
+                                    <input type="text" class="form-control" name="website" maxlength="255"
                                         placeholder="Enter your website URL" value="{{ $profile->website }}">
                                 </div>
 
@@ -144,28 +111,28 @@
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Country') }}</label>
                                     <input type="text" class="form-control" name="country" placeholder="Enter your country"
-                                        value="{{ $profile->country }}" required>
+                                        maxlength="255" value="{{ $profile->country }}" required>
                                 </div>
 
                                 {{-- City --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('City') }} *</label>
                                     <input type="text" class="form-control" name="city" placeholder="Enter your city"
-                                        value="{{ $profile->city }}" required>
+                                        maxlength="255" value="{{ $profile->city }}" required>
                                 </div>
 
                                 {{-- Degree --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Degree') }}</label>
                                     <input type="text" class="form-control" name="degree" placeholder="Enter your degree"
-                                        value="{{ $profile->degree }}">
+                                        maxlength="255" value="{{ $profile->degree }}">
                                 </div>
 
                                 {{-- Bio --}}
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Bio') }}</label>
                                     <textarea class="form-control" name="description"
-                                        placeholder="Enter a bio for your profile" spellcheck="false"
+                                        placeholder="Enter a bio for your profile" spellcheck="false" maxlength="255"
                                         required>{{ $profile->description }}</textarea>
                                 </div>
 
@@ -284,7 +251,7 @@
                                                                         <input type="hidden" name="education_id"
                                                                             value="{{ $education->id }}">
                                                                         <input type="text" class="form-control"
-                                                                            name="education_title"
+                                                                            name="education_title" maxlength="255"
                                                                             placeholder="Enter your education title"
                                                                             value="{{ $education->title }}">
                                                                     </div>
@@ -311,7 +278,7 @@
                                                                         <label
                                                                             class="form-label">{{ __('Education Institution') }}</label>
                                                                         <input type="text" class="form-control"
-                                                                            name="education_institution"
+                                                                            name="education_institution" maxlength="255"
                                                                             placeholder="Enter your education institution"
                                                                             value="{{ $education->institution }}">
                                                                     </div>
@@ -320,7 +287,7 @@
                                                                         <label
                                                                             class="form-label">{{ __('Education Description') }}</label>
                                                                         <textarea class="form-control"
-                                                                            name="education_description"
+                                                                            name="education_description" maxlength="255"
                                                                             placeholder="Enter your education description"
                                                                             spellcheck="false">{{ $education->description }}</textarea>
                                                                     </div>
@@ -382,7 +349,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Education Title') }}</label>
                                                         <input type="text" class="form-control" name="education_title"
-                                                            placeholder="Enter your education title">
+                                                            maxlength="255" placeholder="Enter your education title">
                                                     </div>
 
                                                     <div class="mb-3">
@@ -400,13 +367,13 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Education Institution') }}</label>
                                                         <input type="text" class="form-control" name="education_institution"
-                                                            placeholder="Enter your education institution">
+                                                            maxlength="255" placeholder="Enter your education institution">
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Education Description') }}</label>
                                                         <textarea class="form-control" name="education_description"
-                                                            placeholder="Enter your education description"
+                                                            maxlength="255" placeholder="Enter your education description"
                                                             spellcheck="false"></textarea>
                                                     </div>
                                                 </div>
@@ -470,6 +437,7 @@
                                                                             value="{{ $userCompany->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="professional_experience_title"
+                                                                            maxlength="255"
                                                                             placeholder="Enter your professional experience title"
                                                                             value="{{ $userCompany->title }}">
                                                                     </div>
@@ -510,6 +478,7 @@
                                                                             class="form-label">{{ __('Professional Experience Description') }}</label>
                                                                         <textarea class="form-control"
                                                                             name="professional_experience_description"
+                                                                            maxlength="255"
                                                                             placeholder="Enter your professional experience description"
                                                                             spellcheck="false">{{ $userCompany->description }}</textarea>
                                                                     </div>
@@ -573,7 +542,7 @@
                                                         <label
                                                             class="form-label">{{ __('Professional Experience Title') }}</label>
                                                         <input type="text" class="form-control"
-                                                            name="professional_experience_title"
+                                                            name="professional_experience_title" maxlength="255"
                                                             placeholder="Enter your professional experience title">
                                                     </div>
 
@@ -611,7 +580,7 @@
                                                         <label
                                                             class="form-label">{{ __('Professional Experience Description') }}</label>
                                                         <textarea class="form-control"
-                                                            name="professional_experience_description"
+                                                            name="professional_experience_description" maxlength="255"
                                                             placeholder="Enter your professional experience description"
                                                             spellcheck="false"></textarea>
                                                     </div>
@@ -674,7 +643,7 @@
                                                                         <input type="hidden" name="charity_id"
                                                                             value="{{ $usersCharity->id }}">
                                                                         <input type="text" class="form-control"
-                                                                            name="charity_title"
+                                                                            name="charity_title" maxlength="255"
                                                                             placeholder="Enter your volunteering title"
                                                                             value="{{ $usersCharity->title }}">
                                                                     </div>
@@ -715,7 +684,7 @@
                                                                         <label
                                                                             class="form-label">{{ __('Volunteering Description') }}</label>
                                                                         <textarea class="form-control"
-                                                                            name="charity_description"
+                                                                            name="charity_description" maxlength="255"
                                                                             placeholder="Enter your volunteering description"
                                                                             spellcheck="false">{{ $usersCharity->description }}</textarea>
                                                                     </div>
@@ -777,7 +746,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Volunteering Title') }}</label>
                                                         <input type="text" class="form-control" name="charity_title"
-                                                            placeholder="Enter your volunteering title">
+                                                            maxlength="255" placeholder="Enter your volunteering title">
                                                     </div>
 
                                                     <div class="mb-3">
@@ -811,7 +780,7 @@
 
                                                         <textarea class="form-control" name="charity_description"
                                                             placeholder="Enter your volunteering description"
-                                                            spellcheck="false"></textarea>
+                                                            maxlength="255" spellcheck="false"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -871,7 +840,7 @@
                                 {{ method_field('PATCH') }}
                                 <div class="mb-3">
                                     <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
-                                        <input type="text" class="form-control" name="skill_name"
+                                        <input type="text" class="form-control" name="skill_name" maxlength="255"
                                             placeholder="Enter your currentSkill name">
                                         <button type="submit" name="createSkill"
                                             class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
@@ -923,7 +892,7 @@
                                                                         <input type="hidden" name="certificate_id"
                                                                             value="{{ $certificate->id }}">
                                                                         <input type="text" class="form-control"
-                                                                            name="certificate_name"
+                                                                            name="certificate_name" maxlength="255"
                                                                             placeholder="Enter your certificate name"
                                                                             value="{{ $certificate->name }}">
                                                                     </div>
@@ -1010,7 +979,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">{{ __('Name') }}</label>
                                                         <input type="text" class="form-control" name="certificate_name"
-                                                            placeholder="Enter your certificate name">
+                                                            maxlength="255" placeholder="Enter your certificate name">
                                                     </div>
 
                                                     <div class="mb-3">
@@ -1046,74 +1015,6 @@
 @endsection
 
 @section('scripts')
-    {{-- TODO: fix preview the one imported in the right place or remove preview and keep the
-    file name only --}}
-    <script>
-        readURL = input => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#uplImg').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(() => {
-                    $('#removePhoto').css('display', 'block');
-                }, 1000);
-            } else {
-                $('#uplImg').attr('src', '{{ asset('
-                    uploads / user_placeholder.png ') }}');
-                $("#photoInput").next('label').find('span').html('Carregar Foto');
-                $('#removePhoto').css('display', 'none');
-            }
-        }
-        $("#photoInput").change(function() {
-            readURL(this);
-        });
-
-        function clearInput() {
-            $("#photoInput").val('');
-            readURL(this);
-        }
-
-        $('.photoInput img').click(function() {
-            $('#photoInput').trigger('click');
-        });
-
-    </script>
-
-    <script>
-        readURL = input => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#uplCover').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(() => {
-                    $('#removePhoto').css('display', 'block');
-                }, 1000);
-            } else {
-                $('#uplCover').attr('src', '{{ asset('
-                    uploads / cover_placeholder.jpg ') }}');
-                $("#coverInput").next('label').find('span').html('Carregar Foto');
-                $('#removePhoto').css('display', 'none');
-            }
-        }
-        $("#coverInput").change(function() {
-            readURL(this);
-        });
-
-        function clearInput() {
-            $("#coverInput").val('');
-            readURL(this);
-        }
-
-        $('.coverInput img').click(function() {
-            $('#coverInput').trigger('click');
-        });
-
-    </script>
-
     <script>
         $(document).ready(function() {
             $('#select-tags-advanced').selectize({

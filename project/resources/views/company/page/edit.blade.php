@@ -50,91 +50,61 @@
                                     <label class="form-label">{{ __('Logo & Cover image') }}</label>
 
                                     {{-- Logo --}}
-                                    <div class="d-inline-block card p-3 col-2 col-lg-3 ml-2 photoInput mb-3"
-                                        style="margin: auto;">
-                                        @php
-                                        $photo = asset('/uploads/user_placeholder.png');
-                                        @endphp
-
-                                        <img src="{{ asset('/uploads/' . $page->logo) }}" alt="{{ __('Insert a logo') }}"
-                                            class="rounded mb-3" id="uplImg">
-                                        <input type="file" name="logo" id="photoInput" class="inputfile"
-                                            value="{{ $page->logo }}" accept="image/x-png,image/jpeg" />
-                                        <label for="photoInput" class="btn btn-secondary">
-                                            <i class="fe fe-upload mr-3"></i>
-                                            <span>{{ __('Update logo') }}</span>
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Company logo') }}
                                         </label>
-
-                                        {{-- <button type="button"
-                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
-                                            {{ $photo !== 'user_placeholder.png' ? '' : 'style=display:none;' }}>
-                                            {{ __('Remove picture') }}
-                                        </button> --}}
+                                        <input type="file" name="logo" class="form-control" accept="image/x-png,image/jpeg"
+                                            value="{{ $page->logo }}" />
                                     </div>
 
                                     {{-- Cover Image --}}
-                                    <div class="d-inline-block card p-2 col-2 col-lg-7 ml-5 coverInput mb-3"
-                                        style="margin: auto;">
-                                        @php
-                                        $photo = asset('/uploads/cover_placeholder.jpg');
-                                        @endphp
-
-                                        <img src="{{ asset('/uploads/' . $page->cover_image) }}"
-                                            alt="{{ __('Insert a cover image') }}" class="rounded mb-3" id="uplCover">
-                                        <input type="file" name="cover_image" id="coverInput" class="inputfile"
-                                            value="{{ $page->cover_image }}" accept="image/x-png,image/jpeg" />
-                                        <label for="coverInput" class="btn btn-secondary">
-                                            <i class="fe fe-upload mr-3"></i>
-                                            <span>{{ __('Update cover image') }}</span>
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Cover Image') }}
                                         </label>
-
-                                        {{-- <button type="button"
-                                            class="btn btn-danger bg-red-light" id="removePhoto" onclick="clearInput()"
-                                            {{ $photo !== 'cover_placeholder.jpg' ? '' : 'style=display:none;' }}>
-                                            {{ __('Remove picture') }}
-                                        </button> --}}
+                                        <input type="file" name="cover_image" class="form-control"
+                                            accept="image/x-png,image/jpeg" value="{{ $page->cover_image }}" />
                                     </div>
-                                </div>
 
-                                {{-- Description --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Description') }} *</label>
-                                    <textarea class="form-control" name="description" maxlength="255"
-                                        placeholder="Enter a description for your page" spellcheck="false"
-                                        required>{{ $page->description }}</textarea>
-                                </div>
+                                    {{-- Description --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Description') }} *</label>
+                                        <textarea class="form-control" name="description" maxlength="255"
+                                            placeholder="Enter a description for your page" spellcheck="false"
+                                            required>{{ $page->description }}</textarea>
+                                    </div>
 
-                                {{-- Website --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Website') }}</label>
-                                    <input type="text" class="form-control" name="website" maxlength="255"
-                                        placeholder="Enter your website URL" value="{{ $page->website }}">
-                                </div>
+                                    {{-- Website --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Website') }}</label>
+                                        <input type="text" class="form-control" name="website" maxlength="255"
+                                            placeholder="Enter your website URL" value="{{ $page->website }}">
+                                    </div>
 
-                                {{-- Phone --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Phone number') }} *</label>
-                                    <input type="text" name="phone" class="form-control" data-mask="000000000"
-                                        data-mask-visible="true" placeholder="000000000" value="{{ $page->phone }}"
-                                        autocomplete="off" required>
-                                </div>
+                                    {{-- Phone --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Phone number') }} *</label>
+                                        <input type="text" name="phone" class="form-control" data-mask="000000000"
+                                            data-mask-visible="true" placeholder="000000000" value="{{ $page->phone }}"
+                                            autocomplete="off" required>
+                                    </div>
 
-                                {{-- Country --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Country') }} *</label>
-                                    <input type="text" class="form-control" name="country" placeholder="Enter your country"
-                                        maxlength="255" value="{{ $page->country }}" required>
-                                </div>
+                                    {{-- Country --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Country') }} *</label>
+                                        <input type="text" class="form-control" name="country"
+                                            placeholder="Enter your country" maxlength="255" value="{{ $page->country }}"
+                                            required>
+                                    </div>
 
-                                {{-- City --}}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('City') }} *</label>
-                                    <input type="text" class="form-control" name="city" placeholder="Enter your city"
-                                        maxlength="255" value="{{ $page->city }}" required>
-                                </div>
+                                    {{-- City --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('City') }} *</label>
+                                        <input type="text" class="form-control" name="city" placeholder="Enter your city"
+                                            maxlength="255" value="{{ $page->city }}" required>
+                                    </div>
 
-                                <button type="submit" name="updatePage"
-                                    class="btn btn-success">{{ __('Save Changes') }}</button>
+                                    <button type="submit" name="updatePage"
+                                        class="btn btn-success">{{ __('Save Changes') }}</button>
                             </form>
                         </fieldset>
 
@@ -253,11 +223,11 @@
                                 <div class="mb-3">
                                     @if ($company->company_type_id === 1)
                                         <h6>{{ __('Could not find business type? Create your own') }}</h6>
-                                        <input type="text" class="form-control" name="type_name"
+                                        <input type="text" class="form-control" name="type_name" maxlength="255"
                                             placeholder="Enter your business type name">
                                     @else
                                         <h6>{{ __('Could not find charity type? Create your own') }}</h6>
-                                        <input type="text" class="form-control" name="type_name"
+                                        <input type="text" class="form-control" name="type_name" maxlength="255"
                                             placeholder="Enter your charity type name">
                                     @endif
                                     <button type="submit" name="createBusinessType"
@@ -273,74 +243,6 @@
 @endsection
 
 @section('scripts')
-    {{-- TODO: fix preview the one imported in the right place or remove preview and keep the
-    file name only --}}
-    <script>
-        readURL = input => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#uplImg').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(() => {
-                    $('#removePhoto').css('display', 'block');
-                }, 1000);
-            } else {
-                $('#uplImg').attr('src', '{{ asset('
-                    uploads / Company_placeholder.png ') }}');
-                $("#photoInput").next('label').find('span').html('Carregar Foto');
-                $('#removePhoto').css('display', 'none');
-            }
-        }
-        $("#photoInput").change(function() {
-            readURL(this);
-        });
-
-        function clearInput() {
-            $("#photoInput").val('');
-            readURL(this);
-        }
-
-        $('.photoInput img').click(function() {
-            $('#photoInput').trigger('click');
-        });
-
-    </script>
-
-    <script>
-        readURL = input => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#uplCover').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(() => {
-                    $('#removePhoto').css('display', 'block');
-                }, 1000);
-            } else {
-                $('#uplCover').attr('src', '{{ asset('
-                    uploads / cover_placeholder.jpg ') }}');
-                $("#coverInput").next('label').find('span').html('Carregar Foto');
-                $('#removePhoto').css('display', 'none');
-            }
-        }
-        $("#coverInput").change(function() {
-            readURL(this);
-        });
-
-        function clearInput() {
-            $("#coverInput").val('');
-            readURL(this);
-        }
-
-        $('.coverInput img').click(function() {
-            $('#coverInput').trigger('click');
-        });
-
-    </script>
-
     <script>
         $(document).ready(function() {
             $('#select-tags-advanced').selectize({

@@ -274,16 +274,11 @@ class ProfileController extends Controller
             if ($request->picture !== 'user_placeholder.png') {
                 Storage::disk('uploads')->delete('/' . $request->picture);
             }
-            $filename = $id . '_' . $this->formatName($id);
+            $filename = 'profile_' . $this->formatName($id);
             $extension = $request->picture->getClientOriginalExtension();
             $filenameToStorePicture = 'profile/img/' . $filename . '_' . time() . '.' . $extension;
-            // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('picture'));
-            // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
-            // $constraint->aspectRatio();
-            // });
             Storage::disk('uploads')->put('/' . $filenameToStorePicture, (string)$img->encode());
-            // $request->picture = $filenameToStorePicture;
 
             $profile->update([
                 'picture' => $filenameToStorePicture,
@@ -294,16 +289,11 @@ class ProfileController extends Controller
             if ($request->cover_image !== 'user_placeholder.png') {
                 Storage::disk('uploads')->delete('/' . $request->cover_image);
             }
-            $filename = $id . '_' . $this->formatName($id);
+            $filename = 'cover_' . $this->formatName($id);
             $extension = $request->cover_image->getClientOriginalExtension();
             $filenameToStoreCover = 'profile/img/' . $filename . '_' . time() . '.' . $extension;
-            // Using Intervention Image to handle the size and weight of any uploaded image
             $img = Image::make($request->file('cover_image'));
-            // $img = Image::make($request->file('picture'))->fit(212, 300, function ($constraint) {
-            // $constraint->aspectRatio();
-            // });
             Storage::disk('uploads')->put('/' . $filenameToStoreCover, (string)$img->encode());
-            // $request->cover_image = $filenameToStoreCover;
 
             $profile->update([
                 'cover_image' => $filenameToStoreCover,
@@ -333,14 +323,6 @@ class ProfileController extends Controller
         $string = strip_tags($string);
 
         return strtolower(trim($string, '-'));
-    }
-
-    public function removePhoto(Request $request)
-    {
-        Storage::disk('uploads')->delete('/' . $request->picture);
-        $request->picture = 'user_placeholder.png';
-        $request->save();
-        return 'success';
     }
 
     /**
