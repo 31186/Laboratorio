@@ -1,5 +1,5 @@
 @extends('layouts.app-profile')
-@include('company.sidebar')
+@include('sidebar')
 
 @section('styles')
     <!-- Vendor CSS Files -->
@@ -125,31 +125,31 @@
         @if ($visitedPage->sn_twitter !== null || $visitedPage->sn_facebook !== null || $visitedPage->sn_instagram !== null || $visitedPage->sn_linkedin !== null)
             @if (count($types) !== 0)
                 <section id="social" class="social">
-            @else
-                <section id="social" class="social section-bg">
+                @else
+                    <section id="social" class="social section-bg">
             @endif
-                <div class="container">
-                    <div class="section-title">
-                        <h2>{{ __('Social') }}</h2>
-                    </div>
-
-                    @if ($visitedPage->sn_twitter !== null)
-                        <a href="{{ 'https://twitter.com/' . $visitedPage->sn_twitter }}" target="_blank"
-                            class="fa fa-twitter"></a>
-                    @endif
-                    @if ($visitedPage->sn_facebook !== null)
-                        <a href="{{ 'https://www.facebook.com/' . $visitedPage->sn_facebook }}" target="_blank"
-                            class="fa fa-facebook"></a>
-                    @endif
-                    @if ($visitedPage->sn_instagram !== null)
-                        <a href="{{ 'https://www.instagram.com/' . $visitedPage->sn_instagram }}" target="_blank"
-                            class="fa fa-instagram"></a>
-                    @endif
-                    @if ($visitedPage->sn_linkedin !== null)
-                        <a href="{{ 'https://www.linkedin.com/in/' . $visitedPage->sn_linkedin }}" target="_blank"
-                            class="fa fa-linkedin"></a>
-                    @endif
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{ __('Social') }}</h2>
                 </div>
+
+                @if ($visitedPage->sn_twitter !== null)
+                    <a href="{{ 'https://twitter.com/' . $visitedPage->sn_twitter }}" target="_blank"
+                        class="fa fa-twitter"></a>
+                @endif
+                @if ($visitedPage->sn_facebook !== null)
+                    <a href="{{ 'https://www.facebook.com/' . $visitedPage->sn_facebook }}" target="_blank"
+                        class="fa fa-facebook"></a>
+                @endif
+                @if ($visitedPage->sn_instagram !== null)
+                    <a href="{{ 'https://www.instagram.com/' . $visitedPage->sn_instagram }}" target="_blank"
+                        class="fa fa-instagram"></a>
+                @endif
+                @if ($visitedPage->sn_linkedin !== null)
+                    <a href="{{ 'https://www.linkedin.com/in/' . $visitedPage->sn_linkedin }}" target="_blank"
+                        class="fa fa-linkedin"></a>
+                @endif
+            </div>
             </section>
         @endif
     </div>

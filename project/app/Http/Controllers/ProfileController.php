@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use App\Models\Company;
+use App\Models\Page;
 use App\Models\User;
 use App\Models\Educations;
 use App\Models\ProfilesSkills;
@@ -83,6 +84,49 @@ class ProfileController extends Controller
             'profile' => Profile::findOrFail(Auth::id()),
             'visitedProfile' => Profile::findOrFail($id),
             'user' => User::findOrFail(Auth::id()),
+            'visitedUser' => User::findOrFail($id),
+            'educations' => Educations::where('profile_id', $id)->get(),
+            'certificates' => Certificates::where('profile_id', $id)->get(),
+            'usersCompanies' => $usersCompanies,
+            'usersCharities' => $usersCharities,
+            'skills' => $userSkills,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showCompany($id)
+    {
+        Profile::findOrFail($id);
+
+        $usersCompanies = DB::table('users_companies')
+            ->join('companies', 'company_id', '=', 'companies.id')
+            ->select('users_companies.*', 'companies.company_name')
+            ->where('companies.company_type_id', '=', '1')
+            ->where('users_companies.user_id', '=', $id)
+            ->get();
+
+        $usersCharities = DB::table('users_companies')
+            ->join('companies', 'company_id', '=', 'companies.id')
+            ->select('users_companies.*', 'companies.company_name')
+            ->where('companies.company_type_id', '=', '2')
+            ->where('users_companies.user_id', '=', $id)
+            ->get();
+
+        $userSkills = DB::table('profiles_skills')
+            ->join('skills', 'profiles_skills.skill_id', '=', 'skills.id')
+            ->select('skills.*')
+            ->where('profiles_skills.profile_id', '=', $id)
+            ->get();
+
+        return view('company.profile.show', [
+            'page' => Page::findOrFail(Auth::id()),
+            'visitedProfile' => Profile::findOrFail($id),
+            'company' => Company::findOrFail(Auth::id()),
             'visitedUser' => User::findOrFail($id),
             'educations' => Educations::where('profile_id', $id)->get(),
             'certificates' => Certificates::where('profile_id', $id)->get(),

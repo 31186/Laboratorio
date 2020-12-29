@@ -1,5 +1,5 @@
 @extends('layouts.app-profile')
-@include('sidebar')
+@include('company.sidebar')
 
 @section('content')
     <div class="page" id="main">
@@ -10,7 +10,7 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h1 class="page-title">
-                                {{ __('Search Companies') }}
+                                {{ __('Search Users') }}
                             </h1>
                         </div>
                     </div>
@@ -18,26 +18,7 @@
                 <div class="row">
                     {{-- Search column --}}
                     <div class="col-3">
-                        <form method="GET" action="{{ route('search') }}">
-                            <div class="subheader mb-2">{{ __('Company type') }}</div>
-                            <div class="mb-3">
-                                <label class="form-check mb-1">
-                                    @if ($selectedCompanyType == 1)
-                                        <input type="radio" class="form-check-input" name="company_type" value="1" checked>
-                                    @else
-                                        <input type="radio" class="form-check-input" name="company_type" value="1">
-                                    @endif
-                                    <span class="form-check-label">{{ __('Business') }}</span>
-                                </label>
-                                <label class="form-check mb-1">
-                                    @if ($selectedCompanyType == 2)
-                                        <input type="radio" class="form-check-input" name="company_type" value="2" checked>
-                                    @else
-                                        <input type="radio" class="form-check-input" name="company_type" value="2">
-                                    @endif
-                                    <span class="form-check-label">{{ __('Charity') }}</span>
-                                </label>
-                            </div>
+                        <form method="GET" action="{{ route('companysearch') }}">
                             <div class="subheader mb-2">{{ __('Country') }}</div>
                             <div>
                                 <select name="country" class="form-select mb-2">
@@ -64,29 +45,29 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="subheader mb-2">{{ __('Types') }}:</div>
+                            <div class="subheader mb-2">{{ __('Skills') }}:</div>
 
-                            <select name="types_array[]" multiple id="select-tags-advanced" class="form-select selectized"
+                            <select name="skills_array[]" multiple id="select-tags-advanced" class="form-select selectized"
                                 multiple="multiple" tabindex="-1" style="display: none;">
-                                @foreach ($types as $type)
-                                    @foreach ($selectedTypes as $selectedType)
-                                        @if (strcmp($type->name, $selectedType) === 0)
-                                            <option value="{{ $type->name }}" selected="selected">
-                                                {{ $type->name }}
+                                @foreach ($skills as $skill)
+                                    @foreach ($selectedSkills as $selectedSkill)
+                                        @if (strcmp($skill->name, $selectedSkill) === 0)
+                                            <option value="{{ $skill->name }}" selected="selected">
+                                                {{ $skill->name }}
                                             </option>
                                         @endif
                                     @endforeach
-                                    <option value="{{ $type->name }}">
-                                        {{ $type->name }}
+                                    <option value="{{ $skill->name }}">
+                                        {{ $skill->name }}
                                     </option>
                                 @endforeach
                             </select>
                             <div class="selectize-dropdown multi form-select plugin-remove_button"
                                 style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
                                 <div class="selectize-dropdown-content">
-                                    @foreach ($types as $type)
-                                        <div class="option" data-selectable="" data-value="{{ $type->name }}">
-                                            {{ $type->name }}
+                                    @foreach ($skills as $skill)
+                                        <div class="option" data-selectable="" data-value="{{ $skill->name }}">
+                                            {{ $skill->name }}
                                         </div>
                                     @endforeach
                                 </div>
@@ -95,7 +76,7 @@
                                 <button class="btn btn-primary w-40">
                                     {{ __('Search') }}
                                 </button>
-                                <a href="/search" class="btn btn-secondary w-30">
+                                <a href="/company/search" class="btn btn-secondary w-30">
                                     {{ __('Reset') }}
                                 </a>
                             </div>
@@ -109,14 +90,14 @@
                                 @foreach ($results as $result)
                                     <div class="col-sm-6 col-lg-4">
                                         <div class="card card-sm">
-                                            <a href="{{ route('showUser', $result->id) }}" class="d-block"><img
+                                            <a href="{{ route('showCompany', $result->id) }}" class="d-block"><img
                                                     src="{{ '/uploads/' . $result->cover_image }}" class="card-img-top"></a>
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
                                                     <span class="avatar mr-3 rounded"
-                                                        style="background-image: url({{ '/uploads/' . $result->logo }})"></span>
+                                                        style="background-image: url({{ '/uploads/' . $result->picture }})"></span>
                                                     <div>
-                                                        <div>{{ $result->company_name }}</div>
+                                                        <div>{{ $result->first_name }} {{ $result->last_name }}</div>
                                                     </div>
                                                 </div>
                                             </div>

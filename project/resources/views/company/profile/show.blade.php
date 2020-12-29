@@ -1,5 +1,5 @@
 @extends('layouts.app-profile')
-@include('sidebar')
+@include('company.sidebar')
 
 @section('styles')
     <!-- Vendor CSS Files -->

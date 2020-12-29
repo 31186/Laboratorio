@@ -28,7 +28,7 @@
 
             <div class="profile">
                 <img src="{{ '/uploads/' . $profile->picture }}" alt="" class="img-fluid rounded-circle">
-                <h1 class="text-light">{{ $user->first_name . ' ' . $user->last_name }}</h1>
+                <h1 class="text-light text-center">{{ $user->first_name . ' ' . $user->last_name }}</h1>
             </div>
 
             <nav class="nav-menu">

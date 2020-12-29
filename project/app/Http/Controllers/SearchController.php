@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
-use App\Models\Page;
 use App\Models\User;
-use App\Models\Company;
 use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Console\Input\Input;
 
 class SearchController extends Controller
 {
@@ -63,15 +60,23 @@ class SearchController extends Controller
      */
     public function getSearch(Request $request)
     {
+        $typesSelected = [];
+
         $results = DB::table('companies')
-            ->join('pages', 'page_id', '=', 'pages.id')
-            ->select('pages.*', 'companies.company_name')
+            ->join('pages', 'companies.page_id', '=', 'pages.id')
+            ->join('pages_types', 'pages.id', 'pages_types.page_id')
+            ->join('types', 'pages_types.type_id', 'types.id')
+            ->select('companies.id', 'companies.company_name', 'pages.cover_image', 'pages.logo', 'pages.country', 'pages.city', 'types.name')
+            ->distinct('companies.id')
             ->get();
 
         if ($request->input('company_type') !== null) {
             $pages = DB::table('companies')
-                ->join('pages', 'page_id', '=', 'pages.id')
-                ->select('pages.*', 'companies.company_name')
+                ->join('pages', 'companies.page_id', '=', 'pages.id')
+                ->join('pages_types', 'pages.id', 'pages_types.page_id')
+                ->join('types', 'pages_types.type_id', 'types.id')
+                ->select('companies.id', 'companies.company_name', 'pages.cover_image', 'pages.logo', 'pages.country', 'pages.city', 'types.name')
+                ->distinct('companies.id')
                 ->where('companies.company_type_id', '=', $request->input('company_type'))
                 ->get();
 
@@ -82,8 +87,11 @@ class SearchController extends Controller
             $pagesToSend = [];
 
             $pages = DB::table('companies')
-                ->join('pages', 'page_id', '=', 'pages.id')
-                ->select('pages.*', 'companies.company_name')
+                ->join('pages', 'companies.page_id', '=', 'pages.id')
+                ->join('pages_types', 'pages.id', 'pages_types.page_id')
+                ->join('types', 'pages_types.type_id', 'types.id')
+                ->select('companies.id', 'companies.company_name', 'pages.cover_image', 'pages.logo', 'pages.country', 'pages.city', 'types.name')
+                ->distinct('companies.id')
                 ->where('pages.country', '=', $request->input('country'))
                 ->get();
 
@@ -102,8 +110,11 @@ class SearchController extends Controller
             $pagesToSend = [];
 
             $pages = DB::table('companies')
-                ->join('pages', 'page_id', '=', 'pages.id')
-                ->select('pages.*', 'companies.company_name')
+                ->join('pages', 'companies.page_id', '=', 'pages.id')
+                ->join('pages_types', 'pages.id', 'pages_types.page_id')
+                ->join('types', 'pages_types.type_id', 'types.id')
+                ->select('companies.id', 'companies.company_name', 'pages.cover_image', 'pages.logo', 'pages.country', 'pages.city', 'types.name')
+                ->distinct('companies.id')
                 ->where('pages.city', '=', $request->input('city'))
                 ->get();
 
@@ -118,7 +129,42 @@ class SearchController extends Controller
             $results = $pagesToSend;
         }
 
-        // TODO: skills
+        if ($request->input('types_array') !== null) {
+            $pagesToSend = [];
+
+            // TODO: 2 company names with same type, should show the ones that match the other fields
+
+            foreach ($request->input('types_array') as $type) {
+                $pages = DB::table('companies')
+                    ->join('pages', 'companies.page_id', '=', 'pages.id')
+                    ->join('pages_types', 'pages.id', 'pages_types.page_id')
+                    ->join('types', 'pages_types.type_id', 'types.id')
+                    ->select('companies.id', 'companies.company_name', 'pages.cover_image', 'pages.logo', 'pages.country', 'pages.city', 'types.name')
+                    ->distinct('companies.id')
+                    ->where('types.name', '=', $type)
+                    ->get();
+
+                foreach ($results as $currentPage) {
+                    foreach ($pages as $page) {
+                        if ($currentPage->id !== $page->id)
+                            break;
+                        $alreadyExists = 0;
+                        foreach ($pagesToSend as $existingPage) {
+                            if ($existingPage->id === $page->id) {
+                                $alreadyExists = 1;
+                                break;
+                            }
+                        }
+                        if (!$alreadyExists)
+                            array_push($pagesToSend, $page);
+                    }
+                }
+
+                array_push($typesSelected, $type);
+            }
+
+            $results = $pagesToSend;
+        }
 
         $countries = DB::table('pages')
             ->select('pages.country')
@@ -142,6 +188,7 @@ class SearchController extends Controller
             'selectedCompanyType' => $request->input('company_type'),
             'selectedCountry' => $request->input('country'),
             'selectedCity' => $request->input('city'),
+            'selectedTypes' => $typesSelected,
         ]);
     }
 

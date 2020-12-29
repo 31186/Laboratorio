@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Company\PageController;
+use App\Http\Controllers\Company\SearchController as CompanySearchController;
 use App\Http\Controllers\SearchController;
 
 /*
@@ -47,7 +48,10 @@ Route::prefix('company')->group(function () {
         Route::post('logout', [Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])->name('company.logout');
         Route::get('home', [App\Http\Controllers\Company\HomeController::class, 'index'])->name('company.home');
         Route::view('profile/password', 'company.profile.password')->name('company.edit-password');
-        Route::resource('/page', PageController::class);
+        Route::resource('page', PageController::class);
+        Route::resource('/search', CompanySearchController::class);
+        Route::get('/search', [CompanySearchController::class, 'getSearch'])->name('companysearch');
+        Route::get('/profile/{id}', [ProfileController::class, 'showCompany'])->name('showCompany');
     });
 });
 
@@ -57,6 +61,5 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::resource('/profile', ProfileController::class);
     Route::resource('/search', SearchController::class);
     Route::get('/search', [SearchController::class, 'getSearch'])->name('search');
+    Route::get('/page/{id}', [PageController::class, 'showUser'])->name('showUser');
 });
-
-// Route::get('/page/{id}', [App\Http\Controllers\Company\Page::class, 'show']);

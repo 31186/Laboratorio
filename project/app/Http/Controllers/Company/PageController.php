@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Page;
 use App\Models\PagesTypes;
+use App\Models\Profile;
 use App\Models\Types;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -64,6 +66,29 @@ class PageController extends Controller
             'page' => Page::findOrFail(Auth::id()),
             'visitedPage' => Page::findOrFail($id),
             'company' => Company::findOrFail(Auth::id()),
+            'visitedCompany' => Company::findOrFail($id),
+            'types' => $companyTypes,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUser($id)
+    {
+        $companyTypes = DB::table('pages_types')
+            ->join('types', 'pages_types.type_id', '=', 'types.id')
+            ->select('types.*')
+            ->where('pages_types.page_id', '=', $id)
+            ->get();
+
+        return view('page.show', [
+            'profile' => Profile::findOrFail(Auth::id()),
+            'visitedPage' => Page::findOrFail($id),
+            'user' => User::findOrFail(Auth::id()),
             'visitedCompany' => Company::findOrFail($id),
             'types' => $companyTypes,
         ]);

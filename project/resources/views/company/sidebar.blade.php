@@ -28,17 +28,21 @@
 
             <div class="profile">
                 <img src="{{ '/uploads/' . $page->logo }}" alt="" class="img-fluid rounded-circle">
-                <h1 class="text-light">{{ $company->name }}</h1>
+                <h1 class="text-light text-center">{{ $company->company_name }}</h1>
             </div>
 
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="{{ url('company/page/' . Auth::id()) }}"><i class="bx bxs-user-detail"></i> <span>{{ __('View page') }}</span></a></li>
-                    <li><a href="{{ url('company/page/' . Auth::id()) . '/edit'}}"><i class="bx bx-pencil"></i> <span>{{ __('Edit page') }}</span></a></li>
-                    <li><a href="{{ url('search') }}"><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
-                    <li><a href="{{ url('interview') }}"><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
+                    <li><a href="{{ url('company/page/' . Auth::id()) }}"><i class="bx bxs-user-detail"></i>
+                            <span>{{ __('View page') }}</span></a></li>
+                    <li><a href="{{ url('company/page/' . Auth::id()) . '/edit' }}"><i class="bx bx-pencil"></i>
+                            <span>{{ __('Edit page') }}</span></a></li>
+                    <li><a href="{{ url('company/search') }}"><i class="bx bx-search"></i>
+                            <span>{{ __('Search') }}</span></a></li>
+                    <li><a href="{{ url('interview') }}"><i class="bx bx-video-plus"></i>
+                            <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
+                                        document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
                             <span>{{ __('Logout') }}</span></a></li>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
