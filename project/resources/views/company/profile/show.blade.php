@@ -290,7 +290,7 @@
                         <div class="modal-content">
 
                             <form method="POST" name="scheduleMeeting"
-                                action="{{ route('interviews.store') }}">
+                                action="{{ route('companyRequestInterview') }}">
                                 @csrf
 
                                 <div class="modal-header">

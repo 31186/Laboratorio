@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Company\PageController;
-use App\Http\Controllers\Company\InterviewsController;
+use App\Http\Controllers\InterviewsController;
 use App\Http\Controllers\Company\SearchController as CompanySearchController;
+use App\Http\Controllers\Company\InterviewsController as CompanyInterviewsController;
 use App\Http\Controllers\SearchController;
 
 /*
@@ -53,7 +54,8 @@ Route::prefix('company')->group(function () {
         Route::resource('/search', CompanySearchController::class);
         Route::get('/search', [CompanySearchController::class, 'getSearch'])->name('companysearch');
         Route::get('/profile/{id}', [ProfileController::class, 'showCompany'])->name('showCompany');
-        Route::resource('interviews', InterviewsController::class);
+        Route::resource('interviews', CompanyInterviewsController::class);
+        Route::put('interviews', [CompanyInterviewsController::class], 'store')->name('companyRequestInterview');
     });
 });
 
@@ -64,4 +66,5 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::resource('/search', SearchController::class);
     Route::get('/search', [SearchController::class, 'getSearch'])->name('search');
     Route::get('/page/{id}', [PageController::class, 'showUser'])->name('showUser');
+    Route::resource('interviews', InterviewsController::class);
 });

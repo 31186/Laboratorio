@@ -36,7 +36,7 @@
                     <li><a href="{{ url('profile/' . Auth::id()) }}"><i class="bx bxs-user-detail"></i> <span>{{ __('View profile') }}</span></a></li>
                     <li><a href="{{ url('profile/' . Auth::id()) . '/edit'}}"><i class="bx bx-pencil"></i> <span>{{ __('Edit profile') }}</span></a></li>
                     <li><a href="{{ url('search') }}"><i class="bx bx-search"></i> <span>{{ __('Search') }}</span></a></li>
-                    <li><a href="{{ url('interview') }}"><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
+                    <li><a href="{{ url('interviews') }}"><i class="bx bx-video-plus"></i> <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>
                             <span>{{ __('Logout') }}</span></a></li>

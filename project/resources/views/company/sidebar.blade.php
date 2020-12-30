@@ -39,7 +39,7 @@
                             <span>{{ __('Edit page') }}</span></a></li>
                     <li><a href="{{ url('company/search') }}"><i class="bx bx-search"></i>
                             <span>{{ __('Search') }}</span></a></li>
-                    <li><a href="{{ url('interview') }}"><i class="bx bx-video-plus"></i>
+                    <li><a href="{{ url('company/interviews') }}"><i class="bx bx-video-plus"></i>
                             <span>{{ __('Interviews') }}</span></a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();"><i class="bx bx-log-out"></i>

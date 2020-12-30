@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Company;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Interview;
+use App\Models\Profile;
 use App\Models\User;
-use App\Models\Company;
-use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,29 +19,29 @@ class InterviewsController extends Controller
     public function index()
     {
         $newInterviews = DB::table('interviews')
-            ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
-            ->where('interviews.company_id', '=', Auth::id())
+            ->join('companies', 'interviews.company_id', 'companies.id')
+            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'new')
             ->get();
 
         $acceptedInterviews = DB::table('interviews')
-            ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
-            ->where('interviews.company_id', '=', Auth::id())
+            ->join('companies', 'interviews.company_id', 'companies.id')
+            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'accepted')
             ->get();
 
         $rejectedInterviews = DB::table('interviews')
-            ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
-            ->where('interviews.company_id', '=', Auth::id())
+            ->join('companies', 'interviews.company_id', 'companies.id')
+            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'rejected')
             ->get();
 
-        return view('company.interviews', [
-            'page' => Page::findOrFail(Auth::id()),
-            'company' => Company::findOrFail(Auth::id()),
+        return view('interviews', [
+            'profile' => Profile::findOrFail(Auth::id()),
+            'user' => User::findOrFail(Auth::id()),
             'newInterviews' => $newInterviews,
             'acceptedInterviews' => $acceptedInterviews,
             'rejectedInterviews' => $rejectedInterviews,
@@ -57,7 +55,7 @@ class InterviewsController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -68,21 +66,7 @@ class InterviewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => ['required', 'integer'],
-            'schedule' => ['required', 'date'],
-        ]);
-
-        User::findOrFail($request->user_id);
-
-        Interview::create([
-            'status' => 'new',
-            'schedule' => $request->schedule,
-            'user_id' => $request->user_id,
-            'company_id' => Auth::id(),
-        ]);
-
-        return $this->index();
+        //
     }
 
     /**
@@ -116,16 +100,42 @@ class InterviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $interview = Interview::findOrFail($id);
-
-        $request->validate([
-            "interview_status" => ['required', 'string', 'max:255'],
-            "schedule" => ['required', 'date'],
-        ]);
-
-        $interview->update($request->all());
+        if ($request->has('accept'))
+            $this->accept($id);
+        elseif ($request->has('reject'))
+            $this->reject($id);
 
         return $this->index();
+    }
+
+    /**
+     * Accept the requested interview
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function accept($id)
+    {
+        $interview = Interview::findOrFail($id);
+
+        $interview->update([
+            'status' => 'accepted'
+        ]);
+    }
+
+    /**
+     * Reject the requested interview
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reject($id)
+    {
+        $interview = Interview::findOrFail($id);
+
+        $interview->update([
+            'status' => 'rejected'
+        ]);
     }
 
     /**
@@ -136,10 +146,6 @@ class InterviewsController extends Controller
      */
     public function destroy($id)
     {
-        $interview = Interview::findOrFail($id);
-
-        $interview->delete();
-
-        return $this->index();
+        //
     }
 }
