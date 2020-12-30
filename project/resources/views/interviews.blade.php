@@ -18,9 +18,9 @@
                         <div class="col-12 mb-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">
+                                    <a href="{{ route('showUser', $newInterview->company_id) }}" class="card-title">
                                         {{ $newInterview->company_name }}
-                                    </h3>
+                                    </a>
                                     <div class="card-actions">
                                         <form method="POST" name="acceptInterview"
                                             action="{{ route('interviews.update', $newInterview->id) }}">
@@ -60,9 +60,9 @@
                         <div class="col-12 mb-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">
-                                        {{ $acceptedInterview->company_name }}
-                                    </h3>
+                                    <a href="{{ route('showUser', $newInterview->company_id) }}" class="card-title">
+                                        {{ $newInterview->company_name }}
+                                    </a>
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
@@ -82,14 +82,36 @@
                         <div class="col-12 mb-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">
-                                        {{ $rejectedInterview->company_name }}
-                                    </h3>
+                                    <a href="{{ route('showUser', $newInterview->company_id) }}" class="card-title">
+                                        {{ $newInterview->company_name }}
+                                    </a>
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
                                         <dt class="col-5">{{ __('Shedule') }}:</dt>
                                         <dd class="col-7">{{ $rejectedInterview->schedule }}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+            @if (count($pastInterviews) !== 0)
+                <div class="ml-3">
+                    <h2 class="ml-3">{{ __('History') }}</h2>
+                    @foreach ($pastInterviews as $pastInterview)
+                        <div class="col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a href="{{ route('showUser', $newInterview->company_id) }}" class="card-title">
+                                        {{ $newInterview->company_name }}
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row">
+                                        <dt class="col-5">{{ __('Shedule') }}:</dt>
+                                        <dd class="col-7">{{ $pastInterview->schedule }}</dd>
                                     </dl>
                                 </div>
                             </div>

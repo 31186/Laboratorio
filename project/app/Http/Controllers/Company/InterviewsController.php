@@ -20,25 +20,37 @@ class InterviewsController extends Controller
      */
     public function index()
     {
+        $date = date('Y-m-d H:i:s', time());
+
         $newInterviews = DB::table('interviews')
             ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
+            ->select('interviews.id', 'interviews.schedule', 'users.id as user_id', 'users.first_name', 'users.last_name')
             ->where('interviews.company_id', '=', Auth::id())
             ->where('status', '=', 'new')
+            ->whereDate('schedule', '>=', $date)
             ->get();
 
         $acceptedInterviews = DB::table('interviews')
             ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
+            ->select('interviews.id', 'interviews.schedule', 'users.id as user_id', 'users.first_name', 'users.last_name')
             ->where('interviews.company_id', '=', Auth::id())
             ->where('status', '=', 'accepted')
+            ->whereDate('schedule', '>=', $date)
             ->get();
 
         $rejectedInterviews = DB::table('interviews')
             ->join('users', 'interviews.user_id', 'users.id')
-            ->select('interviews.id', 'interviews.schedule', 'users.first_name', 'users.last_name')
+            ->select('interviews.id', 'interviews.schedule', 'users.id as user_id', 'users.first_name', 'users.last_name')
             ->where('interviews.company_id', '=', Auth::id())
             ->where('status', '=', 'rejected')
+            ->get();
+
+        $pastInterviews = DB::table('interviews')
+            ->join('users', 'interviews.user_id', 'users.id')
+            ->select('interviews.id', 'interviews.schedule', 'users.id as user_id', 'users.first_name', 'users.last_name')
+            ->where('interviews.company_id', '=', Auth::id())
+            ->where('status', '=', 'accepted')
+            ->whereDate('schedule', '<', $date)
             ->get();
 
         return view('company.interviews', [
@@ -47,6 +59,7 @@ class InterviewsController extends Controller
             'newInterviews' => $newInterviews,
             'acceptedInterviews' => $acceptedInterviews,
             'rejectedInterviews' => $rejectedInterviews,
+            'pastInterviews' => $pastInterviews,
         ]);
     }
 

@@ -18,25 +18,37 @@ class InterviewsController extends Controller
      */
     public function index()
     {
+        $date = date('Y-m-d H:i:s', time());
+
         $newInterviews = DB::table('interviews')
             ->join('companies', 'interviews.company_id', 'companies.id')
-            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->select('interviews.id', 'interviews.schedule', 'companies.id as company_id', 'companies.company_name')
             ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'new')
+            ->whereDate('schedule', '>=', $date)
             ->get();
 
         $acceptedInterviews = DB::table('interviews')
             ->join('companies', 'interviews.company_id', 'companies.id')
-            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->select('interviews.id', 'interviews.schedule', 'companies.id as company_id', 'companies.company_name')
             ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'accepted')
+            ->whereDate('schedule', '>=', $date)
             ->get();
 
         $rejectedInterviews = DB::table('interviews')
             ->join('companies', 'interviews.company_id', 'companies.id')
-            ->select('interviews.id', 'interviews.schedule', 'companies.company_name')
+            ->select('interviews.id', 'interviews.schedule', 'companies.id as company_id', 'companies.company_name')
             ->where('interviews.user_id', '=', Auth::id())
             ->where('status', '=', 'rejected')
+            ->get();
+
+        $pastInterviews = DB::table('interviews')
+            ->join('companies', 'interviews.company_id', 'companies.id')
+            ->select('interviews.id', 'interviews.schedule', 'companies.id as company_id', 'companies.company_name')
+            ->where('interviews.user_id', '=', Auth::id())
+            ->where('status', '=', 'accepted')
+            ->whereDate('schedule', '<', $date)
             ->get();
 
         return view('interviews', [
@@ -45,6 +57,7 @@ class InterviewsController extends Controller
             'newInterviews' => $newInterviews,
             'acceptedInterviews' => $acceptedInterviews,
             'rejectedInterviews' => $rejectedInterviews,
+            'pastInterviews' => $pastInterviews,
         ]);
     }
 
