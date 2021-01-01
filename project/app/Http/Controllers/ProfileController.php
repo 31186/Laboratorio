@@ -219,6 +219,8 @@ class ProfileController extends Controller
             $this->updateCertificate($request, $id);
         else if ($request->has('createCertificate'))
             $this->createCertificate($request, $id);
+        else if ($request->has('deleteCertificate'))
+            $this->deleteCertificate($request, $id);
         else if ($request->has('updateSkills'))
             $this->updateSkills($request, $id);
         else if ($request->has('createSkill'))
@@ -574,12 +576,10 @@ class ProfileController extends Controller
      */
     public function updateCertificate(Request $request, $id)
     {
-        // TODO: fix, edit not working
-
         $request->validate([
             'certificate_id' => ['required', 'integer'],
             'certificate_name' => ['required', 'string', 'max:255'],
-            'certificate_file' => ['file', 'max:8192'],
+            'certificate_file' => ['nullable', 'file', 'max:8192'],
             'certification_date' => ['required', 'date', 'max:255'],
         ]);
 
@@ -594,20 +594,20 @@ class ProfileController extends Controller
                 'uploads',
                 $filenameToStoreCertificate
             );
-            $request->certificate_file = $filenameToStoreCertificate;
-        }
 
-        if (isset($request->certificate_file))
+            $request->certificate_file = $filenameToStoreCertificate;
+
             $certificates->update([
                 'name' => $request->certificate_name,
                 'file' => $request->certificate_file,
                 'certification_date' => $request->certification_date,
             ]);
-        else
+        } else {
             $certificates->update([
-                'name' => $request->$request->certificate_name,
-                'certification_date' => $request->$request->certification_date,
+                'name' => $request->certificate_name,
+                'certification_date' => $request->certification_date,
             ]);
+        }
     }
 
     /**
@@ -643,6 +643,26 @@ class ProfileController extends Controller
             'certification_date' => $request->certification_date,
             'profile_id' => $id
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCertificate(Request $request, $id)
+    {
+        Profile::findOrFail($id);
+
+        $request->validate([
+            'certificate_id' => ['required', 'integer'],
+        ]);
+
+        $certificate = Certificates::findOrFail($request->certificate_id);
+
+        $certificate->delete();
     }
 
     /**

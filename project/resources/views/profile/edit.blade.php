@@ -928,8 +928,21 @@
                                                 <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
                                                     data-toggle="modal"
                                                     data-target="#editCertificateModal-{{ $certificate->id }}">
-                                                    {{ __('Edit certificate') }}
+                                                    {{ __('Edit') }}
                                                 </a>
+
+                                                <form method="POST" name="deleteCertificate"
+                                                    action="{{ route('profile.update', $profile->id) }}">
+                                                    @csrf
+                                                    {{ method_field('PATCH') }}
+
+                                                    <input type="hidden" name="certificate_id"
+                                                        value="{{ $certificate->id }}">
+                                                    <input type="submit" name="deleteCertificate"
+                                                        class="btn btn-danger btn-pill w-10 mr-3 mt-1 float-right"
+                                                        value="{{ __('Delete') }}">
+                                                </form>
+                                                {{-- HERE --}}
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="editCertificateModal-{{ $certificate->id }}"
@@ -974,11 +987,11 @@
                                                                             required>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">{{ __('File') }} *
+                                                                        <label class="form-label">{{ __('File') }}
                                                                         </label>
                                                                         <input type="file" name="certificate_file"
                                                                             class="form-control" accept=".pdf"
-                                                                            value="{{ $certificate->file }}" required />
+                                                                            value="{{ $certificate->file }}" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
