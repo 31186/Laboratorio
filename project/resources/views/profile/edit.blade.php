@@ -81,7 +81,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('Job Title') }} *</label>
                                     <input type="text" class="form-control" name="job_title" placeholder="Enter a job title"
-                                        maxlength="255" required value="{{ $profile->job_title }}">
+                                        maxlength="25" required value="{{ $profile->job_title }}">
                                 </div>
 
                                 {{-- Job Description --}}
@@ -101,7 +101,7 @@
 
                                 {{-- Phone --}}
                                 <div class="mb-3">
-                                    <label class="form-label">Phone number</label>
+                                    <label class="form-label">{{ __('Phone number') }} *</label>
                                     <input type="text" name="phone" class="form-control" data-mask="000000000"
                                         data-mask-visible="true" placeholder="000000000" value="{{ $profile->phone }}"
                                         autocomplete="off">
@@ -109,7 +109,7 @@
 
                                 {{-- Country --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Country') }}</label>
+                                    <label class="form-label">{{ __('Country') }} *</label>
                                     <input type="text" class="form-control" name="country" placeholder="Enter your country"
                                         maxlength="255" value="{{ $profile->country }}" required>
                                 </div>
@@ -123,14 +123,14 @@
 
                                 {{-- Degree --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Degree') }}</label>
+                                    <label class="form-label">{{ __('Degree') }} *</label>
                                     <input type="text" class="form-control" name="degree" placeholder="Enter your degree"
-                                        maxlength="255" value="{{ $profile->degree }}">
+                                        maxlength="255" value="{{ $profile->degree }}" required>
                                 </div>
 
                                 {{-- Bio --}}
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('Bio') }}</label>
+                                    <label class="form-label">{{ __('Bio') }} *</label>
                                     <textarea class="form-control" name="description"
                                         placeholder="Enter a bio for your profile" spellcheck="false" maxlength="255"
                                         required>{{ $profile->description }}</textarea>
@@ -205,6 +205,58 @@
                             </form>
                         </fieldset>
 
+                        {{-- Skills --}}
+                        <fieldset class="form-fieldset">
+                            <h4>{{ __('Skills') }}</h4>
+                            <form method="POST" name="updateSkills" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Skills') }}</label>
+                                    <select name="skills_array[]" multiple id="select-tags-advanced"
+                                        class="form-select selectized" multiple="multiple" tabindex="-1"
+                                        style="display: none;">
+                                        @foreach ($skills as $skill)
+                                            @foreach ($currentSkills as $currentSkill)
+                                                @if (strcmp($skill->name, $currentSkill->name) === 0)
+                                                    <option value="{{ $skill->name }}" selected="selected">
+                                                        {{ $skill->name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                            <option value="{{ $skill->name }}">
+                                                {{ $skill->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="selectize-dropdown multi form-select plugin-remove_button"
+                                        style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
+                                        <div class="selectize-dropdown-content">
+                                            @foreach ($skills as $skill)
+                                                <div class="option" data-selectable="" data-value="{{ $skill->name }}">
+                                                    {{ $skill->name }}
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="updateSkills"
+                                        class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
+
+                            <form method="POST" name="createSkill" action="{{ route('profile.update', $profile->id) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="mb-3">
+                                    <h6>{{ __('Could not find currentSkill? Create your own') }} *</h4>
+                                        <input type="text" class="form-control" name="skill_name" maxlength="255"
+                                            placeholder="Enter your currentSkill name" required>
+                                        <button type="submit" name="createSkill"
+                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
+                                </div>
+                            </form>
+                        </fieldset>
+
                         {{-- Resume Education --}}
                         <fieldset class="form-fieldset">
                             <h4>{{ __('Resume Education') }}</h4>
@@ -220,8 +272,18 @@
                                                 <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
                                                     data-toggle="modal"
                                                     data-target="#editEducationModal-{{ $education->id }}">
-                                                    {{ __('Edit education') }}
+                                                    {{ __('Edit') }}
                                                 </a>
+                                                <form method="POST" name="deleteEducation"
+                                                    action="{{ route('profile.update', $profile->id) }}">
+                                                    @csrf
+                                                    {{ method_field('PATCH') }}
+
+                                                    <input type="hidden" name="education_id" value="{{ $education->id }}">
+                                                    <input type="submit" name="deleteEducation"
+                                                        class="btn btn-danger btn-pill w-10 mr-3 mt-1 float-right"
+                                                        value="{{ __('Delete') }}">
+                                                </form>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="editEducationModal-{{ $education->id }}"
@@ -247,49 +309,55 @@
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Education Title') }}</label>
+                                                                            class="form-label">{{ __('Education Title') }}
+                                                                            *</label>
                                                                         <input type="hidden" name="education_id"
                                                                             value="{{ $education->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="education_title" maxlength="255"
                                                                             placeholder="Enter your education title"
-                                                                            value="{{ $education->title }}">
+                                                                            value="{{ $education->title }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Education Start Date') }}</label>
+                                                                            class="form-label">{{ __('Education Start Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="education_start_date"
                                                                             placeholder="Enter your education start date"
-                                                                            value="{{ $education->start_date }}">
+                                                                            value="{{ $education->start_date }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Education End Date') }}</label>
+                                                                            class="form-label">{{ __('Education End Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="education_end_date"
                                                                             placeholder="Enter your education end date"
-                                                                            value="{{ $education->end_date }}">
+                                                                            value="{{ $education->end_date }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Education Institution') }}</label>
+                                                                            class="form-label">{{ __('Education Institution') }}
+                                                                            *</label>
                                                                         <input type="text" class="form-control"
                                                                             name="education_institution" maxlength="255"
                                                                             placeholder="Enter your education institution"
-                                                                            value="{{ $education->institution }}">
+                                                                            value="{{ $education->institution }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Education Description') }}</label>
+                                                                            class="form-label">{{ __('Education Description') }}
+                                                                            *</label>
                                                                         <textarea class="form-control"
                                                                             name="education_description" maxlength="255"
                                                                             placeholder="Enter your education description"
-                                                                            spellcheck="false">{{ $education->description }}</textarea>
+                                                                            spellcheck="false"
+                                                                            required>{{ $education->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -347,34 +415,38 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Education Title') }}</label>
+                                                        <label class="form-label">{{ __('Education Title') }} *</label>
                                                         <input type="text" class="form-control" name="education_title"
-                                                            maxlength="255" placeholder="Enter your education title">
+                                                            maxlength="255" placeholder="Enter your education title"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Education Start Date') }}</label>
+                                                        <label class="form-label">{{ __('Education Start Date') }} *</label>
                                                         <input type="date" class="form-control" name="education_start_date"
-                                                            placeholder="Enter your education start date">
+                                                            placeholder="Enter your education start date" required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Education End Date') }}</label>
+                                                        <label class="form-label">{{ __('Education End Date') }} *</label>
                                                         <input type="date" class="form-control" name="education_end_date"
-                                                            placeholder="Enter your education end date">
+                                                            placeholder="Enter your education end date" required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Education Institution') }}</label>
+                                                        <label class="form-label">{{ __('Education Institution') }}
+                                                            *</label>
                                                         <input type="text" class="form-control" name="education_institution"
-                                                            maxlength="255" placeholder="Enter your education institution">
+                                                            maxlength="255" placeholder="Enter your education institution"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Education Description') }}</label>
+                                                        <label class="form-label">{{ __('Education Description') }}
+                                                            *</label>
                                                         <textarea class="form-control" name="education_description"
                                                             maxlength="255" placeholder="Enter your education description"
-                                                            spellcheck="false"></textarea>
+                                                            spellcheck="false" required></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -404,8 +476,20 @@
                                                 <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
                                                     data-toggle="modal"
                                                     data-target="#editCompanyModal-{{ $userCompany->id }}">
-                                                    {{ __('Edit professional experience') }}
+                                                    {{ __('Edit') }}
                                                 </a>
+
+                                                <form method="POST" name="deleteProfessionalExperience"
+                                                    action="{{ route('profile.update', $profile->id) }}">
+                                                    @csrf
+                                                    {{ method_field('PATCH') }}
+
+                                                    <input type="hidden" name="professional_id"
+                                                        value="{{ $userCompany->id }}">
+                                                    <input type="submit" name="deleteProfessionalExperience"
+                                                        class="btn btn-danger btn-pill w-10 mr-3 mt-1 float-right"
+                                                        value="{{ __('Delete') }}">
+                                                </form>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="editCompanyModal-{{ $userCompany->id }}"
@@ -431,7 +515,8 @@
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Professional Experience Title') }}</label>
+                                                                            class="form-label">{{ __('Professional Experience Title') }}
+                                                                            *</label>
                                                                         <input type="hidden"
                                                                             name="professional_experience_id"
                                                                             value="{{ $userCompany->id }}">
@@ -439,32 +524,36 @@
                                                                             name="professional_experience_title"
                                                                             maxlength="255"
                                                                             placeholder="Enter your professional experience title"
-                                                                            value="{{ $userCompany->title }}">
+                                                                            value="{{ $userCompany->title }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Professional Experience Start Date') }}</label>
+                                                                            class="form-label">{{ __('Professional Experience Start Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="professional_experience_start_date"
                                                                             placeholder="Enter your professional experience start date"
-                                                                            value="{{ $userCompany->start_date }}">
+                                                                            value="{{ $userCompany->start_date }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Professional Experience End Date') }}</label>
+                                                                            class="form-label">{{ __('Professional Experience End Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="professional_experience_end_date"
                                                                             placeholder="Enter your professional experience end date"
-                                                                            value="{{ $userCompany->end_date }}">
+                                                                            value="{{ $userCompany->end_date }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Professional Experience Company') }}</label>
+                                                                            class="form-label">{{ __('Professional Experience Company') }}
+                                                                            *</label>
                                                                         <select class="form-control"
-                                                                            name="professional_experience_company_id">
+                                                                            name="professional_experience_company_id"
+                                                                            required>
                                                                             @foreach ($companies as $company)
                                                                                 <option value="{{ $company->id }}">
                                                                                     {{ $company->company_name }}
@@ -475,12 +564,14 @@
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Professional Experience Description') }}</label>
+                                                                            class="form-label">{{ __('Professional Experience Description') }}
+                                                                            *</label>
                                                                         <textarea class="form-control"
                                                                             name="professional_experience_description"
                                                                             maxlength="255"
                                                                             placeholder="Enter your professional experience description"
-                                                                            spellcheck="false">{{ $userCompany->description }}</textarea>
+                                                                            spellcheck="false"
+                                                                            required>{{ $userCompany->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -539,35 +630,40 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Professional Experience Title') }}</label>
+                                                        <label class="form-label">{{ __('Professional Experience Title') }}
+                                                            *</label>
                                                         <input type="text" class="form-control"
                                                             name="professional_experience_title" maxlength="255"
-                                                            placeholder="Enter your professional experience title">
+                                                            placeholder="Enter your professional experience title" required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label
-                                                            class="form-label">{{ __('Professional Experience Start Date') }}</label>
+                                                            class="form-label">{{ __('Professional Experience Start Date') }}
+                                                            *</label>
                                                         <input type="date" class="form-control"
                                                             name="professional_experience_start_date"
-                                                            placeholder="Enter your professional experience start date">
+                                                            placeholder="Enter your professional experience start date"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label
-                                                            class="form-label">{{ __('Professional Experience End Date') }}</label>
+                                                            class="form-label">{{ __('Professional Experience End Date') }}
+                                                            *</label>
                                                         <input type="date" class="form-control"
                                                             name="professional_experience_end_date"
-                                                            placeholder="Enter your professional experience end date">
+                                                            placeholder="Enter your professional experience end date"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="companies"
-                                                            class="form-label">{{ __('Professional Experience Company') }}</label>
+                                                            class="form-label">{{ __('Professional Experience Company') }}
+                                                            *</label>
 
                                                         <select class="form-control"
-                                                            name="professional_experience_company_id">
+                                                            name="professional_experience_company_id" required>
                                                             @foreach ($companies as $company)
                                                                 <option value="{{ $company->id }}">
                                                                     {{ $company->company_name }}
@@ -578,11 +674,12 @@
 
                                                     <div class="mb-3">
                                                         <label
-                                                            class="form-label">{{ __('Professional Experience Description') }}</label>
+                                                            class="form-label">{{ __('Professional Experience Description') }}
+                                                            *</label>
                                                         <textarea class="form-control"
                                                             name="professional_experience_description" maxlength="255"
                                                             placeholder="Enter your professional experience description"
-                                                            spellcheck="false"></textarea>
+                                                            spellcheck="false" required></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -612,8 +709,20 @@
                                                 <a class="btn btn-secondary btn-pill w-10 mr-3 float-right"
                                                     data-toggle="modal"
                                                     data-target="#editusersCharityModal-{{ $usersCharity->id }}">
-                                                    {{ __('Edit volunteering') }}
+                                                    {{ __('Edit') }}
                                                 </a>
+
+                                                <form method="POST" name="deleteVolunteering"
+                                                    action="{{ route('profile.update', $profile->id) }}">
+                                                    @csrf
+                                                    {{ method_field('PATCH') }}
+
+                                                    <input type="hidden" name="volunteering_id"
+                                                        value="{{ $usersCharity->id }}">
+                                                    <input type="submit" name="deleteVolunteering"
+                                                        class="btn btn-danger btn-pill w-10 mr-3 mt-1 float-right"
+                                                        value="{{ __('Delete') }}">
+                                                </form>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="editusersCharityModal-{{ $usersCharity->id }}"
@@ -639,39 +748,44 @@
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Volunteeting Title') }}</label>
+                                                                            class="form-label">{{ __('Volunteeting Title') }}
+                                                                            *</label>
                                                                         <input type="hidden" name="charity_id"
                                                                             value="{{ $usersCharity->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="charity_title" maxlength="255"
                                                                             placeholder="Enter your volunteering title"
-                                                                            value="{{ $usersCharity->title }}">
+                                                                            value="{{ $usersCharity->title }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Volunteering Start Date') }}</label>
+                                                                            class="form-label">{{ __('Volunteering Start Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="charity_start_date"
                                                                             placeholder="Enter your volunteering start date"
-                                                                            value="{{ $usersCharity->start_date }}">
+                                                                            value="{{ $usersCharity->start_date }}"
+                                                                            required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Volunteering End Date') }}</label>
+                                                                            class="form-label">{{ __('Volunteering End Date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="charity_end_date"
                                                                             placeholder="Enter your volunteering end date"
-                                                                            value="{{ $usersCharity->end_date }}">
+                                                                            value="{{ $usersCharity->end_date }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Volunteering Company') }}</label>
+                                                                            class="form-label">{{ __('Volunteering Company') }}
+                                                                            *</label>
 
                                                                         <select class="form-control"
-                                                                            name="charity_company_id">
+                                                                            name="charity_company_id" required>
                                                                             @foreach ($charities as $charity)
                                                                                 <option value="{{ $charity->id }}">
                                                                                     {{ $charity->company_name }}
@@ -682,11 +796,13 @@
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Volunteering Description') }}</label>
+                                                                            class="form-label">{{ __('Volunteering Description') }}
+                                                                            *</label>
                                                                         <textarea class="form-control"
                                                                             name="charity_description" maxlength="255"
                                                                             placeholder="Enter your volunteering description"
-                                                                            spellcheck="false">{{ $usersCharity->description }}</textarea>
+                                                                            spellcheck="false"
+                                                                            required>{{ $usersCharity->description }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -744,28 +860,30 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Volunteering Title') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering Title') }} *</label>
                                                         <input type="text" class="form-control" name="charity_title"
-                                                            maxlength="255" placeholder="Enter your volunteering title">
+                                                            maxlength="255" placeholder="Enter your volunteering title"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Volunteering Start Date') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering Start Date') }}
+                                                            *</label>
                                                         <input type="date" class="form-control" name="charity_start_date"
-                                                            placeholder="Enter your volunteering start date">
+                                                            placeholder="Enter your volunteering start date" required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Volunteering End Date') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering End Date') }}
+                                                            *</label>
                                                         <input type="date" class="form-control" name="charity_end_date"
-                                                            placeholder="Enter your volunteering end date">
+                                                            placeholder="Enter your volunteering end date" required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Volunteering Company') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering Company') }} *</label>
 
-                                                        <select class="form-control" name="charity_company_id">
+                                                        <select class="form-control" name="charity_company_id" required>
                                                             @foreach ($charities as $charity)
                                                                 <option value="{{ $charity->id }}">
                                                                     {{ $charity->company_name }}
@@ -775,12 +893,12 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label
-                                                            class="form-label">{{ __('Volunteering Description') }}</label>
+                                                        <label class="form-label">{{ __('Volunteering Description') }}
+                                                            *</label>
 
                                                         <textarea class="form-control" name="charity_description"
                                                             placeholder="Enter your volunteering description"
-                                                            maxlength="255" spellcheck="false"></textarea>
+                                                            maxlength="255" spellcheck="false" required></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -794,58 +912,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </fieldset>
-
-                        {{-- Skills --}}
-                        <fieldset class="form-fieldset">
-                            <h4>{{ __('Skills') }}</h4>
-                            <form method="POST" name="updateSkills" action="{{ route('profile.update', $profile->id) }}">
-                                @csrf
-                                {{ method_field('PATCH') }}
-                                <div class="mb-3">
-                                    <label class="form-label">{{ __('Skills') }}</label>
-                                    <select name="skills_array[]" multiple id="select-tags-advanced"
-                                        class="form-select selectized" multiple="multiple" tabindex="-1"
-                                        style="display: none;">
-                                        @foreach ($skills as $skill)
-                                            @foreach ($currentSkills as $currentSkill)
-                                                @if (strcmp($skill->name, $currentSkill->name) === 0)
-                                                    <option value="{{ $skill->name }}" selected="selected">
-                                                        {{ $skill->name }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                            <option value="{{ $skill->name }}">
-                                                {{ $skill->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="selectize-dropdown multi form-select plugin-remove_button"
-                                        style="display: none; visibility: visible; width: 402px; top: 34px; left: 0px;">
-                                        <div class="selectize-dropdown-content">
-                                            @foreach ($skills as $skill)
-                                                <div class="option" data-selectable="" data-value="{{ $skill->name }}">
-                                                    {{ $skill->name }}
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <button type="submit" name="updateSkills"
-                                        class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
-                                </div>
-                            </form>
-
-                            <form method="POST" name="createSkill" action="{{ route('profile.update', $profile->id) }}">
-                                @csrf
-                                {{ method_field('PATCH') }}
-                                <div class="mb-3">
-                                    <h6>{{ __('Could not find currentSkill? Create your own') }}</h4>
-                                        <input type="text" class="form-control" name="skill_name" maxlength="255"
-                                            placeholder="Enter your currentSkill name">
-                                        <button type="submit" name="createSkill"
-                                            class="btn btn-success w-10 mt-3">{{ __('Save Changes') }}</button>
-                                </div>
-                            </form>
                         </fieldset>
 
                         {{-- Certificates --}}
@@ -888,29 +954,31 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">{{ __('Name') }}</label>
+                                                                        <label class="form-label">{{ __('Name') }} *</label>
                                                                         <input type="hidden" name="certificate_id"
                                                                             value="{{ $certificate->id }}">
                                                                         <input type="text" class="form-control"
                                                                             name="certificate_name" maxlength="255"
                                                                             placeholder="Enter your certificate name"
-                                                                            value="{{ $certificate->name }}">
+                                                                            value="{{ $certificate->name }}" required>
                                                                     </div>
 
                                                                     <div class="mb-3">
                                                                         <label
-                                                                            class="form-label">{{ __('Certification date') }}</label>
+                                                                            class="form-label">{{ __('Certification date') }}
+                                                                            *</label>
                                                                         <input type="date" class="form-control"
                                                                             name="certification_date"
                                                                             placeholder="Enter your certification date"
-                                                                            value="{{ $certificate->certification_date }}">
+                                                                            value="{{ $certificate->certification_date }}"
+                                                                            required>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">{{ __('File') }}
+                                                                        <label class="form-label">{{ __('File') }} *
                                                                         </label>
                                                                         <input type="file" name="certificate_file"
                                                                             class="form-control" accept=".pdf"
-                                                                            value="{{ $certificate->file }}" />
+                                                                            value="{{ $certificate->file }}" required />
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -977,22 +1045,23 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Name') }}</label>
+                                                        <label class="form-label">{{ __('Name') }} *</label>
                                                         <input type="text" class="form-control" name="certificate_name"
-                                                            maxlength="255" placeholder="Enter your certificate name">
+                                                            maxlength="255" placeholder="Enter your certificate name"
+                                                            required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('Certification date') }}</label>
+                                                        <label class="form-label">{{ __('Certification date') }} *</label>
                                                         <input type="date" class="form-control" name="certification_date"
-                                                            placeholder="Enter your certification date">
+                                                            placeholder="Enter your certification date" required>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label class="form-label">{{ __('File') }}
+                                                        <label class="form-label">{{ __('File') }} *
                                                         </label>
                                                         <input type="file" name="certificate_file" class="form-control"
-                                                            accept=".pdf" />
+                                                            accept=".pdf" required />
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">

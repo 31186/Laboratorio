@@ -201,16 +201,24 @@ class ProfileController extends Controller
             $this->updateEducation($request, $id);
         else if ($request->has('createEducation'))
             $this->createEducation($request, $id);
+        else if ($request->has('deleteEducation'))
+            $this->deleteEducation($request, $id);
         else if ($request->has('updateProfessionalExperience'))
             $this->updateProfessionalExperience($request, $id);
         else if ($request->has('createProfessionalExperience'))
             $this->createProfessionalExperience($request, $id);
+        else if ($request->has('deleteProfessionalExperience'))
+            $this->deleteProfessionalExperience($request, $id);
         else if ($request->has('updateVolunteering'))
             $this->updateVolunteering($request, $id);
         else if ($request->has('createVolunteering'))
             $this->createVolunteering($request, $id);
+        else if ($request->has('deleteVolunteering'))
+            $this->deleteVolunteering($request, $id);
         else if ($request->has('updateCertificate'))
             $this->updateCertificate($request, $id);
+        else if ($request->has('createCertificate'))
+            $this->createCertificate($request, $id);
         else if ($request->has('updateSkills'))
             $this->updateSkills($request, $id);
         else if ($request->has('createSkill'))
@@ -390,6 +398,26 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function deleteEducation(Request $request, $id)
+    {
+        Profile::findOrFail($id);
+
+        $request->validate([
+            'education_id' => ['required', 'integer'],
+        ]);
+
+        $education = Educations::findOrFail($request->education_id);
+
+        $education->delete();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateProfessionalExperience(Request $request, $id)
     {
         $request->validate([
@@ -447,6 +475,26 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function deleteProfessionalExperience(Request $request, $id)
+    {
+        Profile::findOrFail($id);
+
+        $request->validate([
+            'professional_id' => ['required', 'integer'],
+        ]);
+
+        $professional = UsersCompanies::findOrFail($request->professional_id);
+
+        $professional->delete();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateVolunteering(Request $request, $id)
     {
         $request->validate([
@@ -495,6 +543,26 @@ class ProfileController extends Controller
             'user_id' => $id,
             'company_id' => $request->charity_company_id,
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteVolunteering(Request $request, $id)
+    {
+        Profile::findOrFail($id);
+
+        $request->validate([
+            'volunteering_id' => ['required', 'integer'],
+        ]);
+
+        $volunteering = UsersCompanies::findOrFail($request->volunteering_id);
+
+        $volunteering->delete();
     }
 
     /**

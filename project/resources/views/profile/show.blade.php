@@ -135,7 +135,7 @@
 
         <!-- ======= Skills Section ======= -->
         @if (count($skills) !== 0)
-            <section id="skills" class="skills section-bg">
+            <section id="skills" class="skills">
                 <div class="container">
 
                     <div class="section-title">
@@ -162,7 +162,7 @@
         <!-- End Skills Section -->
 
         <!-- ======= Resume Section ======= -->
-        <section id="resume" class="resume">
+        <section id="resume" class="resume section-bg">
             <div class="container">
 
                 <div class="section-title">
@@ -236,7 +236,7 @@
 
         <!-- ======= Certificates Section ======= -->
         @if (count($certificates) != 0)
-            <section id="certificates" class="certificates section-bg">
+            <section id="certificates" class="certificates">
                 <div class="container">
 
                     <div class="section-title">
